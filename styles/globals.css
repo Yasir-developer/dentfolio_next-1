@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .sizingStyles {
+    @apply max-w-[1140px] mx-auto px-8;
+  }
+
+  .inputStyles {
+    @apply border border-custom-grey focus:outline-none rounded-[7px] p-4 mt-4 lg:mt-0 w-[90%] text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-normal
+  }
+  .dentistBodyStyles{
+    @apply h-full absolute top-0 bottom-0 w-full bg-white
+  }
+  .blueGradient{
+    @apply bg-gradient-radial from-[#0372E2] to-[#0B5FB4]
+  }
+}
+.toast-message {
+  background-color: '#0372E2';
+  /* color: #fff; */
+  font-size: 20px;
+  width: 34vw;
+  padding: 30px 20px;
+}
+::placeholder {
+  color: deeppink;
+font-size: 16px;
+font-weight: 300;
+}
+
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap'); */
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  font-family: "Poppins";
+  /* overflow: hidden; */
+
+  /* color: rgb(var(--foreground-rgb)); */
+
+}
+h1{
+  /* font-size: 41px; */
+  /* font-weight: bold; */
+  
+}
+.bodyStyle{
+  overflow: hidden;
+}
+.stepIndicator {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  width: "100%";
+}
+
+.step {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #0372e2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.circleRadius {
+  width: 60px;
+  height: 60px;
+  background-color: aqua;
+  /* padding:10px;
+  margin: 25px; */
+  border-color: red;
+  border-width: 2;
+  border-radius: 30px;
+  /* background-color: #0372e2; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.line {
+ 
+  height: 1px;
+  width: 100px;
+  background-color: grey;
+}
+.arrow::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #0372e2;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+/* Adjust the spacing and size as needed */
+
+.checkbox-round {
+  width: 1.3em;
+  height: 1.3em;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+main{
+  height: 100%;
+}
+/* #__next,#__next>div{
+  height: 100%;
+} */
+.checkbox-round:checked {
+  background-color: gray;
+}
+.contentContainer{
+  overflow-y: overlay;
+}
+.img-style{
+
+}
+.img-wrapper > div {
+ 
+   height: 100%;
+   width: 100%;
+   align-items: 'center';
+ }
+.initialClass{
+  position: fixed;
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+top:0;
+bottom:0;
+}
+.updatedClass{
+  display: none;
+}
+@media screen and (max-width:767px){
+  .slick-slider.customSlider .slick-slide>div {
+      text-align: center;
+  }
+}
