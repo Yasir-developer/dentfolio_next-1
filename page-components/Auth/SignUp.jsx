@@ -21,6 +21,7 @@ import Router from 'next/router';
 
 import Checkbox from '@/components/Checkbox/Checkbox';
 import axios from 'axios';
+import { mutate } from 'swr';
 // const SignUp = () => {
 //   const emailRef = useRef();
 //   const passwordRef = useRef();
