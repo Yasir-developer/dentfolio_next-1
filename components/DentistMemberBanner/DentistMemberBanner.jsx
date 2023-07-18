@@ -1,18 +1,18 @@
-import React from "react";
-import BlueButtons from "@/components/Buttons/BlueButtons";
-import Image from "next/image";
-import doctor from "../../../public/images/female-dentist.png";
-import PrivatePatients from "@/page-components/PrivatePatients";
-import { FaLongArrowAltDown, FaStethoscope } from "react-icons/fa";
-import MonthlyPlan from "../MonthlyPlan/MonthlyPlan";
-import Router from "next/router";
+import React from 'react';
+import BlueButtons from '@/components/Buttons/BlueButtons';
+import Image from 'next/image';
+import doctor from '../../public/images/female-dentist.png';
+import PrivatePatients from '../../page-components/PrivatePatients';
+import { FaLongArrowAltDown, FaStethoscope } from 'react-icons/fa';
+import MonthlyPlan from '../MonthlyPlan/MonthlyPlan';
+import Router from 'next/router';
 const DentistMemberBanner = () => {
   const stepImages = [
-    "/image/doctor.png",
-    "/image/doctor.png",
-    "/image/doctor.png",
-    "/image/doctor.png",
-    "/image/doctor.png",
+    '/image/doctor.png',
+    '/image/doctor.png',
+    '/image/doctor.png',
+    '/image/doctor.png',
+    '/image/doctor.png',
   ];
   return (
     <>
@@ -26,12 +26,12 @@ const DentistMemberBanner = () => {
       >
         <div>
           <img
-            src={"/images/female.png"}
+            src={'/images/female.png'}
             style={{
-              objectFit: "cover",
-              objectPosition: "80% 100%",
-              backgroundRepeat: "no-repeat",
-              minHeight: "220px",
+              objectFit: 'cover',
+              objectPosition: '80% 100%',
+              backgroundRepeat: 'no-repeat',
+              minHeight: '220px',
               // height: "300px",
             }}
             className="lg:hidden block"
@@ -52,7 +52,7 @@ const DentistMemberBanner = () => {
         <div className="dentistPlanBannerInnerContainer sizingStyles flex items-center justify-between absolute lg:relative top-0 h-full pl-1">
           <div className="w-[100%] lg:w-[55%] lg:py-[100px]  dentistPlanContentContainer">
             <h1 className="lg:text-4xl text-[14px] font-bold mb-4 text-black lg:w-full mt-[30px] lg:mt-[0px] w-[70%] lg:px-0 px-3">
-              JOIN THE HUNDREDS OF OTHER DENTFOLIO MEMBERS GROWING THEIR{" "}
+              JOIN THE HUNDREDS OF OTHER DENTFOLIO MEMBERS GROWING THEIR{' '}
               <span className="lg:text-4xl text-[14px] font-bold font-poppins text-custom-blue">
                 PRIVATE PATIENT LISTS
               </span>
@@ -63,12 +63,12 @@ const DentistMemberBanner = () => {
             <BlueButtons
               buttonText="Start my Free Month"
               className={
-                "lg:text-[16px] text-[14px] lg:font-semibold font-normal  mb-[30px] lg:mb-0 mx-3"
+                'lg:text-[16px] text-[14px] lg:font-semibold font-normal  mb-[30px] lg:mb-0 mx-3'
               }
               onClick={(e) => {
                 e.preventDefault();
 
-                Router.push("/dentist/sign-up");
+                Router.push('/dentist/sign-up');
               }}
               // className="lg:!px-8  mx-auto"
               // btnStyle={ margin: "20px" }

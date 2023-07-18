@@ -1,22 +1,22 @@
-import React from "react";
-import caseOne from "../../../public/images/case2.png";
-import Image from "next/image";
+import React from 'react';
+// import caseOne from "../../../public/images/case2.png";
+import Image from 'next/image';
 
 const PreviousCases = () => {
   const caseTypes = [
     {
-      img_url: "/images/case2.png",
-      name: "Composite Bonding",
+      img_url: '/images/case2.png',
+      name: 'Composite Bonding',
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet consectetur adipiscing elit Curabitur congue sapien non efficitur sollicitudin.",
-      type: ["Aligners", "Bridges", "Implants", "Root Canal Treatment"],
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet consectetur adipiscing elit Curabitur congue sapien non efficitur sollicitudin.',
+      type: ['Aligners', 'Bridges', 'Implants', 'Root Canal Treatment'],
     },
     {
-      img_url: "/images/case1.png",
-      name: "Composite Bonding",
+      img_url: '/images/case1.png',
+      name: 'Composite Bonding',
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet consectetur adipiscing elit Curabitur congue sapien non efficitur sollicitudin.",
-      type: ["Aligners", "Root Canal Treatment", "Bridges", "Implants"],
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet consectetur adipiscing elit Curabitur congue sapien non efficitur sollicitudin.',
+      type: ['Aligners', 'Root Canal Treatment', 'Bridges', 'Implants'],
     },
   ];
   return (

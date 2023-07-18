@@ -1,12 +1,12 @@
-import Image from "next/image";
-import React, { useState } from "react";
-import location from "../../../public/images/location.svg";
-import Router from "next/router";
-import BlueButtons from "../Buttons/BlueButtons";
-import { FaTimes } from "react-icons/fa";
-import profile from "../../../public/images/profile1.png";
-import AuthInput from "../Inputs/AuthInput";
-import checkCircle from "../../../public/images/check-circle2.svg";
+import Image from 'next/image';
+import React, { useState } from 'react';
+import location from '../../public/images/location.svg';
+import Router from 'next/router';
+import BlueButtons from '../Buttons/BlueButtons';
+import { FaTimes } from 'react-icons/fa';
+import profile from '../../public/images/profile1.png';
+import AuthInput from '../Inputs/AuthInput';
+import checkCircle from '../../public/images/check-circle2.svg';
 
 const DoctorProfileCard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -75,15 +75,15 @@ const DoctorProfileCard = () => {
                   className="inputStyles"
                 /> */}
                 <AuthInput
-                  placeholder={"Full Name"}
+                  placeholder={'Full Name'}
                   className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-[90%] w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
                   // btnStyle={ma}
                 />
 
                 <AuthInput
-                  placeholder={"Phone Number"}
+                  placeholder={'Phone Number'}
                   className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-[90%] w-full py-3  text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
-                  type={"tel"}
+                  type={'tel'}
                 />
                 {/* <input
                   type="tel"
@@ -92,9 +92,9 @@ const DoctorProfileCard = () => {
                   placeholder="Phone Number"
                 /> */}
                 <AuthInput
-                  placeholder={"Email Address"}
+                  placeholder={'Email Address'}
                   className="border border-custom-grey rounded-[7px]  lg:mt-0 w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
-                  type={"email"}
+                  type={'email'}
                 />
                 {/* <input
                   type="email"
@@ -131,45 +131,45 @@ const DoctorProfileCard = () => {
   const doctorArray = [
     {
       id: 1,
-      name: "Dr. Dylan Taylor",
-      country: "Manchester",
+      name: 'Dr. Dylan Taylor',
+      country: 'Manchester',
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se",
-      img_url: "/images/profile1.png",
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se',
+      img_url: '/images/profile1.png',
     },
 
     {
       id: 2,
-      name: "Dr.Vincent Sullivan",
-      country: "Manchester",
+      name: 'Dr.Vincent Sullivan',
+      country: 'Manchester',
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se",
-      img_url: "/images/profile2.png",
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se',
+      img_url: '/images/profile2.png',
     },
 
     {
       id: 3,
-      name: "Dr.Joan Jackson ",
-      country: "Manchester",
+      name: 'Dr.Joan Jackson ',
+      country: 'Manchester',
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se",
-      img_url: "/images/profile3.png",
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se',
+      img_url: '/images/profile3.png',
     },
     {
       id: 4,
-      name: "Dr. Dylan Taylor",
-      country: "Manchester",
+      name: 'Dr. Dylan Taylor',
+      country: 'Manchester',
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se",
-      img_url: "/images/profile4.png",
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se',
+      img_url: '/images/profile4.png',
     },
     {
       id: 5,
-      name: "Dr. Dylan Taylor",
-      country: "Manchester",
+      name: 'Dr. Dylan Taylor',
+      country: 'Manchester',
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se",
-      img_url: "/images/profile6.png",
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se',
+      img_url: '/images/profile6.png',
     },
   ];
   return (
@@ -224,18 +224,18 @@ const DoctorProfileCard = () => {
               </button> */}
               <BlueButtons
                 className={
-                  "lg:font-medium font-medium sm:text-[16px] w-[50%] lg:w-[20%] text-[14px] py-[0] !px-[0px] sm:px-[60px] text-white rounded-[7px] mt-2 sm:mt-0 mr-2 sm:mr-4"
+                  'lg:font-medium font-medium sm:text-[16px] w-[50%] lg:w-[20%] text-[14px] py-[0] !px-[0px] sm:px-[60px] text-white rounded-[7px] mt-2 sm:mt-0 mr-2 sm:mr-4'
                 }
-                buttonText={"Contact Me"}
+                buttonText={'Contact Me'}
                 onClick={() => setShowModal(true)}
               />
 
               <BlueButtons
                 className={
-                  "lg:font-medium font-medium sm:text-[16px] w-[50%] lg:w-[20%] text-[14px] py-[2] !px-[0px] sm:px-[60px] !text-black rounded-[7px] mt-2 sm:mt-0 mr-2 sm:mr-4 bg-transparent border border-black "
+                  'lg:font-medium font-medium sm:text-[16px] w-[50%] lg:w-[20%] text-[14px] py-[2] !px-[0px] sm:px-[60px] !text-black rounded-[7px] mt-2 sm:mt-0 mr-2 sm:mr-4 bg-transparent border border-black '
                 }
-                buttonText={"View Profile"}
-                onClick={() => Router.push("/patient/profile-page")}
+                buttonText={'View Profile'}
+                onClick={() => Router.push('/patient/profile-page')}
               />
               {/* <button
                 onClick={() => Router.push("/patient/profile-page")}

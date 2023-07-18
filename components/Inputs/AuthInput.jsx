@@ -1,20 +1,23 @@
-import React, { useState } from "react";
+import React, { forwardRef, useState } from 'react';
 // import from 'react';
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-import { HiEye, HiEyeOff } from "react-icons/hi";
-const AuthInput = ({
-  type,
-  id,
-  placeholder,
-  value,
-  onChange,
-  className,
-  containerClassName,
-  btnStyle,
-  maxLength,
-  ...rest
-}) => {
+import { HiEye, HiEyeOff } from 'react-icons/hi';
+const AuthInput = forwardRef(function AuthInput(
+  {
+    type,
+    id,
+    placeholder,
+    value,
+    onChange,
+    className,
+    containerClassName,
+    btnStyle,
+    maxLength,
+    ...rest
+  },
+  ref
+) {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -24,13 +27,14 @@ const AuthInput = ({
   return (
     // <div className="relative">
     <>
-      {type !== "password" ? (
+      {type !== 'password' ? (
         <>
           <input
-            type={showPassword ? "text" : type}
+            type={showPassword ? 'text' : type}
             id={id}
             placeholder={placeholder}
             value={value}
+            ref={ref}
             onChange={onChange}
             required
             {...rest}
@@ -58,31 +62,31 @@ const AuthInput = ({
         >
           <>
             <input
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               id="password"
               value={value}
               onChange={onChange}
-              placeholder={placeholder ? placeholder : "Password"}
+              placeholder={placeholder ? placeholder : 'Password'}
               required
               className={`focus:outline-none w-[100%] lg:w-[100%] lg:text-[16px] text-[14px] font-light bg-custom-dashboard-bg ${className}`}
             />
             {showPassword ? (
               <FaEye
                 style={{
-                  color: "#9F9F9F",
-                  width: "17px",
-                  height: "17px",
-                  cursor: "pointer",
+                  color: '#9F9F9F',
+                  width: '17px',
+                  height: '17px',
+                  cursor: 'pointer',
                 }}
                 onClick={() => togglePasswordVisibility()}
               />
             ) : (
               <FaEyeSlash
                 style={{
-                  color: "#9F9F9F",
-                  width: "17px",
-                  height: "17px",
-                  cursor: "pointer",
+                  color: '#9F9F9F',
+                  width: '17px',
+                  height: '17px',
+                  cursor: 'pointer',
                 }}
                 onClick={() => togglePasswordVisibility()}
               />
@@ -92,6 +96,6 @@ const AuthInput = ({
       )}
     </>
   );
-};
+});
 
 export default AuthInput;

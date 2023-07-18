@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import profile from "../../../public/images/profile1.png";
-import Image from "next/image";
-import { FaTimes } from "react-icons/fa";
-import checkCircle from "../../../public/images/check-circle2.svg";
+import React, { useEffect, useState } from 'react';
+import profile from '../../public/images/profile1.png';
+import Image from 'next/image';
+import { FaTimes } from 'react-icons/fa';
+import checkCircle from '../../public/images/check-circle2.svg';
 
-import map from "../../../public/images/map.png";
-import AuthInput from "../Inputs/AuthInput";
-import BlueButtons from "../Buttons/BlueButtons";
+import map from '../../public/images/map.png';
+import AuthInput from '../Inputs/AuthInput';
+import BlueButtons from '../Buttons/BlueButtons';
 const DoctorBasicDetail = (props) => {
-  console.log(props, "props ===");
+  console.log(props, 'props ===');
   const [showModal, setShowModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showContact, setShowContact] = useState(false);
@@ -16,8 +16,8 @@ const DoctorBasicDetail = (props) => {
   useEffect(() => {
     // console.log(window.location, "window");
     if (typeof window !== undefined) {
-      console.log(window?.location?.pathname, " window?.location?.pathname");
-      if (window?.location?.pathname === "/patient/profile-page") {
+      console.log(window?.location?.pathname, ' window?.location?.pathname');
+      if (window?.location?.pathname === '/patient/profile-page') {
         setShowContact(true);
       } else {
         setShowContact(false);
@@ -93,15 +93,15 @@ const DoctorBasicDetail = (props) => {
                   className="inputStyles"
                 /> */}
                 <AuthInput
-                  placeholder={"Full Name"}
+                  placeholder={'Full Name'}
                   className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-[90%] w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
                   // btnStyle={ma}
                 />
 
                 <AuthInput
-                  placeholder={"Phone Number"}
+                  placeholder={'Phone Number'}
                   className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-[90%] w-full py-3  text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
-                  type={"tel"}
+                  type={'tel'}
                 />
                 {/* <input
                   type="tel"
@@ -110,9 +110,9 @@ const DoctorBasicDetail = (props) => {
                   placeholder="Phone Number"
                 /> */}
                 <AuthInput
-                  placeholder={"Email Address"}
+                  placeholder={'Email Address'}
                   className="border border-custom-grey rounded-[7px]  lg:mt-0 w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
-                  type={"email"}
+                  type={'email'}
                 />
                 {/* <input
                   type="email"
@@ -178,7 +178,7 @@ const DoctorBasicDetail = (props) => {
         </div>
         <div className="lg:px-8">
           <p>
-            {props?.data?.bio ? props?.data?.bio : "No Bio"}
+            {props?.data?.bio ? props?.data?.bio : 'No Bio'}
             {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
             congue, sapien non efficitur sollicitudin, ex risus semper diam, sed
             ornare libero urna ac leo sit amet, consectetur adipiscing elit.

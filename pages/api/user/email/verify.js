@@ -1,7 +1,7 @@
 import { createToken } from '@/api-lib/db';
 import { CONFIG as MAIL_CONFIG, sendMail } from '@/api-lib/mail';
 import { auths } from '@/api-lib/middlewares';
-import { getMongoDb } from '@/api-lib/mongodb';
+// import { getMongoDb } from '@/api-lib/mongodb';
 import { ncOpts } from '@/api-lib/nc';
 import nc from 'next-connect';
 
@@ -15,7 +15,7 @@ handler.post(async (req, res) => {
     return;
   }
 
-  const db = await getMongoDb();
+  // const db = await getMongoDb();
 
   const token = await createToken(db, {
     creatorId: req.user._id,

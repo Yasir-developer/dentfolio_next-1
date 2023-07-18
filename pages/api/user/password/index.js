@@ -1,7 +1,7 @@
 import { ValidateProps } from '@/api-lib/constants';
 import { updateUserPasswordByOldPassword } from '@/api-lib/db';
 import { auths, validateBody } from '@/api-lib/middlewares';
-import { getMongoDb } from '@/api-lib/mongodb';
+// import { getMongoDb } from '@/api-lib/mongodb';
 import { ncOpts } from '@/api-lib/nc';
 import nc from 'next-connect';
 
@@ -24,7 +24,7 @@ handler.put(
       return;
     }
 
-    const db = await getMongoDb();
+    // const db = await getMongoDb();
 
     const { oldPassword, newPassword } = req.body;
 

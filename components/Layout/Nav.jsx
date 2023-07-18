@@ -11,6 +11,7 @@ import Container from './Container';
 // import styles from './Nav.module.css';
 import Spacer from './Spacer';
 import Wrapper from './Wrapper';
+import AppHeader from '../Header/Header';
 
 const UserMenu = ({ user, mutate }) => {
   const menuRef = useRef();
@@ -72,10 +73,10 @@ const UserMenu = ({ user, mutate }) => {
         {visible && (
           <div className={styles.menu}>
             <Link passHref href={`/user/${user.username}`}>
-              <a className={styles.item}>Profile</a>
+              Profile
             </Link>
             <Link passHref href="/settings">
-              <a className={styles.item}>Settngs</a>
+              Settngs
             </Link>
             <div className={styles.item} style={{ cursor: 'auto' }}>
               <Container alignItems="center">
@@ -98,45 +99,48 @@ const Nav = () => {
   const { data: { user } = {}, mutate } = useCurrentUser();
 
   return (
-    <nav className={styles.nav}>
-      <Wrapper className={styles.wrapper}>
-        <Container
-          className={styles.content}
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Link href="/">
-            <a className={styles.logo}>Next.js MongoDB App</a>
-          </Link>
-          <Container>
-            {user ? (
-              <>
-                <UserMenu user={user} mutate={mutate} />
-              </>
-            ) : (
-              <>
-                <Link passHref href="/login">
-                  <ButtonLink
-                    size="small"
-                    type="success"
-                    variant="ghost"
-                    color="link"
-                  >
-                    Log in
-                  </ButtonLink>
-                </Link>
-                <Spacer axis="horizontal" size={0.25} />
-                <Link passHref href="/sign-up">
-                  <Button size="small" type="success">
-                    Sign Up
-                  </Button>
-                </Link>
-              </>
-            )}
-          </Container>
-        </Container>
-      </Wrapper>
-    </nav>
+    // <nav className={styles.nav}>
+    //   <Wrapper className={styles.wrapper}>
+    //     <Container
+    //       className={styles.content}
+    //       alignItems="center"
+    //       justifyContent="space-between"
+    //     >
+    //       <Link href="/">
+    //         {/* <a className={styles.logo}>Next.js MongoDB App</a> */}
+    //       </Link>
+    //       <Container>
+    //         {user ? (
+    //           <>
+    //             <UserMenu user={user} mutate={mutate} />
+    //           </>
+    //         ) : (
+    //           <>
+    //             <Link passHref href="/login">
+    //               <ButtonLink
+    //                 size="small"
+    //                 type="success"
+    //                 variant="ghost"
+    //                 color="link"
+    //               >
+    //                 Log in
+    //               </ButtonLink>
+    //             </Link>
+    //             <Spacer axis="horizontal" size={0.25} />
+    //             <Link passHref href="/sign-up">
+    //               <Button size="small" type="success">
+    //                 Sign Up
+    //               </Button>
+    //             </Link>
+    //           </>
+    //         )}
+    //       </Container>
+    //     </Container>
+    //   </Wrapper>
+    // </nav>
+    <div>
+      <AppHeader />
+    </div>
   );
 };
 

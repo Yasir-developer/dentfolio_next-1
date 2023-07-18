@@ -1,8 +1,8 @@
-import Image from "next/image";
-import React from "react";
-import { FaFilter, FaCrosshairs } from "react-icons/fa";
-import locationCross from "../../../public/images/location-crosshairs-solid.svg";
-import Router from "next/router";
+import Image from 'next/image';
+import React from 'react';
+import { FaFilter, FaCrosshairs } from 'react-icons/fa';
+// import locationCross from "../../../public/images/location-crosshairs-solid.svg";
+import Router from 'next/router';
 const SearchBanner = () => {
   return (
     <div className="bg-gradient-to-r from-[#ccd6e5] to-[#dce8fa]">
@@ -10,10 +10,10 @@ const SearchBanner = () => {
         <div className="w-full lg:w-[70%]">
           <div className="lg:p-4">
             <h1 className="text-3xl lg:text-4xl font-bold mb-4 text-black w-full lg:w-[80%] mt-[20px] lg:mt-[0px]">
-              FIND A PRIVATE DENTIST{" "}
+              FIND A PRIVATE DENTIST{' '}
               <span className="text-3xl lg:text-4xl font-bold font-poppins text-custom-blue">
                 NEAR YOU
-              </span>{" "}
+              </span>{' '}
             </h1>
             <p className="mb-4 text-black font-normal lg:text-[14px] text-[13px]">
               Hundreds of dentists and practices around the UK showcase their
@@ -36,7 +36,7 @@ const SearchBanner = () => {
 
                 <button
                   className="bg-custom-blue text-white px-4 py-2 rounded ml-2 focus:outline-none"
-                  onClick={() => Router.push("/patient/dentist-list")}
+                  onClick={() => Router.push('/patient/dentist-list')}
                 >
                   Search
                 </button>

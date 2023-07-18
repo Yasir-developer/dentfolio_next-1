@@ -1,8 +1,8 @@
-import React from "react";
-import logoWhite from "../../../public/images/logoWhite.png";
-import Image from "next/image";
-import { FaAngleDown } from "react-icons/fa";
-import Link from "next/link";
+import React from 'react';
+// import logoWhite from "../../../public/images/logoWhite.png";
+// import Image from "next/image";
+// import { FaAngleDown } from "react-icons/fa";
+import Link from 'next/link';
 const DashboardFooter = () => {
   return (
     <div className="w-full flex bg-white  border-t border-b border-[#70707038]">
@@ -11,10 +11,10 @@ const DashboardFooter = () => {
           © Copyright 2023 Dentfolio. All Rights Reserved.
         </p>
         <div className="flex gap-x-10 lg:gap-x-3 lg:mr-[50px]">
-          <Link href={"#"} passHref className="text-[14px]">
+          <Link href={'#'} passHref className="text-[14px]">
             Terms Of Services
           </Link>
-          <Link href={"#"} passHref className="text-[14px]">
+          <Link href={'#'} passHref className="text-[14px]">
             Privacy Policy
           </Link>
           {/* <p className="text-[14px]">Privacy Policy</p> */}

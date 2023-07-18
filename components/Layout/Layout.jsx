@@ -1,7 +1,8 @@
 import Head from 'next/head';
-import Footer from './Footer';
+// import Footer from './Footer';
 import styles from './Layout.module.css';
 import Nav from './Nav';
+import Footer from '../Footer/Footer';
 
 const Layout = ({ children }) => {
   return (
@@ -28,8 +29,9 @@ const Layout = ({ children }) => {
         />
       </Head>
       <Nav />
-      <main className={styles.main}>{children}</main>
+      <main>{children}</main>
       <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

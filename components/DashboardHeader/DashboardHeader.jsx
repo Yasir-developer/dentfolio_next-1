@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import logoWhite from "../../../public/images/logoWhite.png";
-import Image from "next/image";
-import { FaAngleDown, FaRegBell, FaBars } from "react-icons/fa";
-import { HiChevronDown } from "react-icons/hi";
-import Router from "next/router";
+import React, { useEffect, useRef, useState } from 'react';
+import logoWhite from '../../public/images/logoWhite.png';
+import Image from 'next/image';
+import { FaAngleDown, FaRegBell, FaBars } from 'react-icons/fa';
+import { HiChevronDown } from 'react-icons/hi';
+import Router from 'next/router';
 // import Dropdown from "react-bootstrap/Dropdown";
 
 const DashboardHeader = ({ menuToggler }) => {
@@ -18,11 +18,11 @@ const DashboardHeader = ({ menuToggler }) => {
       }
     };
 
-    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener('mousedown', handleOutsideClick);
 
     // Clean up the event listener on unmount
     return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
   const toggleDropdown = () => {
@@ -38,7 +38,7 @@ const DashboardHeader = ({ menuToggler }) => {
         <Image
           src={logoWhite}
           className="mx-auto max-w-[173px] cursor-pointer"
-          onClick={() => Router.push("/dentist/dentist-plan")}
+          onClick={() => Router.push('/dentist/dentist-plan')}
         />
 
         {/* <h1 className="text-lg font-bold">Dashboard</h1> */}
@@ -59,7 +59,7 @@ const DashboardHeader = ({ menuToggler }) => {
           <div className="lg:border-l border-l-[#c8bfc3] flex">
             <div className="flex flex-row items-center justify-center lg:pr-[80px] lg:pl-[30px] ">
               <Image
-                src={"/images/profileImg.png"}
+                src={'/images/profileImg.png'}
                 alt="logo"
                 width={51}
                 height={51}
@@ -78,7 +78,7 @@ const DashboardHeader = ({ menuToggler }) => {
                 >
                   <HiChevronDown
                     className={`transform  h-5 w-5 text-[#919191] ${
-                      isDropdownOpen ? "rotate-180" : "rotate-0"
+                      isDropdownOpen ? 'rotate-180' : 'rotate-0'
                     }`}
                   />
 
@@ -112,7 +112,7 @@ const DashboardHeader = ({ menuToggler }) => {
                         class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
                         onClick={() => {
                           // handleOptionSelect;
-                          Router.push("/dentist/settings");
+                          Router.push('/dentist/settings');
                         }}
                       >
                         Settings
@@ -127,7 +127,7 @@ const DashboardHeader = ({ menuToggler }) => {
                         // href="#"
                         onClick={() => {
                           // handleOptionSelect;
-                          Router.push("/dentist/dentist-plan");
+                          Router.push('/dentist/dentist-plan');
                         }}
                         class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
                       >

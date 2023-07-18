@@ -1,7 +1,7 @@
 import { ValidateProps } from '@/api-lib/constants';
 import { findUserByUsername, updateUserById } from '@/api-lib/db';
 import { auths, validateBody } from '@/api-lib/middlewares';
-import { getMongoDb } from '@/api-lib/mongodb';
+// import { getMongoDb } from '@/api-lib/mongodb';
 import { ncOpts } from '@/api-lib/nc';
 import { slugUsername } from '@/lib/user';
 import { v2 as cloudinary } from 'cloudinary';
@@ -49,7 +49,7 @@ handler.patch(
       return;
     }
 
-    const db = await getMongoDb();
+    // const db = await getMongoDb();
 
     let profilePicture;
     if (req.file) {

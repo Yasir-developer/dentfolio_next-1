@@ -14,8 +14,8 @@ const Comment = ({ comment, className }) => {
   }, [comment.createdAt]);
   return (
     <div className={clsx(styles.root, className)}>
-      <Link href={`/user/${comment.creator.username}`}>
-        {/* <a>
+      {/* <Link href={`/user/${comment.creator.username}`}>
+        <a>
           <Container className={styles.creator}>
             <Avatar
               size={36}
@@ -27,8 +27,8 @@ const Comment = ({ comment, className }) => {
               <p className={styles.username}>{comment.creator.username}</p>
             </Container>
           </Container>
-        </a> */}
-      </Link>
+        </a>
+      </Link> */}
       <div className={styles.wrap}>
         <p className={styles.content}>{comment.content}</p>
       </div>

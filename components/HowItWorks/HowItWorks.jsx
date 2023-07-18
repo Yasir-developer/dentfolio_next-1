@@ -1,10 +1,10 @@
-import Image from "next/image";
-import React from "react";
-import upArrow from "../../../public/images/up.svg";
-import downArrow from "../../../public/images/down.svg";
-import dental from "../../../public/images/dental.png";
-import satisfied from "../../../public/images/satisfied.png";
-import cellular from "../../../public/images/cellular.png";
+import Image from 'next/image';
+import React from 'react';
+import upArrow from '../../public/images/up.svg';
+import downArrow from '../../public/images/down.svg';
+import dental from '../../public/images/dental.png';
+import satisfied from '../../public/images/satisfied.png';
+import cellular from '../../public/images/cellular.png';
 
 const HowItWorks = () => {
   return (

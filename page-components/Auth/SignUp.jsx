@@ -1,9 +1,9 @@
-import { Button } from '@/components/Button';
-import { Input } from '@/components/Input';
-import { Container, Spacer, Wrapper } from '@/components/Layout';
-import { TextLink } from '@/components/Text';
-import { fetcher } from '@/lib/fetch';
-import { useCurrentUser } from '@/lib/user';
+// import { Button } from '@/components/Button';
+// import { Input } from '@/components/Input';
+// import { Container, Spacer, Wrapper } from '@/components/Layout';
+// import { TextLink } from '@/components/Text';
+// import { fetcher } from '@/lib/fetch';
+// import { useCurrentUser } from '@/lib/user';
 import Image from 'next/image';
 // import Image from 'next/future/image';
 
@@ -20,6 +20,7 @@ import AuthInput from '@/components/Inputs/AuthInput';
 import Router from 'next/router';
 
 import Checkbox from '@/components/Checkbox/Checkbox';
+import axios from 'axios';
 // const SignUp = () => {
 //   const emailRef = useRef();
 //   const passwordRef = useRef();
@@ -149,87 +150,127 @@ const SignUp = () => {
   const [city, setCity] = useState('');
   const [postCode, setPostCode] = useState('');
 
-  const handleRegistration = (e) => {
-    e.preventDefault();
-    setLoader(true);
-    const finalData = {
-      email,
-      password,
-      firstName,
-      lastName,
-      displayName,
-      gdcNo,
-      buildingName,
-      streetName,
-      city,
-      postCode,
-    };
+  const router = useRouter();
 
-    // return;
-    const options = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+  const onSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      try {
+        setLoader(true);
+        // setIsLoading(true);
+        const response = await fetcher('/api/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            // name: nameRef.current.value,
+            password: password,
+            firstName,
+            lastName,
+            userName,
 
-    console.log(finalData, 'final data');
-
-    axios
-      .post(`${server}/api/signup/`, finalData, options)
-      .then((res) => {
-        console.log(res, 'job post response..');
-        // return;
-        if (res.status == 201) {
-          setLoader(false);
-          toast.success('Signup Successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          Router.replace('/dentist/view-profile');
-        } else if (res.status == 400) {
-          setLoader(false);
-          toast.error(res.errors[0], {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
-      })
-      .catch((error) => {
+            displayName,
+            gdcNo,
+            buildingName,
+            streetName,
+            city,
+            postCode,
+            // username: usernameRef.current.value,
+          }),
+        });
+        console.log(response, 'response -------');
+        mutate({ user: response.user }, false);
+        toast.success('Your account has been created');
+        router.replace('/dentist/view-profile');
+      } catch (e) {
+        toast.error(e.message);
+      } finally {
         setLoader(false);
-        if (error?.response?.data?.errors[0]) {
-          toast.error(error?.response?.data?.errors[0], {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        } else {
-          setLoader(false);
-          toast.error(error?.response?.data?.message, {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
-      });
-  };
+      }
+    },
+    [mutate, router]
+  );
+
+  // const handleRegistration = (e) => {
+  //   e.preventDefault();
+  //   setLoader(true);
+  //   const finalData = {
+  //     email,
+  //     password,
+  //     firstName,
+  //     lastName,
+  //     displayName,
+  //     gdcNo,
+  //     buildingName,
+  //     streetName,
+  //     city,
+  //     postCode,
+  //   };
+
+  //   // return;
+  //   const options = {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   };
+
+  //   console.log(finalData, 'final data');
+
+  //   axios
+  //     .post(`${server}/api/signup/`, finalData, options)
+  //     .then((res) => {
+  //       console.log(res, 'job post response..');
+  //       if (res.status == 201) {
+  //         setLoader(false);
+  //         toast.success('Signup Successfully', {
+  //           position: 'top-center',
+  //           autoClose: 2000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //         });
+  //         Router.replace('/dentist/view-profile');
+  //       } else if (res.status == 400) {
+  //         setLoader(false);
+  //         toast.error(res.errors[0], {
+  //           position: 'top-center',
+  //           autoClose: 2000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       setLoader(false);
+  //       if (error?.response?.data?.errors[0]) {
+  //         toast.error(error?.response?.data?.errors[0], {
+  //           position: 'top-center',
+  //           autoClose: 2000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //         });
+  //       } else {
+  //         setLoader(false);
+  //         toast.error(error?.response?.data?.message, {
+  //           position: 'top-center',
+  //           autoClose: 2000,
+  //           hideProgressBar: false,
+  //           closeOnClick: true,
+  //           pauseOnHover: true,
+  //           draggable: true,
+  //           progress: undefined,
+  //         });
+  //       }
+  //     });
+  // };
 
   const handleTermsChange = () => {
     setTermsAccepted(!termsAccepted);
@@ -265,11 +306,12 @@ const SignUp = () => {
               Sign Up
             </h2>
             <form
-              onSubmit={(e) => {
-                // e.preventDefault();
-                // handleRegistration(e);
-                // Router.replace("/dentist/view-profile");
-              }}
+              // onSubmit={
+              onSubmit={onSubmit}
+              // e.preventDefault();
+              // handleRegistration(e);
+              // Router.replace("/dentist/view-profile");
+              // }
             >
               <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-2 items-center justify-center">
                 <AuthInput

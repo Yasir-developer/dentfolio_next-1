@@ -148,15 +148,8 @@ main{
 .contentContainer{
   overflow-y: overlay;
 }
-.img-style{
 
-}
-.img-wrapper > div {
- 
-   height: 100%;
-   width: 100%;
-   align-items: 'center';
- }
+
 .initialClass{
   position: fixed;
   background-color: #fff;

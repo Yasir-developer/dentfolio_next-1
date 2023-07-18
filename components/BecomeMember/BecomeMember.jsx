@@ -1,7 +1,7 @@
-import Image from "next/image";
-import React from "react";
-import doctor from "../../../public/images/doctor.png";
-import Router from "next/router";
+import Image from 'next/image';
+import React from 'react';
+import doctor from '../../public/images/doctor.png';
+import Router from 'next/router';
 
 // import Become from "../../../public/images/member.png";
 
@@ -52,8 +52,8 @@ const BecomeMember = () => {
       <div
         style={{
           backgroundImage: `url(/images/member.png)`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
         }}
       >
         <div className="sizingStyles lg:py-28 py-[28px] px-6 md:px-12 lg:px-20 flex flex-col md:flex-row justify-between items-center">
@@ -70,7 +70,7 @@ const BecomeMember = () => {
               sed ornare.
             </h3>
             <button
-              onClick={() => Router.push("/dentist/dentist-plan")}
+              onClick={() => Router.push('/dentist/dentist-plan')}
               className="bg-transparent border font-medium  flex items-center justify-center lg:text-left text-center border-white text-white mx-auto lg:ml-0 py-2 px-8 md:px-12 lg:px-16 lg:mt-10 mt-5 rounded text-sm"
             >
               Find Out More

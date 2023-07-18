@@ -1,5 +1,5 @@
 import { findAndDeleteTokenByIdAndType, updateUserById } from '@/api-lib/db';
-import { getMongoDb } from '@/api-lib/mongodb';
+// import { getMongoDb } from '@/api-lib/mongodb';
 import { VerifyEmail } from '@/page-components/VerifyEmail';
 import Head from 'next/head';
 
@@ -15,7 +15,7 @@ export default function EmailVerifyPage({ valid }) {
 }
 
 export async function getServerSideProps(context) {
-  const db = await getMongoDb();
+  // const db = await getMongoDb();
 
   const { token } = context.params;
 

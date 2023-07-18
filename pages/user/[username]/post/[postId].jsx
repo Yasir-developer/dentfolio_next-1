@@ -1,5 +1,5 @@
 import { findPostById } from '@/api-lib/db';
-import { getMongoDb } from '@/api-lib/mongodb';
+// import { getMongoDb } from '@/api-lib/mongodb';
 import { UserPost } from '@/page-components/UserPost';
 import Head from 'next/head';
 
@@ -20,7 +20,7 @@ export default function UserPostPage({ post }) {
 }
 
 export async function getServerSideProps(context) {
-  const db = await getMongoDb();
+  // const db = await getMongoDb();
 
   const post = await findPostById(db, context.params.postId);
   if (!post) {

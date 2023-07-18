@@ -1,5 +1,5 @@
 import { findUserByUsername } from '@/api-lib/db';
-import { getMongoDb } from '@/api-lib/mongodb';
+// import { getMongoDb } from '@/api-lib/mongodb';
 import { User } from '@/page-components/User';
 import Head from 'next/head';
 
@@ -17,7 +17,7 @@ export default function UserPage({ user }) {
 }
 
 export async function getServerSideProps(context) {
-  const db = await getMongoDb();
+  // const db = await getMongoDb();
 
   const user = await findUserByUsername(db, context.params.username);
   if (!user) {

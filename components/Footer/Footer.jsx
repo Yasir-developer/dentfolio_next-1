@@ -1,15 +1,15 @@
-import Image from "next/image";
-import React from "react";
-import footer from "../../../public/images/footerLogo.png";
+import Image from 'next/image';
+import React from 'react';
+import footer from '../../public/images/footerLogo.png';
 
 import {
   FaFacebookF,
   FaTwitter,
   FaInstagram,
   FaLinkedin,
-} from "react-icons/fa";
-import { useRouter } from "next/router";
-import Link from "next/link";
+} from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const Footer = () => {
   const router = useRouter();
@@ -72,21 +72,21 @@ const Footer = () => {
     //   {/* <div className='order bw-[200px] justify-center'></div> */}
     // </footer>
     <>
-      {router.pathname !== "/dentist/login" &&
-      router.pathname !== "/dentist/sign-up" &&
-      router.pathname !== "/dentist/edit-case" &&
-      router.pathname !== "/dentist/view-profile" &&
-      router.pathname !== "/dentist/create-case" &&
-      router.pathname !== "/dentist/edit-profile" &&
-      router.pathname !== "/dentist/forgot-password" &&
-      router.pathname !== "/admin/overview" &&
-      router.pathname !== "/dentist/billing" &&
-      router.pathname !== "/dentist/billing-history" &&
-      router.pathname !== "/dentist/settings" &&
-      router.pathname !== "/admin/overview" &&
-      router.pathname !== "/admin/dentist" &&
-      router.pathname !== "/admin/revenue" &&
-      router.pathname !== "/admin/settings" ? (
+      {router.pathname !== '/dentist/login' &&
+      router.pathname !== '/dentist/sign-up' &&
+      router.pathname !== '/dentist/edit-case' &&
+      router.pathname !== '/dentist/view-profile' &&
+      router.pathname !== '/dentist/create-case' &&
+      router.pathname !== '/dentist/edit-profile' &&
+      router.pathname !== '/dentist/forgot-password' &&
+      router.pathname !== '/admin/overview' &&
+      router.pathname !== '/dentist/billing' &&
+      router.pathname !== '/dentist/billing-history' &&
+      router.pathname !== '/dentist/settings' &&
+      router.pathname !== '/admin/overview' &&
+      router.pathname !== '/admin/dentist' &&
+      router.pathname !== '/admin/revenue' &&
+      router.pathname !== '/admin/settings' ? (
         <footer className="bg-footer-blue absolute w-full">
           <div className="max-w-[1140px] px-[20px] sm:px-[100px] mx-auto lg:pt-[0px] lg:pb-[20px] pt-[50px] pb-[50px] sm:pb-[70px]">
             <div className="flex flex-col items-center justify-center lg:pt-[50px] sm:pt-[70px]">

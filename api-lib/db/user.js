@@ -12,6 +12,7 @@ export async function findUserWithEmailAndPassword(db, email, password) {
 }
 
 export async function findUserForAuth(db, userId) {
+  console.log(db, 'finffff');
   return db
     .collection('users')
     .findOne({ _id: new ObjectId(userId) }, { projection: { password: 0 } })
@@ -33,6 +34,7 @@ export async function findUserByUsername(db, username) {
 }
 
 export async function findUserByEmail(db, email) {
+  // console.log(db, 'findUserByEmail');
   email = normalizeEmail(email);
   return db
     .collection('users')
@@ -53,15 +55,55 @@ export async function updateUserById(db, id, data) {
 
 export async function insertUser(
   db,
-  { email, originalPassword, bio = '', name, profilePicture, username }
+  {
+    email,
+    originalPassword,
+    bio = '',
+    name,
+    profilePicture,
+    username = '',
+    // bio = '',
+    firstName,
+    lastName,
+    displayName,
+    speciality,
+    degree,
+    gdcNo,
+    buildingName,
+    streetName,
+    city,
+    postCode,
+    // bio = '',
+    // username ='',
+    courtesyTitle = '',
+    profile_photo = '',
+    treatment_type = [],
+    previous_case = [],
+  }
 ) {
   const user = {
     emailVerified: false,
     profilePicture,
     email,
-    name,
-    username,
+    // name,
+    // username,
     bio,
+    firstName,
+    lastName,
+    displayName,
+    speciality,
+    degree,
+    gdcNo,
+    buildingName,
+    streetName,
+    city,
+    postCode,
+    bio: '',
+    // username: '',
+    courtesyTitle: '',
+    profile_photo: '',
+    treatment_type: [],
+    previous_case: [],
   };
   const password = await bcrypt.hash(originalPassword, 10);
   const { insertedId } = await db

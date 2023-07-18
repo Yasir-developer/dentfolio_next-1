@@ -10,12 +10,12 @@
 module.exports = {
   reactStrictMode: true,
   // images: { domains: ["res.cloudinary.com"] },
-  experimental: {
-    images: {
-      allowFutureImage: true,
-      layoutRaw: true,
-    },
-  },
+  // experimental: {
+  //   images: {
+  //     allowFutureImage: true,
+  //     layoutRaw: true,
+  //   },
+  // },
   // images,
   // nextConfig,
 };

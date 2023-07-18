@@ -1,11 +1,11 @@
-import React from "react";
-import checkCircle from "../../../public/images/check-circle.svg";
-import Image from "next/image";
-import Slider from "react-slick";
+import React from 'react';
+import checkCircle from '../../public/images/check-circle.svg';
+import Image from 'next/image';
+import Slider from 'react-slick';
 
 const TreatmentProvide = () => {
   const settings = {
-    className: "customSlider",
+    className: 'customSlider',
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
@@ -43,25 +43,25 @@ const TreatmentProvide = () => {
   };
   const treatmentArray = [
     {
-      type: "Oral Examination",
+      type: 'Oral Examination',
     },
     {
-      type: "Teeth Alignments",
+      type: 'Teeth Alignments',
     },
     {
-      type: "Teeth Straightening",
+      type: 'Teeth Straightening',
     },
     {
-      type: "Root Canal",
+      type: 'Root Canal',
     },
     {
-      type: "Root Canal",
+      type: 'Root Canal',
     },
     {
-      type: "Root Canal",
+      type: 'Root Canal',
     },
     {
-      type: "Root Canal",
+      type: 'Root Canal',
     },
   ];
   return (

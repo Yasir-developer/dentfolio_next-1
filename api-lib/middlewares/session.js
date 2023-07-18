@@ -21,6 +21,7 @@ const getSession = nextSession({
 });
 
 export default async function session(req, res, next) {
+  // console.log(res, 'res =======');
   await getSession(req, res);
   next();
 }

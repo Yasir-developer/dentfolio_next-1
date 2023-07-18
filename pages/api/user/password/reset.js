@@ -7,7 +7,7 @@ import {
 } from '@/api-lib/db';
 import { CONFIG as MAIL_CONFIG, sendMail } from '@/api-lib/mail';
 import { validateBody } from '@/api-lib/middlewares';
-import { getMongoDb } from '@/api-lib/mongodb';
+// import { getMongoDb } from '@/api-lib/mongodb';
 import { ncOpts } from '@/api-lib/nc';
 import nc from 'next-connect';
 import normalizeEmail from 'validator/lib/normalizeEmail';
@@ -24,10 +24,10 @@ handler.post(
     additionalProperties: false,
   }),
   async (req, res) => {
-    const db = await getMongoDb();
+    // const db = await getMongoDb();
 
     const email = normalizeEmail(req.body.email);
-    const user = await findUserByEmail(db, email);
+    const user = await findUserByEmail(req.db, email);
     if (!user) {
       res.status(400).json({
         error: { message: 'We couldn’t find that email. Please try again.' },
@@ -35,7 +35,7 @@ handler.post(
       return;
     }
 
-    const token = await createToken(db, {
+    const token = await createToken(req.db, {
       creatorId: user._id,
       type: 'passwordReset',
       expireAt: new Date(Date.now() + 1000 * 60 * 20),
@@ -68,10 +68,10 @@ handler.put(
     additionalProperties: false,
   }),
   async (req, res) => {
-    const db = await getMongoDb();
+    // const db = await getMongoDb();
 
     const deletedToken = await findAndDeleteTokenByIdAndType(
-      db,
+      req.db,
       req.body.token,
       'passwordReset'
     );
@@ -80,7 +80,7 @@ handler.put(
       return;
     }
     await UNSAFE_updateUserPassword(
-      db,
+      req.db,
       deletedToken.creatorId,
       req.body.password
     );
