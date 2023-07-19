@@ -190,11 +190,6 @@ const DoctorBasicDetail = (props) => {
               >
                 Contact Me
               </button>
-              {/* <BlueButtons
-              className={"mt-[35px] font-semibold"}
-              buttonText={"Contact Me"}
-              onClick={() => setShowModal(true)}
-            /> */}
             </div>
           ) : (
             <></>
