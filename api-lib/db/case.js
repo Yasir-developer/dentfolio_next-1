@@ -1,23 +1,38 @@
 import { ObjectId } from 'mongodb';
 
-export async function insertCase(db, { case_title, dentistId }) {
+export async function insertCase(db, { case_title, description, visibility, caseType, dentistId }) {
   console.log(case_title, 'content');
+  console.log(description, 'description');
+  console.log(visibility, 'visibility');
+  console.log(caseType, 'caseType');
+  console.log(dentistId, 'dentistId');
   const cases = {
     case_title,
+    description,
+    visibility,
+    caseType,
     dentistId,
     // createdAt: new Date(),
   };
-  const { insertedId, caseTitle } = await db
+  const newCase = await db
     .collection('cases')
     .insertOne(cases);
-  cases._id = insertedId;
-  cases.case_title = caseTitle;
   console.log(cases, 'cases');
-  //   cases.content = content;
-  return cases;
+  return newCase;
 
   //   return db
   //     .collection('users')
   //     .find({ _id: new ObjectId(id) })
   //     .toArray();
 }
+export async function getCases(db,{dentistId}){
+  console.log(dentistId.toString())
+  console.log(typeof dentistId.toString())
+  const newCase = await db
+    .collection('cases')
+    .find({dentistId}).toArray();
+    // .find({dentistId:new ObjectId(dentistId.toString())}).toArray();
+  console.log(newCase, 'cases');
+  return newCase;
+}
+

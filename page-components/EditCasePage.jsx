@@ -1,8 +1,13 @@
 import DashboardFooter from "@/components/DashboardFooter/DashboardFooter";
 import EditCaseCard from "@/components/EditCaseCard/EditCaseCard";
-import React from "react";
+import React, { useEffect } from "react";
+import axios from 'axios';
+import { server } from '../config';
 
 const EditCasePage = () => {
+  useEffect(() => {
+    getCases()
+  },[]);
   const caseTypes = [
     {
       img_url: "/images/case2.png",
@@ -19,6 +24,27 @@ const EditCasePage = () => {
       type: ["Aligners", "Root Canal Treatment", "Bridges", "Implants"],
     },
   ];
+
+  const getCases = () => {
+    const options = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    axios
+      .get(`${server}/api/cases`)
+      .then(function (response) {
+        // handle success
+        console.log(response, 'getCase');
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error, 'get Error');
+      })
+  }
+
+
+
 
   return (
     <div className="items-center justify-center">

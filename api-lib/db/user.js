@@ -12,7 +12,7 @@ export async function findUserWithEmailAndPassword(db, email, password) {
 }
 
 export async function findUserForAuth(db, userId) {
-  console.log(db, 'finffff');
+  // console.log(db, 'finffff');
   return db
     .collection('users')
     .findOne({ _id: new ObjectId(userId) }, { projection: { password: 0 } })
