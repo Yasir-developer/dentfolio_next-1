@@ -166,7 +166,6 @@ const DoctorBasicDetail = (props) => {
           </div>
           <div>
             <h2 className="text-custom-blue font-semibold lg:text-[33px] text-[20px]">
-              {/* Dr. Dylan Taylor */}
               {props?.data?.displayName}
             </h2>
             <div className="flex flex-col">
