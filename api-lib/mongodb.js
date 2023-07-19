@@ -70,7 +70,7 @@ export async function getMongoClient() {
     global.mongo.client = new MongoClient(
       'mongodb+srv://alirf50:F4omy5EBHUIooNKM@cluster0.nlocabm.mongodb.net/dentfolio?retryWrites=true&w=majority'
     );
-    console.log('hello');
+    // console.log('hello');
   }
   // It is okay to call connect() even if it is connected
   // using node-mongodb-native v4 (it will be no-op)
@@ -84,10 +84,10 @@ export default async function database(req, res, next) {
     global.mongo.client = new MongoClient(
       'mongodb+srv://alirf50:F4omy5EBHUIooNKM@cluster0.nlocabm.mongodb.net/dentfolio?retryWrites=true&w=majority'
     );
-    console.log('hello2');
+    // console.log('hello2');
   }
   req.dbClient = await getMongoClient();
-  console.log(req.dbClient, 'req.dbClient ');
+  // console.log(req.dbClient, 'req.dbClient ');
   req.db = req.dbClient.db(); // this use the database specified in the MONGODB_URI (after the "/")
   if (!indexesCreated) await createIndexes(req.db);
   return next();

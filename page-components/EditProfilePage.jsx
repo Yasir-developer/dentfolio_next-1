@@ -546,7 +546,7 @@ const EditProfilePage = () => {
                 <></>
               )}
               <p className="text-[18px] font-semibold">Treatment Type:</p>
-              <div>
+              <div className='w-full'>
                 <TagsInput
                   value={tags}
                   onChange={handleChange}

@@ -21,12 +21,12 @@ const MyApp = ({ Component, pageProps, reduxStore }) => {
   return (
     <Provider store={reduxStore}>
       <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider>
+        {/* <ThemeProvider> */}
           <Layout>
             <Component {...pageProps} />
             <Toaster />
           </Layout>
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </PersistGate>
     </Provider>
   );

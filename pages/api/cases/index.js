@@ -2,6 +2,7 @@ import {
   getCaseByDentistId,
   getTeacherById,
   insertCase,
+  getCases
   // insertPost,
 } from '@/api-lib/db';
 import { auths, database, validateBody } from '@/api-lib/middlewares';
@@ -29,13 +30,27 @@ handler.post(
     // if (!req.user) {
     //   return res.status(401).end();
     // }
-    console.log(req.body, 'llllll');
+    // console.log(req.body, 'llllll');
+    // console.log(req.user._id,'req.user._id')
     const cases = await insertCase(req.db, {
-      case_title: req.body.case_title,
+      case_title: req.body.title,
+      description: req.body.description,
+      caseType: req.body.tags,
+      visibility: req.body.selectedOption == 'public' ? 1 : 0,
       dentistId: req.user._id,
     });
 
     return res.json({ cases });
   }
 );
+handler.get(
+  ...auths,
+
+  async (req, res) => {
+    const getCase = await getCases(req.db, {
+      dentistId: req.user._id,
+    });
+    return res.json({ getCase });
+  }
+)
 export default handler;
