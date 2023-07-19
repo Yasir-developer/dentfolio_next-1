@@ -10,18 +10,21 @@ import Checkbox from '@/components/Checkbox/Checkbox';
 import { mutate } from 'swr';
 import { toast } from 'react-hot-toast';
 import { fetcher } from '@/lib/fetch';
+import { fetchUser } from 'redux/actions/auth';
 // import { server } from '../../../config';
 // import axios from 'axios';
 // import { toast } from 'react-toastify';
 // import { fetchUser } from '@/redux/actions/auth';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { server } from 'config';
+import axios from 'axios';
 
 const Signup = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const usernameRef = useRef();
   const nameRef = useRef();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // console.log(server, "server");
   const [loader, setLoader] = useState(false);
@@ -43,47 +46,51 @@ const Signup = () => {
 
   const router = useRouter();
 
-  const onSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
-      try {
-        setLoader(true);
-        // console.log(passwordRef.current, 'password ref');
-        // setIsLoading(true);
-        // return;
-        const response = await fetcher('/api/users', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email: email,
-            // name: nameRef.current.value,
-            password: password,
-            firstName,
-            lastName,
-            // userName,
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log('here');
 
-            displayName,
-            gdcNo,
-            buildingName,
-            streetName,
-            city,
-            postCode,
-            // username: usernameRef.current.value,
-          }),
-        });
-        // console.log(response.user, 'response -------');
+    setLoader(true);
+    // console.log(passwordRef.current, 'password ref');
+    // setIsLoading(true);
+    // return;
+    axios
+      .post(`${server}/api/users`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify({
+        email: email,
+        // name: nameRef.current.value,
+        password: password,
+        firstName,
+        lastName,
+        // userName,
+        speciality,
+        degree,
+        displayName,
+        gdcNo,
+        buildingName,
+        streetName,
+        city,
+        postCode,
+        // username: usernameRef.current.value,
+        // }),
+      })
+      .then((response) => {
+        // console.log(response, 'response -------');
         // return;
-        mutate({ user: response.user }, false);
-        toast.success('Your account has been created');
-        router.replace('/dentist/view-profile');
-      } catch (e) {
-        toast.error(e.message);
-      } finally {
-        setLoader(false);
-      }
-    },
-    [mutate, router, password]
-  );
+        if (response.status == 201) {
+          dispatch(fetchUser(response?.data?.user));
+
+          // mutate({ user: response.user }, false);
+          toast.success('Your account has been created');
+          router.replace('/dentist/view-profile');
+        }
+      })
+      .catch((e) => {
+        console.log(e, 'erororor');
+      });
+  };
 
   const handleRegistration = (e) => {
     e.preventDefault();
@@ -196,18 +203,20 @@ const Signup = () => {
             <h2 className="my-8 text-center font-semibold text-[32px] md:text-4xl text-custom-black">
               Sign Up
             </h2>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={(e) => onSubmit(e)}>
               <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-2 items-center justify-center">
                 <AuthInput
                   ref={emailRef}
                   placeholder={'First Name'}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
+                  required
                 />
                 <AuthInput
                   placeholder={'Last Name'}
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
+                  required
                 />
 
                 <AuthInput
@@ -216,6 +225,7 @@ const Signup = () => {
                   className={'w-[92.5%] lg:w-[45%]'}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
 
                 <AuthInput
@@ -223,6 +233,7 @@ const Signup = () => {
                   className={'w-[92.5%] lg:w-[45%]'}
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
+                  required
                 />
                 <AuthInput
                   placeholder={'Password'}
@@ -240,6 +251,7 @@ const Signup = () => {
                   containerClassName={'!w-[45%]'}
                   value={speciality}
                   onChange={(e) => setSpeciality(e.target.value)}
+                  required
                 />
                 <AuthInput
                   placeholder={'Degree'}
@@ -248,32 +260,38 @@ const Signup = () => {
                   containerClassName={'!w-[45%]'}
                   value={degree}
                   onChange={(e) => setDegree(e.target.value)}
+                  required
                 />
 
                 <AuthInput
                   placeholder={'GDC Number'}
                   value={gdcNo}
                   onChange={(e) => setGdcNo(e.target.value)}
+                  required
                 />
                 <AuthInput
                   placeholder={'Practice Building number/ Name'}
                   value={buildingName}
                   onChange={(e) => setBuildingName(e.target.value)}
+                  required
                 />
                 <AuthInput
                   placeholder={'Practice Street Name'}
                   value={streetName}
                   onChange={(e) => setStreetName(e.target.value)}
+                  required
                 />
                 <AuthInput
                   placeholder={'Practice City'}
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
+                  required
                 />
                 <AuthInput
                   placeholder={'Practice Post Code'}
                   value={postCode}
                   onChange={(e) => setPostCode(e.target.value)}
+                  required
                 />
               </div>
 

@@ -5,10 +5,12 @@ import AuthInput from '@/components/Inputs/AuthInput';
 import axios from 'axios';
 import Router from 'next/router';
 import React, { useState, useRef, useEffect } from 'react';
+import { toast } from 'react-hot-toast';
+
 import { FaTrash, FaPlus } from 'react-icons/fa';
 import { HiChevronDown } from 'react-icons/hi';
 // import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 // import logoWhite from "../../public/images";
 
 import { server } from '../config/index';
@@ -91,7 +93,7 @@ const EditProfilePage = () => {
       setPhone(user?.phone ? user?.phone : '');
       setTags(user?.treatment_type);
       setUserName(user?.userName);
-      setPickedImage(user?.image);
+      setPickedImage(user?.profile_photo);
       // setI(user?.treatment_type);
     }
     console.log(tags, 'use effect tags');
@@ -215,8 +217,15 @@ const EditProfilePage = () => {
 
   const handleSave = (e, secureUrl) => {
     e.preventDefault();
+    const treatmentTypeJSON = JSON.stringify(tags);
+    console.log(treatmentTypeJSON, 'treatmentTypeJSON');
+    // return;
+    console.log(imageFiles, 'imageFiles');
+    // return;
     setLoader(true);
     const formData = new FormData();
+    formData.append('id', user?._id);
+
     formData.append('firstName', firstName);
     formData.append('lastName', lastName);
     formData.append('userName', userName);
@@ -228,14 +237,15 @@ const EditProfilePage = () => {
     formData.append('postCode', postCode);
     formData.append('bio', bio);
     formData.append('phone', phone);
-    formData.append('treatment_type', tags);
+    formData.append('treatment_type', treatmentTypeJSON);
     formData.append('courtesyTitle', selectedOption);
+    formData.append('profile_photo', imageFiles);
 
-    if (imageFiles) {
-      formData.append('image', secureUrl);
-    } else {
-      formData.append('image', pickedImage);
-    }
+    // if (imageFiles) {
+    //   formData.append('image', secureUrl);
+    // } else {
+    //   formData.append('image', pickedImage);
+    // }
 
     axios
       .patch(`${server}/api/user`, formData, {
@@ -248,15 +258,7 @@ const EditProfilePage = () => {
         setLoader(false);
         if (res.status === 200) {
           dispatch(fetchUser(res?.data?.user));
-          toast.success('Your Profile Update Successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          toast.success('Profile Updated');
         }
       })
       .catch((error) => {
