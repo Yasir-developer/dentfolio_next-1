@@ -59,7 +59,7 @@ export async function insertUser(
     email,
     originalPassword,
     bio = '',
-    name,
+    // name,
     profilePicture,
     username = '',
     // bio = '',

@@ -179,9 +179,9 @@ handler.get(async (req, res) => {
   const userId = req.user?.userId;
   console.log(userId, 'userId request');
   console.log(req.query, 'req.query');
-  const dentist = await getDentistById(req.db, req.query.dentistId);
+  const user = await getDentistById(req.db, req.query.dentistId);
   // console.log(dentist, 'teacher');
-  res.json({ dentist });
+  res.json({ user });
 });
 
 export default handler;

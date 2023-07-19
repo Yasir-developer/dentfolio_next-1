@@ -14,6 +14,8 @@ const AuthInput = forwardRef(function AuthInput(
     containerClassName,
     btnStyle,
     maxLength,
+    required,
+    disabled,
     ...rest
   },
   ref
@@ -36,7 +38,8 @@ const AuthInput = forwardRef(function AuthInput(
             value={value}
             ref={ref}
             onChange={onChange}
-            required
+            required={required ? required : null}
+            disabled={disabled ? disabled : null}
             {...rest}
             style={btnStyle}
             maxLength={maxLength}

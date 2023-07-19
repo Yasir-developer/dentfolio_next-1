@@ -1,6 +1,6 @@
 import { ValidateProps } from '@/api-lib/constants';
 import { findUserByUsername, updateUserById } from '@/api-lib/db';
-import { auths, validateBody } from '@/api-lib/middlewares';
+import { auths, database, validateBody } from '@/api-lib/middlewares';
 // import { getMongoDb } from '@/api-lib/mongodb';
 import { ncOpts } from '@/api-lib/nc';
 import { slugUsername } from '@/lib/user';
@@ -25,7 +25,7 @@ if (process.env.CLOUDINARY_URL) {
   });
 }
 
-handler.use(...auths);
+handler.use(database, ...auths);
 
 handler.get(async (req, res) => {
   if (!req.user) return res.json({ user: null });
@@ -34,20 +34,20 @@ handler.get(async (req, res) => {
 
 handler.patch(
   upload.single('profilePicture'),
-  validateBody({
-    type: 'object',
-    properties: {
-      username: ValidateProps.user.username,
-      name: ValidateProps.user.name,
-      bio: ValidateProps.user.bio,
-    },
-    additionalProperties: true,
-  }),
+  // validateBody({
+  //   type: 'object',
+  //   properties: {
+  //     username: ValidateProps.user.username,
+  //     name: ValidateProps.user.name,
+  //     bio: ValidateProps.user.bio,
+  //   },
+  //   additionalProperties: true,
+  // }),
   async (req, res) => {
-    if (!req.user) {
-      req.status(401).end();
-      return;
-    }
+    // if (!req.user) {
+    //   req.status(401).end();
+    //   return;
+    // }
 
     // const db = await getMongoDb();
 
@@ -60,7 +60,24 @@ handler.patch(
       });
       profilePicture = image.secure_url;
     }
-    const { name, bio } = req.body;
+    const {
+      firstName,
+      lastName,
+      userName,
+
+      displayName,
+      gdcNo,
+      buildingName,
+      streetName,
+      city,
+      postCode,
+      bio,
+      phone,
+      courtesyTitle,
+      profile_photo,
+      treatment_type,
+      previous_case,
+    } = req.body;
 
     let username;
 
@@ -77,13 +94,31 @@ handler.patch(
       }
     }
 
-    const user = await updateUserById(db, req.user._id, {
-      ...(username && { username }),
-      ...(name && { name }),
-      ...(typeof bio === 'string' && { bio }),
-      ...(profilePicture && { profilePicture }),
-    });
+    const user = await updateUserById(
+      // req.db,
+      req.db,
+      req.body.id ? req.body.id : req.user._id,
+      {
+        // ...(username && { username }),
+        ...(firstName && { firstName }),
+        ...(userName && { userName }),
+        ...(displayName && { displayName }),
+        ...(gdcNo && { gdcNo }),
+        ...(buildingName && { buildingName }),
+        ...(streetName && { streetName }),
+        ...(city && { city }),
+        ...(postCode && { postCode }),
+        ...(phone && { phone }),
+        ...(courtesyTitle && { courtesyTitle }),
+        ...(profile_photo && { profile_photo }),
+        ...(treatment_type && { treatment_type }),
+        ...(previous_case && { previous_case }),
 
+        ...(typeof bio === 'string' && { bio }),
+        // ...(profilePicture && { profilePicture }),
+      }
+    );
+    console.log(user, 'user');
     res.json({ user });
   }
 );

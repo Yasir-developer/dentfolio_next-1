@@ -6,7 +6,7 @@ import TreatmentProvide from '@/components/TreatmentProvide/TreatmentProvide';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 // import { server } from "../../config";
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const ViewProfilePage = () => {
   const [profile, setProfile] = useState({});
@@ -15,7 +15,8 @@ const ViewProfilePage = () => {
 
   const [loader, setLoader] = useState(true);
 
-  // const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  console.log(user, 'user all data');
   // console.log(user, 'user');
   // useEffect(() => {
   //   if (user) {
@@ -70,12 +71,8 @@ const ViewProfilePage = () => {
           </div>
         ) : (
           <>
-            <DoctorBasicDetail
-            // data={profile}
-            />
-            <DashboardTreatment
-            // treatmentData={user?.treatment_type}
-            />
+            <DoctorBasicDetail data={user} />
+            <DashboardTreatment treatmentData={user?.treatment_type} />
             {/* <TreatmentProvide /> */}
             <PreviousCases cases={casesData} />
           </>

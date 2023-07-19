@@ -63,20 +63,24 @@ const TreatmentProvide = (props) => {
       </h2>
       <div className="mt-7 lg:gap-x-5 gap-y-5 flex flex-col lg:flex-row items-center">
         {/* <Slider {...settings}> */}
-        {props?.treatmentData?.map((item, index) => {
-          return (
-            <div
-              className="min-h-[180px] lg:min-h-full !w-[90%] bg-custom-blue-light items-center justify-center py-7 text-center rounded-[7px]"
-              key={index}
-            >
-              <Image src={checkCircle} alt="logo" className="mx-auto" />
+        {props?.treatmentData.length > 0 ? (
+          props?.treatmentData?.map((item, index) => {
+            return (
+              <div
+                className="min-h-[180px] lg:min-h-full !w-[90%] bg-custom-blue-light items-center justify-center py-7 text-center rounded-[7px]"
+                key={index}
+              >
+                <Image src={checkCircle} alt="logo" className="mx-auto" />
 
-              <p className="text-custom-black text-[18px] font-semibold mt-3">
-                {item.type}
-              </p>
-            </div>
-          );
-        })}
+                <p className="text-custom-black text-[18px] font-semibold mt-3">
+                  {item.type}
+                </p>
+              </div>
+            );
+          })
+        ) : (
+          <p>No Treatment Found</p>
+        )}
         {/* </Slider> */}
       </div>
     </div>

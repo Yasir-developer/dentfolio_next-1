@@ -152,26 +152,26 @@ const DoctorBasicDetail = (props) => {
       {showThankYouModal && thankYouModal()}
       <div className="w-full lg:w-[60%]">
         <div className="lg:px-8 py-10 flex flex-row items-center gap-x-[1rem]">
-          <div className="lg:w-[205px] lg:h-[205px] rounded-[102.5px]">
+          <div className="lg:w-[205px] lg:h-[205px] rounded-[102.5px] border-r-[50%] overflow-hidden">
             <Image
-              src={profile}
+              src={props?.data?.image ? props?.data?.image : profile}
               width={205}
               height={205}
-              className="rounded-[102.5px] max-w-[130px] lg:max-w-[205px]"
+              className="rounded-[102.5px] max-w-[130px] lg:max-w-[205px] text-transparent object-cover	object-top"
             />
           </div>
           <div>
             <h2 className="text-custom-blue font-semibold lg:text-[33px] text-[20px]">
               {/* Dr. Dylan Taylor */}
-              {props?.data?.displayName}
+              {props?.data.displayName}
             </h2>
             <div className="flex flex-col">
               <h3 className="text-custom-black lg:text-[22px] text-[17px]">
-                Orthodontist
+                {props?.data?.speciality}
               </h3>
 
               <h2 className="text-[#5D5D5D] text-[16px] font-normal">
-                BDS | RDS | C.PAED
+                {props?.data?.degree}
               </h2>
             </div>
           </div>

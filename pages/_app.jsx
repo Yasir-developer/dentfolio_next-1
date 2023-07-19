@@ -9,15 +9,26 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '@/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-tagsinput/react-tagsinput.css';
+import withReduxStore from '../lib/with-redux-store';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 // import '../assets/globals.css';
 
-export default function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps, reduxStore }) => {
+  const persistor = persistStore(reduxStore);
+
   return (
-    <ThemeProvider>
-      <Layout>
-        <Component {...pageProps} />
-        <Toaster />
-      </Layout>
-    </ThemeProvider>
+    <Provider store={reduxStore}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider>
+          <Layout>
+            <Component {...pageProps} />
+            <Toaster />
+          </Layout>
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   );
-}
+};
+export default withReduxStore(MyApp);

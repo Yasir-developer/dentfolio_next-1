@@ -11,11 +11,15 @@ import { HiChevronDown } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 // import logoWhite from "../../public/images";
 
-// import { server } from '../../config';
+import { server } from '../config/index';
 // import { TagsInput } from "react-tag-input-component";
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
 import Image from 'next/image';
+import { useCurrentUser } from '@/lib/user';
+import { fetcher } from '@/lib/fetch';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from 'redux/actions/auth';
 const EditProfilePage = () => {
   const [loader, setLoader] = useState(false);
   const [pickedImage, setPickedImage] = useState(null);
@@ -45,13 +49,16 @@ const EditProfilePage = () => {
   const [imageData, setImageData] = useState('');
 
   const [tags, setTags] = useState([]);
+  // const { data: { user } = {}, mutate } = useCurrentUser();
 
   const dropdownRef = useRef(null);
   const uploadFileref = useRef(null);
-  // const dispatch = useDispatch();
+  const lastRef = useRef();
 
-  // const { user } = useSelector((state) => state.auth);
-  // console.log(user, "user =======");
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.auth);
+  console.log(user, 'user =======');
   useEffect(() => {
     // Add event listener to handle clicks outside the dropdown
     const handleOutsideClick = (event) => {
@@ -69,26 +76,26 @@ const EditProfilePage = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setFirstName(user?.firstName);
-  //     setLastName(user?.lastName);
-  //     setSelectedOption(user?.courtesyTitle);
-  //     setBuildingName(user?.buildingName);
-  //     setStreetName(user?.streetName);
-  //     setGdcNo(user?.gdcNo);
-  //     setDisplayName(user?.displayName);
-  //     setCity(user?.city);
-  //     setPostCode(user?.postCode);
-  //     setBio(user?.bio);
-  //     setPhone(user?.phone);
-  //     setTags(user?.treatment_type);
-  //     setUserName(user?.userName);
-  //     setPickedImage(user?.image);
-  //     // setI(user?.treatment_type);
-  //   }
-  //   console.log(tags, "use effect tags");
-  // }, [user]);
+  useEffect(() => {
+    if (user) {
+      setFirstName(user?.firstName);
+      setLastName(user?.lastName);
+      setSelectedOption(user?.courtesyTitle);
+      setBuildingName(user?.buildingName);
+      setStreetName(user?.streetName);
+      setGdcNo(user?.gdcNo);
+      setDisplayName(user?.displayName);
+      setCity(user?.city);
+      setPostCode(user?.postCode);
+      setBio(user?.bio);
+      setPhone(user?.phone ? user?.phone : '');
+      setTags(user?.treatment_type);
+      setUserName(user?.userName);
+      setPickedImage(user?.image);
+      // setI(user?.treatment_type);
+    }
+    console.log(tags, 'use effect tags');
+  }, [user]);
 
   const handleChange = (tags) => {
     setTags(tags);
@@ -98,93 +105,149 @@ const EditProfilePage = () => {
     setSelectedOption(event.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   setLoader(true);
+  //   if (imageFiles) {
+  //     const formdata = new FormData();
+  //     formdata.append('file', imageFiles);
+  //     formdata.append('upload_preset', 'vakxgj9w');
+  //     // formdata.append("signature", "mkkk");
+  //     formdata.append('api_key', '583939563285816');
+
+  //     axios
+  //       .post(
+  //         `https://api.cloudinary.com/v1_1/dtnbj2pa5/auto/upload`,
+  //         formdata
+  //         // email,
+  //         // password,
+  //         // options,
+  //       )
+  //       .then((res) => {
+  //         console.log(res, 'img response');
+  //         setImageSecureUrl(res.data.secure_url);
+  //         // const secureUrl = data.secure_url;
+  //         handleSave(res?.data?.secure_url);
+
+  //         setLoader(false);
+  //       })
+  //       // .then((data) => {
+
+  //       // })
+  //       .catch((error) => {
+  //         setLoader(false);
+  //         console.log(error, 'error error');
+  //         // toast.error(error?.data?.message, {
+  //         //   position: "top-center",
+  //         //   autoClose: 2000,
+  //         //   hideProgressBar: false,
+  //         //   closeOnClick: true,
+  //         //   pauseOnHover: true,
+  //         //   draggable: true,
+  //         //   progress: undefined,
+  //         // });
+  //       });
+  //   } else {
+  //     handleSave();
+  //   }
+  // };
+
+  const onSubmit = async (e) => {
     e.preventDefault();
+    // const {
+    //   firstName,
+    //   lastName,
+    //   phone,
+    //   streetName,
+    //   bio,
+    //   displayName,
+    //   speciality,
+    //   degree,
+    //   gdcNo,
+    //   buildingName,
+    //   postCode,
 
-    setLoader(true);
-    if (imageFiles) {
+    //   city,
+
+    //   image,
+    // } = data;
+    // console.log(data, "student profile date");
+    // return
+    try {
+      setLoader(true); // setIsLoading(true);
+
+      console.log(lastRef.current.value);
+      console.log(firstName);
+
+      // return;
       const formdata = new FormData();
-      formdata.append('file', imageFiles);
-      formdata.append('upload_preset', 'vakxgj9w');
-      // formdata.append("signature", "mkkk");
-      formdata.append('api_key', '583939563285816');
 
-      axios
-        .post(
-          `https://api.cloudinary.com/v1_1/dtnbj2pa5/auto/upload`,
-          formdata
-          // email,
-          // password,
-          // options,
-        )
-        .then((res) => {
-          console.log(res, 'img response');
-          setImageSecureUrl(res.data.secure_url);
-          // const secureUrl = data.secure_url;
-          handleSave(res?.data?.secure_url);
+      formdata.append('firstName', firstName ? firstName : '');
+      // formdata.append("password", password ? password : "");
+      formdata.append('phone', phone ? phone : '');
+      formdata.append('lastName', lastRef.current.value);
+      formdata.append('bio', bio);
+      formdata.append('streetName', streetName);
+      formdata.append('displayName', displayName);
+      // formdata.append('speciality', speciality);
+      // formdata.append('degree', degree);
 
-          setLoader(false);
-        })
-        // .then((data) => {
-
-        // })
-        .catch((error) => {
-          setLoader(false);
-          console.log(error, 'error error');
-          // toast.error(error?.data?.message, {
-          //   position: "top-center",
-          //   autoClose: 2000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   pauseOnHover: true,
-          //   draggable: true,
-          //   progress: undefined,
-          // });
-        });
-    } else {
-      handleSave();
+      // formdata.append("education", educationJSON);
+      // formdata.append("profileBio", profileBioJSON);
+      // formdata.append("hourlyRate", hourlyRate ? hourlyRate : "");
+      // formdata.append("profilePicture", image ? image : "");
+      formdata.append('id', user._id);
+      const response = await fetcher(`/api/user`, {
+        method: 'PATCH',
+        body: formdata,
+      });
+      console.log(response.body, 'patch');
+      mutate({ user: response.user }, false);
+      toast.success('Your profile has been updated');
+    } catch (e) {
+      toast.error(e.message);
+    } finally {
+      setLoader(false);
+      // setIsLoading(false);
     }
   };
 
-  const handleSave = (secureUrl) => {
-    console.log(secureUrl, 'promise secure url');
-    // e.preventDefault();
-    console.log(tags, 'treatment');
-    // return;
+  const handleSave = (e, secureUrl) => {
+    e.preventDefault();
     setLoader(true);
+    const formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('userName', userName);
+    formData.append('displayName', displayName);
+    formData.append('gdcNo', gdcNo);
+    formData.append('buildingName', buildingName);
+    formData.append('streetName', streetName);
+    formData.append('city', city);
+    formData.append('postCode', postCode);
+    formData.append('bio', bio);
+    formData.append('phone', phone);
+    formData.append('treatment_type', tags);
+    formData.append('courtesyTitle', selectedOption);
 
-    // return;
-    const options = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+    if (imageFiles) {
+      formData.append('image', secureUrl);
+    } else {
+      formData.append('image', pickedImage);
+    }
+
     axios
-      .put(`${server}/api/dentists/${user._id}`, {
-        firstName,
-        lastName,
-        userName,
-        displayName,
-        gdcNo,
-        buildingName,
-        streetName,
-        city,
-        postCode,
-        bio,
-        phone,
-        options,
-        treatment_type: tags,
-        courtesyTitle: selectedOption,
-
-        ...(imageFiles ? { image: secureUrl } : { image: pickedImage }),
+      .patch(`${server}/api/user`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Important to set the correct content type
+        },
       })
       .then((res) => {
-        console.log(res.data.user, 'res after updatae');
+        console.log(res.data.user, 'res after update');
         setLoader(false);
-        if (res.status == 200) {
+        if (res.status === 200) {
           dispatch(fetchUser(res?.data?.user));
-          setLoader(false);
-
           toast.success('Your Profile Update Successfully', {
             position: 'top-center',
             autoClose: 2000,
@@ -194,7 +257,6 @@ const EditProfilePage = () => {
             draggable: true,
             progress: undefined,
           });
-          // Router.replace("/dentist/view-profile");
         }
       })
       .catch((error) => {
@@ -209,6 +271,68 @@ const EditProfilePage = () => {
           progress: undefined,
         });
       });
+    // console.log(secureUrl, 'promise secure url');
+    // // e.preventDefault();
+    // console.log(tags, 'treatment');
+    // // return;
+    // setLoader(true);
+
+    // // return;
+    // const options = {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // };
+    // axios
+    //   .patch(`${server}/api/user`, {
+    //     firstName,
+    //     lastName,
+    //     userName,
+    //     displayName,
+    //     gdcNo,
+    //     buildingName,
+    //     streetName,
+    //     city,
+    //     postCode,
+    //     bio,
+    //     phone,
+    //     options,
+    //     treatment_type: tags,
+    //     courtesyTitle: selectedOption,
+
+    //     ...(imageFiles ? { image: secureUrl } : { image: pickedImage }),
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data.user, 'res after updatae');
+    //     setLoader(false);
+    //     if (res.status == 200) {
+    //       dispatch(fetchUser(res?.data?.user));
+    //       setLoader(false);
+
+    //       toast.success('Your Profile Update Successfully', {
+    //         position: 'top-center',
+    //         autoClose: 2000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //       });
+    //       // Router.replace("/dentist/view-profile");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     setLoader(false);
+    //     toast.error(error?.data?.message, {
+    //       position: 'top-center',
+    //       autoClose: 2000,
+    //       hideProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true,
+    //       draggable: true,
+    //       progress: undefined,
+    //     });
+    //   });
   };
   const uploadFileHandler = () => {
     console.log('hereeee');
@@ -285,9 +409,13 @@ const EditProfilePage = () => {
         </div>
         <div className="py-5 flex w-[90%] rounded-[7px] flex-col items-start justify-center mx-auto">
           <form
-            onSubmit={(e) => {
-              handleSubmit(e);
-            }}
+            onSubmit={
+              (e) =>
+                // onSubmit(e)
+                handleSave(e)
+              // handleSubmit(e);
+              // handleSubmit(e);
+            }
           >
             <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-1 items-center">
               <div className="relative flex items-center border bg-custom-dashboard-bg border-custom-grey rounded-[7px] p-3 w-[45%] placeholder-slate-400 text-[16px] font-light mb-5">
@@ -326,13 +454,14 @@ const EditProfilePage = () => {
               <AuthInput
                 placeholder={'Last Name'}
                 className={'order-4'}
+                ref={lastRef}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
               <AuthInput
                 placeholder={'Email Address'}
                 className={'w-[92.5%] lg:w-[45%] order-5'}
-                // value={user?.email}
+                value={user?.email}
                 disabled
               />
               <AuthInput
