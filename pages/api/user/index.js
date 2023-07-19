@@ -17,6 +17,9 @@ if (process.env.CLOUDINARY_URL) {
     username: api_key,
     password: api_secret,
   } = new URL(process.env.CLOUDINARY_URL);
+  console.log(cloud_name, 'cloud_name');
+  console.log(api_key, 'api_key');
+  console.log(api_secret, 'api_secret');
 
   cloudinary.config({
     cloud_name,
@@ -33,7 +36,7 @@ handler.get(async (req, res) => {
 });
 
 handler.patch(
-  upload.single('profilePicture'),
+  upload.single('profile_photo'),
   // validateBody({
   //   type: 'object',
   //   properties: {
@@ -51,14 +54,17 @@ handler.patch(
 
     // const db = await getMongoDb();
 
-    let profilePicture;
+    let path;
+    console.log(path, 'path========');
     if (req.file) {
+      console.log(req.file.path, 'req.file=======');
       const image = await cloudinary.uploader.upload(req.file.path, {
         width: 512,
         height: 512,
         crop: 'fill',
       });
-      profilePicture = image.secure_url;
+      path = image.secure_url;
+      console.log(path, 'my path');
     }
     const {
       firstName,
@@ -110,8 +116,9 @@ handler.patch(
         ...(postCode && { postCode }),
         ...(phone && { phone }),
         ...(courtesyTitle && { courtesyTitle }),
-        ...(profile_photo && { profile_photo }),
-        ...(treatment_type && { treatment_type }),
+
+        ...(req?.file?.path && { profile_photo: path }),
+        ...(treatment_type && { treatment_type: JSON.parse(treatment_type) }),
         ...(previous_case && { previous_case }),
 
         ...(typeof bio === 'string' && { bio }),

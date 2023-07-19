@@ -150,11 +150,15 @@ const DoctorBasicDetail = (props) => {
     <div className="sizingStyles flex flex-col lg:flex-row justify-between">
       {showModal && conversationModal()}
       {showThankYouModal && thankYouModal()}
-      <div className="w-full lg:w-[60%]">
+      <div className="w-full lg:w-[80%]">
         <div className="lg:px-8 py-10 flex flex-row items-center gap-x-[1rem]">
           <div className="lg:w-[205px] lg:h-[205px] rounded-[102.5px] border-r-[50%] overflow-hidden">
             <Image
-              src={props?.data?.image ? props?.data?.image : profile}
+              src={
+                props?.data?.profile_photo
+                  ? props?.data?.profile_photo
+                  : profile
+              }
               width={205}
               height={205}
               className="rounded-[102.5px] max-w-[130px] lg:max-w-[205px] text-transparent object-cover	object-top"
@@ -163,7 +167,7 @@ const DoctorBasicDetail = (props) => {
           <div>
             <h2 className="text-custom-blue font-semibold lg:text-[33px] text-[20px]">
               {/* Dr. Dylan Taylor */}
-              {props?.data.displayName}
+              {props?.data?.displayName}
             </h2>
             <div className="flex flex-col">
               <h3 className="text-custom-black lg:text-[22px] text-[17px]">
@@ -177,14 +181,7 @@ const DoctorBasicDetail = (props) => {
           </div>
         </div>
         <div className="lg:px-8">
-          <p>
-            {props?.data?.bio ? props?.data?.bio : 'No Bio'}
-            {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            congue, sapien non efficitur sollicitudin, ex risus semper diam, sed
-            ornare libero urna ac leo sit amet, consectetur adipiscing elit.
-            Curabitur congue, sapien non efficitur sollicitudin, ex risus semper
-            diam, sesectetur adipiscing elit. */}
-          </p>
+          <p className="">{props?.data?.bio ? props?.data?.bio : 'No Bio'}</p>
           {showContact ? (
             <div className="lg:static lg:bg-transparent bg-[#dce8fa] fixed bottom-0 w-full left-0 lg:text-left text-center pb-5 z-10">
               <button
@@ -193,11 +190,6 @@ const DoctorBasicDetail = (props) => {
               >
                 Contact Me
               </button>
-              {/* <BlueButtons
-              className={"mt-[35px] font-semibold"}
-              buttonText={"Contact Me"}
-              onClick={() => setShowModal(true)}
-            /> */}
             </div>
           ) : (
             <></>
