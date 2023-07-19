@@ -47,7 +47,7 @@ const ViewProfilePage = () => {
       .catch((error) => {});
   };
   return (
-    <div className="w-[80%] mx-auto">
+    <div className="w-[90%] mx-auto">
       {/* <DentistTabs> */}
       {/* <EditCasePage /> */}
       {/* <h1>Edit case</h1> */}

@@ -150,7 +150,7 @@ const DoctorBasicDetail = (props) => {
     <div className="sizingStyles flex flex-col lg:flex-row justify-between">
       {showModal && conversationModal()}
       {showThankYouModal && thankYouModal()}
-      <div className="w-full lg:w-[60%]">
+      <div className="w-full lg:w-[80%]">
         <div className="lg:px-8 py-10 flex flex-row items-center gap-x-[1rem]">
           <div className="lg:w-[205px] lg:h-[205px] rounded-[102.5px] border-r-[50%] overflow-hidden">
             <Image
@@ -181,7 +181,7 @@ const DoctorBasicDetail = (props) => {
           </div>
         </div>
         <div className="lg:px-8">
-          <p>
+          <p className="">
             {props?.data?.bio ? props?.data?.bio : 'No Bio'}
             {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
             congue, sapien non efficitur sollicitudin, ex risus semper diam, sed
