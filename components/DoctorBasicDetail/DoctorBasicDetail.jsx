@@ -181,14 +181,7 @@ const DoctorBasicDetail = (props) => {
           </div>
         </div>
         <div className="lg:px-8">
-          <p className="">
-            {props?.data?.bio ? props?.data?.bio : 'No Bio'}
-            {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            congue, sapien non efficitur sollicitudin, ex risus semper diam, sed
-            ornare libero urna ac leo sit amet, consectetur adipiscing elit.
-            Curabitur congue, sapien non efficitur sollicitudin, ex risus semper
-            diam, sesectetur adipiscing elit. */}
-          </p>
+          <p className="">{props?.data?.bio ? props?.data?.bio : 'No Bio'}</p>
           {showContact ? (
             <div className="lg:static lg:bg-transparent bg-[#dce8fa] fixed bottom-0 w-full left-0 lg:text-left text-center pb-5 z-10">
               <button
