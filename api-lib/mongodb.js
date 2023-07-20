@@ -68,7 +68,8 @@ async function createIndexes(db) {
 export async function getMongoClient() {
   if (!global.mongo.client) {
     global.mongo.client = new MongoClient(
-      'mongodb+srv://alirf50:F4omy5EBHUIooNKM@cluster0.nlocabm.mongodb.net/dentfolio?retryWrites=true&w=majority'
+      process.env.MONGODB_URI
+      // 'mongodb+srv://alirf50:F4omy5EBHUIooNKM@cluster0.nlocabm.mongodb.net/dentfolio?retryWrites=true&w=majority'
     );
     // console.log('hello');
   }
@@ -81,9 +82,7 @@ export async function getMongoClient() {
 
 export default async function database(req, res, next) {
   if (!global.mongo.client) {
-    global.mongo.client = new MongoClient(
-      'mongodb+srv://alirf50:F4omy5EBHUIooNKM@cluster0.nlocabm.mongodb.net/dentfolio?retryWrites=true&w=majority'
-    );
+    global.mongo.client = new MongoClient(process.env.MONGODB_URI);
     // console.log('hello2');
   }
   req.dbClient = await getMongoClient();
