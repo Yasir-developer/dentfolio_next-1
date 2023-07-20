@@ -2,7 +2,7 @@ import {
   getCaseByDentistId,
   getTeacherById,
   insertCase,
-  getCases
+  getCases,
   // insertPost,
 } from '@/api-lib/db';
 import { auths, database, validateBody } from '@/api-lib/middlewares';
@@ -30,7 +30,7 @@ handler.post(
     // if (!req.user) {
     //   return res.status(401).end();
     // }
-    // console.log(req.body, 'llllll');
+
     // console.log(req.user._id,'req.user._id')
     const cases = await insertCase(req.db, {
       case_title: req.body.title,
@@ -52,5 +52,5 @@ handler.get(
     });
     return res.json({ getCase });
   }
-)
+);
 export default handler;
