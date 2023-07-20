@@ -71,7 +71,6 @@ export async function getMongoClient() {
       process.env.MONGODB_URI
       // 'mongodb+srv://alirf50:F4omy5EBHUIooNKM@cluster0.nlocabm.mongodb.net/dentfolio?retryWrites=true&w=majority'
     );
-    // console.log('hello');
   }
   // It is okay to call connect() even if it is connected
   // using node-mongodb-native v4 (it will be no-op)
