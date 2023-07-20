@@ -32,7 +32,7 @@
 //    */
 //   if (!global.mongoClientPromise) {
 //     const client = new MongoClient(
-//       'mongodb+srv://alirf50:F4omy5EBHUIooNKM@cluster0.nlocabm.mongodb.net/dentfolio?retryWrites=true&w=majority'
+//       'mongodb+srv://alirf50:F4omy5EBHUIooNKM@cluster0.nlocabm..net/dentfolio?retryWrites=true&w=majority'
 //     );
 //     // client.connect() returns an instance of MongoClient when resolved
 //     global.mongoClientPromise = client

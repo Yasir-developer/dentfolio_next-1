@@ -31,7 +31,6 @@ handler.post(
     //   return res.status(401).end();
     // }
 
-    // console.log(req.user._id,'req.user._id')
     const cases = await insertCase(req.db, {
       case_title: req.body.title,
       description: req.body.description,
