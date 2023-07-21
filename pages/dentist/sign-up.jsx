@@ -9,17 +9,17 @@ import Router, { useRouter } from 'next/router';
 import Checkbox from '@/components/Checkbox/Checkbox';
 import { mutate } from 'swr';
 import { toast } from 'react-hot-toast';
-import { fetcher } from '@/lib/fetch';
+
 import { fetchUser } from 'redux/actions/auth';
-// import { server } from '../../../config';
-// import axios from 'axios';
-// import { toast } from 'react-toastify';
-// import { fetchUser } from '@/redux/actions/auth';
+
 import { useDispatch } from 'react-redux';
 import { server } from 'config';
 import axios from 'axios';
+import { getAddressSuggestions, getAddressData } from '../../lib/googleMaps';
 
 const Signup = () => {
+  const GOOGLE_MAPS_API_KEY = 'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo';
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const usernameRef = useRef();
@@ -27,6 +27,9 @@ const Signup = () => {
   const dispatch = useDispatch();
 
   // console.log(server, "server");
+  const [address, setAddress] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [data, setData] = useState(null);
   const [loader, setLoader] = useState(false);
 
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -43,138 +46,87 @@ const Signup = () => {
   const [postCode, setPostCode] = useState('');
   const [speciality, setSpeciality] = useState('');
   const [degree, setDegree] = useState('');
-
+  const [showAddress, setShowAddress] = useState('');
   const router = useRouter();
+  // const GOOGLE_MAPS_API_KEY = 'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo';
+
+  const handleInputChange = async (e) => {
+    const input = e.target.value;
+
+    setData({});
+    // data.city = '';
+    setAddress(input);
+    setShowAddress(input);
+    if (input) {
+      const suggestions = await getAddressSuggestions(input);
+      console.log(suggestions, 'suggestion');
+      setSuggestions(suggestions);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleAddressSelect = async (selectedAddress, addressShow) => {
+    console.log(selectedAddress, 'addressShow');
+
+    // setShowAddress
+    setShowAddress(addressShow);
+    setAddress(selectedAddress);
+    setSuggestions([]);
+
+    const response = await getAddressData(selectedAddress, addressShow);
+    setData(response);
+    console.log(data, 'daasdsadsd');
+    if (data) {
+      setPostCode(data.postalCode);
+      setCity(data.city);
+    }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log('here');
-
-    setLoader(true);
-    // console.log(passwordRef.current, 'password ref');
-    // setIsLoading(true);
+    console.log(showAddress, data?.city, data?.postalCode, 'here');
     // return;
-    axios
-      .post(`${server}/api/users`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        // body: JSON.stringify({
-        email: email,
-        // name: nameRef.current.value,
-        password: password,
-        firstName,
-        lastName,
-        // userName,
-        speciality,
-        degree,
-        displayName,
-        gdcNo,
-        buildingName,
-        streetName,
-        city,
-        postCode,
-        // username: usernameRef.current.value,
-        // }),
-      })
-      .then((response) => {
-        // console.log(response, 'response -------');
-        // return;
-        if (response.status == 201) {
-          dispatch(fetchUser(response?.data?.user));
+    if (termsAccepted && privacyAccepted) {
+      setLoader(true);
 
-          // mutate({ user: response.user }, false);
-          toast.success('Your account has been created');
-          router.replace('/dentist/view-profile');
-        }
-      })
-      .catch((e) => {
-        console.log(e, 'erororor');
-      });
-  };
+      axios
+        .post(`${server}/api/users`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          email: email,
+          password: password,
+          firstName,
+          lastName,
+          speciality,
+          degree,
+          displayName,
+          gdcNo,
+          buildingName,
+          streetName: streetName ? streetName : showAddress,
+          city: city ? city : data?.city,
+          postCode: postCode ? postCode : data?.postalCode,
+        })
+        .then((response) => {
+          if (response.status == 201) {
+            dispatch(fetchUser(response?.data?.user));
 
-  const handleRegistration = (e) => {
-    e.preventDefault();
-    setLoader(true);
-    const finalData = {
-      email,
-      password,
-      firstName,
-      lastName,
-      displayName,
-      gdcNo,
-      buildingName,
-      streetName,
-      city,
-      postCode,
-      speciality,
-      degree,
-    };
-
-    // return;
-    const options = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-
-    console.log(finalData, 'final data');
-
-    axios
-      .post(`${server}/api/signup/`, finalData, options)
-      .then((res) => {
-        console.log(res, 'job post response..');
-        // return;
-        if (res.status == 201) {
+            toast.success('Your account has been created');
+            router.replace('/dentist/view-profile');
+          }
+        })
+        .catch((error) => {
+          if (error?.response?.data?.error) {
+            toast.error(error?.response?.data?.error.message);
+          }
           setLoader(false);
-          dispatch(fetchUser(res?.data?.user));
-          toast.success('Signup Successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          Router.replace('/dentist/view-profile');
-        } else if (res.status == 400) {
-          setLoader(false);
-          toast.error(res.errors[0], {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
-      })
-      .catch((error) => {
-        setLoader(false);
-        if (error?.response?.data?.errors[0]) {
-          toast.error(error?.response?.data?.errors[0], {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        } else {
-          setLoader(false);
-          toast.error(error?.response?.data?.message, {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
-      });
+          // console.log(e, 'erororor');
+        });
+    } else {
+      toast.error(
+        'Please Check all the Marks and Accept Terms & condition to continue'
+      );
+    }
   };
 
   const handleTermsChange = () => {
@@ -274,22 +226,83 @@ const Signup = () => {
                   value={buildingName}
                   onChange={(e) => setBuildingName(e.target.value)}
                   required
+                  className={'lg:!w-[45%] !w-[92.5%]'}
                 />
-                <AuthInput
-                  placeholder={'Practice Street Name'}
-                  value={streetName}
-                  onChange={(e) => setStreetName(e.target.value)}
-                  required
-                />
+                <div className="lg:w-[45%] z-[999] w-[92.5%] relative">
+                  <AuthInput
+                    placeholder={'Practice Street Name'}
+                    value={showAddress}
+                    onChange={handleInputChange}
+                    // onChange={(e) => setStreetName(e.target.value)}
+                    required
+                    className={'!w-full'}
+                  />
+                  <div class="absolute right-100 bg-white shadow-xl w-full top-[50px] mt-0 pt-0 rounded-[7px] pb-0">
+                    {suggestions.length > 0 && (
+                      <ul className="mt-0 rounded-[7px] p-[10px] space-y-2 bg-white border border-gray-300 w-full rounded-b-md shadow-md">
+                        {suggestions.map((suggestion, index) => (
+                          <>
+                            {console.log(suggestion, 'dsassdsadsdsa')}
+                            <li
+                              className="hover:bg-gray-100 p-1"
+                              key={index}
+                              onClick={() => {
+                                handleAddressSelect(
+                                  suggestion[1],
+                                  suggestion[0]
+                                );
+                              }}
+                            >
+                              {suggestion[0]}
+                            </li>
+                          </>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+                {/* {data && (
+                  <>
+                    {console.log(data.postalCode, 'ata.postalCode')}
+                    <div>
+                      <h2>Address Data:</h2>
+                      <p>Address: {data.address}</p>
+                      <p>City: {data.city}</p>
+                      <p>Postal Code: {data.postalCode}</p>
+                    </div>
+                  </>
+                )} */}
+                {/* {data?.addressComponents?.map((component) => (
+                  <>
+                    {console.log(component, 'component')}
+                    {component.types[0].include('types') ? (
+                      <div key={component.long_name}>
+                        <strong>{component.long_name}</strong>:{' '}
+                        {component.long_name}
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                ))} */}
+                {/* <Autocomplete
+                  apiKey={'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo'}
+                  onPlaceSelected={(place) => console.log(place)}
+                  options={{
+                    types: ['address'],
+                    componentRestrictions: { country: 'ru' },
+                  }}
+                  defaultValue="Pakistan"
+                /> */}
                 <AuthInput
                   placeholder={'Practice City'}
-                  value={city}
+                  value={city ? city : data?.city}
                   onChange={(e) => setCity(e.target.value)}
                   required
                 />
                 <AuthInput
                   placeholder={'Practice Post Code'}
-                  value={postCode}
+                  value={postCode ? postCode : data?.postalCode}
                   onChange={(e) => setPostCode(e.target.value)}
                   required
                 />

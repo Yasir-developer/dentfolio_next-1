@@ -5,11 +5,12 @@ import { FaAngleDown, FaRegBell, FaBars } from 'react-icons/fa';
 import { HiChevronDown } from 'react-icons/hi';
 import Router from 'next/router';
 import { logoutUser } from 'redux/actions/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import Dropdown from "react-bootstrap/Dropdown";
 
 const DashboardHeader = ({ menuToggler }) => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -77,7 +78,8 @@ const DashboardHeader = ({ menuToggler }) => {
               />
 
               <h2 className="hidden lg:block text-custom-blue text-[16px] font-semibold px-2">
-                Dylan Taylor
+                {user?.displayName}
+                {/* Dylan Taylor */}
               </h2>
               {/* className="hidden md:block" */}
               <div className="flex" style={{ zIndex: 1 }} ref={dropdownRef}>

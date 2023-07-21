@@ -1,12 +1,12 @@
-import React from "react";
-import { FaCheckCircle } from "react-icons/fa";
-import BlueButtons from "../Buttons/BlueButtons";
-import Router from "next/router";
+import React from 'react';
+import { FaCheckCircle } from 'react-icons/fa';
+import BlueButtons from '../Buttons/BlueButtons';
+import Router from 'next/router';
 
 const MonthlyPlan = () => {
   return (
     // <div className="flex">
-    <div className="px-5 lg:px-0 w-[100%] lg:w-[45%]">
+    <div className="px-5 lg:px-0 lg:w-[45%] w-full">
       <div className="bg-custom-blue w-full rounded-[7px] px-8 py-5">
         <h2 className="text-white text-[18px] lg:text-[24px] font-semibold">
           DENTFOLIO MONTHLY PLAN
@@ -31,11 +31,11 @@ const MonthlyPlan = () => {
         </div>
 
         <BlueButtons
-          buttonText={"Start my Free Month"}
-          className={"my-5 text-[14px] lg:text-[18px] font-medium"}
+          buttonText={'Start my Free Month'}
+          className={'my-5 text-[14px] lg:text-[18px] font-medium'}
           onClick={(e) => {
             e.preventDefault();
-            Router.push("/dentist/sign-up");
+            Router.push('/dentist/sign-up');
           }}
         />
 

@@ -15,28 +15,30 @@ const PrivatePatients = () => {
       description: 'Sign up and create your account.',
     },
     {
+      //'/images/message.svg'
       type: '1',
-      img_url: '/images/photos.svg',
+      img_url: '/images/message.svg',
       title: '2. CREATE CASES',
       description: 'Create Cases to show to potential patients.',
     },
 
     {
-      img_url: '/images/doctor.svg',
+      img_url: '/images/email.svg',
 
       title: '3. LOCAL PATIENTS FIND YOU',
       description:
         'Local patients looking for a dentist visit the site and find you.',
     },
     {
-      img_url: '/images/email.svg',
+      ///
+      img_url: '/images/doctor.svg',
       type: '1',
       title: '4. SEND A EMAIL',
       description:
         'They send a contact form which will arrive to your email inbox.',
     },
     {
-      img_url: '/images/message.svg',
+      img_url: '/images/photos.svg',
 
       title: '5. YOU CAN DISCUSS VIA EMAIL',
       description:

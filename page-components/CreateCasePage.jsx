@@ -1,42 +1,69 @@
-import BlueButtons from "@/components/Buttons/BlueButtons";
-import AuthInput from "@/components/Inputs/AuthInput";
-import Router from "next/router";
+import BlueButtons from '@/components/Buttons/BlueButtons';
+import AuthInput from '@/components/Inputs/AuthInput';
+import Router from 'next/router';
 import { server } from '../config';
-import React, { useRef, useState, useEffect } from "react";
-import { FaPlus, FaTrash } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useRef, useState, useEffect } from 'react';
+import { FaPlus, FaTrash } from 'react-icons/fa';
+import { ToastContainer, toast } from 'react-toastify';
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const CreateCasePage = () => {
+  const { user } = useSelector((state) => state.auth);
+
   const treatmentType = [
     {
-      type: "Aligners",
+      type: 'Aligners',
     },
     {
-      type: "Aligners",
+      type: 'Aligners',
     },
     {
-      type: "Aligners",
+      type: 'Aligners',
     },
   ];
-  const [selectedOption, setSelectedOption] = useState("public");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [selectedOption, setSelectedOption] = useState('public');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [caseType, setCaseType] = useState(treatmentType);
   const [loader, setLoader] = useState(false);
+  const [imageFiles, setImageFiles] = useState([]);
+  const [pickedImage, setPickedImage] = useState([]);
+
   const [tags, setTags] = useState([]);
   const uploadFileref = useRef(null);
 
   useEffect(() => {
-    console.log(tags)
-  },[tags]);
+    console.log(tags);
+  }, [tags]);
 
   const handleChange = (tags) => {
     setTags(tags);
   };
+  const onImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    console.log(files, 'all');
 
+    if (files) {
+      setImageFiles(files);
+      console.log(imageFiles, 'kdskskdsa');
+      // console.log(formatBytes(file.size), "formatBytes(file.size)");
+      // if (parseFloat(formatBytes(file.size)) > 5) return toast.error('File can not be larger than 5 mb')
+      // if (!files.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+      //   console.log('no file');
+      //   return toast.error('Please select valid image.');
+      // }
+      // setImgObj(file);
+      console.log(files, 'my files');
+      const urls = files.map((file) => URL.createObjectURL(file));
+      console.log(urls, 'urls ---');
+      setPickedImage(urls);
+      // setPickedImage(URL.createObjectURL(files));
+      console.log(pickedImage, 'pickedImage');
+    }
+  };
   const uploadFileHandler = () => {
     uploadFileref.current.click();
   };
@@ -46,34 +73,43 @@ const CreateCasePage = () => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(title, 'Title')
-    console.log(description, 'description')
-    console.log(tags, 'tags')
-    console.log(selectedOption, 'selectedOption')
+    console.log(title, 'Title');
+    console.log(description, 'description');
+    console.log(tags, 'tags');
+    console.log(selectedOption, 'selectedOption');
     setLoader(true);
     const finalData = {
       title,
       description,
       tags,
-      selectedOption
+      selectedOption,
     };
     const options = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'multipart/form-data',
       },
     };
-    console.log(finalData, "final data");
-    console.log(`${server}/api/create-case/`)
+    console.log(finalData, 'final data');
+    // console.log(`${server}/api/create-case/`);
+    const formData = new FormData();
+    formData.append('dentistId', user?._id);
 
+    formData.append('case_title', title);
+    formData.append('description', description);
+
+    formData.append('caseType', 'abc');
+    formData.append('visibility', 1);
+    formData.append('cases_photo', imageFiles);
+    console.log(imageFiles, 'formData');
     axios
-      .post(`${server}/api/cases`, finalData, options)
+      .post(`${server}/api/cases`, formData, options)
       .then((res) => {
-        console.log(res, "job post response..");
+        console.log(res, 'job post response..');
         // return;
         if (res.status == 201) {
           setLoader(false);
-          toast.success("Case Created Successfully", {
-            position: "top-center",
+          toast.success('Case Created Successfully', {
+            position: 'top-center',
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -81,11 +117,11 @@ const CreateCasePage = () => {
             draggable: true,
             progress: undefined,
           });
-          Router.replace("/dentist/view-profile");
+          Router.replace('/dentist/view-profile');
         } else if (res.status == 400) {
           setLoader(false);
           toast.error(res.errors[0], {
-            position: "top-center",
+            position: 'top-center',
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -97,10 +133,13 @@ const CreateCasePage = () => {
       })
       .catch((error) => {
         setLoader(false);
-        console.log(error)
-        if (error?.response?.data?.errors && error.response.data.errors.length > 0) {
+        console.log(error);
+        if (
+          error?.response?.data?.errors &&
+          error.response.data.errors.length > 0
+        ) {
           toast.error(error?.response?.data?.errors[0], {
-            position: "top-center",
+            position: 'top-center',
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -108,10 +147,10 @@ const CreateCasePage = () => {
             draggable: true,
             progress: undefined,
           });
-        } else if(error?.response?.data?.message) {
+        } else if (error?.response?.data?.message) {
           // setLoader(false);
           toast.error(error?.response?.data?.message, {
-            position: "top-center",
+            position: 'top-center',
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -119,9 +158,9 @@ const CreateCasePage = () => {
             draggable: true,
             progress: undefined,
           });
-        }else{
+        } else {
           toast.error(error?.message, {
-            position: "top-center",
+            position: 'top-center',
             autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -133,7 +172,7 @@ const CreateCasePage = () => {
       });
   };
 
-  const notify = () => toast("Wow so easy!");
+  const notify = () => toast('Wow so easy!');
 
   return (
     <div className="flex items-center justify-center bg-white">
@@ -159,15 +198,16 @@ const CreateCasePage = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            submitHandler(e)
+            submitHandler(e);
             // Router.push("/dentist/create-case");
           }}
+          // enctype="multipart/form-data"
         >
           <div className="py-5 flex w-[100%] rounded-[7px] flex-col items-start justify-start ">
             <div className="w-[90%] flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-1 items-center justify-start">
               <AuthInput
-                placeholder={"Case Title"}
-                className={"w-full lg:!w-[90%]"}
+                placeholder={'Case Title'}
+                className={'w-full lg:!w-[90%]'}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
@@ -190,8 +230,8 @@ const CreateCasePage = () => {
                     type="radio"
                     value="public"
                     className="ml-0 lg:ml-[15px] mr-[5px]"
-                    checked={selectedOption === "public"}
-                    onChange={() => handleRadioBtn("public")}
+                    checked={selectedOption === 'public'}
+                    onChange={() => handleRadioBtn('public')}
                   />
                   Public
                 </label>
@@ -202,8 +242,8 @@ const CreateCasePage = () => {
                       type="radio"
                       value="private"
                       className="ml-[15px] mr-[5px]"
-                      checked={selectedOption === "private"}
-                      onChange={() => handleRadioBtn("private")}
+                      checked={selectedOption === 'private'}
+                      onChange={() => handleRadioBtn('private')}
                     />
                     Private
                   </label>
@@ -214,7 +254,7 @@ const CreateCasePage = () => {
             <div className="lg:w-[45%] flex flex-col pt-5">
               <p className="text-[18px] font-semibold">Case Type:</p>
               <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 mt-3">
-                <div className='w-full'>
+                <div className="w-full">
                   <TagsInput
                     value={tags}
                     onChange={handleChange}
@@ -247,11 +287,14 @@ const CreateCasePage = () => {
               <p className="text-[18px] font-semibold">Upload Photos:</p>
               <input
                 ref={uploadFileref}
+                onChange={(e) => onImageChange(e)}
+                multiple
                 type="file"
                 className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] text-[14px] bg-custom-dashboard-bg hidden"
                 placeholder="Upload Photos"
               />
               <button
+                type="button"
                 className="py-2 px-8 bg-[#D4D4D4] rounded-[7px] h-12 mt-5"
                 onClick={() => uploadFileHandler()}
               >
@@ -262,8 +305,8 @@ const CreateCasePage = () => {
             </div>
 
             <BlueButtons
-              buttonText={"Save"}
-              className={"bg-[#D4D4D4] rounded-[7px] mt-10"}
+              buttonText={'Save'}
+              className={'bg-[#D4D4D4] rounded-[7px] mt-10'}
               onClick={() => notify}
             />
           </div>

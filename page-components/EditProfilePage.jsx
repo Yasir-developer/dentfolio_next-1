@@ -22,11 +22,16 @@ import { useCurrentUser } from '@/lib/user';
 import { fetcher } from '@/lib/fetch';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from 'redux/actions/auth';
+import { getAddressData, getAddressSuggestions } from '@/lib/googleMaps';
 const EditProfilePage = () => {
   const [loader, setLoader] = useState(false);
   const [pickedImage, setPickedImage] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
+  const [address, setAddress] = useState('');
+  const [showAddress, setShowAddress] = useState('');
 
+  const [suggestions, setSuggestions] = useState([]);
+  const [data, setData] = useState(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [treatment, setTreatment] = useState([]);
@@ -79,7 +84,9 @@ const EditProfilePage = () => {
   }, []);
 
   useEffect(() => {
+    console.log(city, 'city');
     if (user) {
+      console.log(user.city, 'user,city');
       setFirstName(user?.firstName);
       setLastName(user?.lastName);
       setSelectedOption(user?.courtesyTitle);
@@ -107,120 +114,51 @@ const EditProfilePage = () => {
     setSelectedOption(event.target.value);
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   setLoader(true);
-  //   if (imageFiles) {
-  //     const formdata = new FormData();
-  //     formdata.append('file', imageFiles);
-  //     formdata.append('upload_preset', 'vakxgj9w');
-  //     // formdata.append("signature", "mkkk");
-  //     formdata.append('api_key', '583939563285816');
-
-  //     axios
-  //       .post(
-  //         `https://api.cloudinary.com/v1_1/dtnbj2pa5/auto/upload`,
-  //         formdata
-  //         // email,
-  //         // password,
-  //         // options,
-  //       )
-  //       .then((res) => {
-  //         console.log(res, 'img response');
-  //         setImageSecureUrl(res.data.secure_url);
-  //         // const secureUrl = data.secure_url;
-  //         handleSave(res?.data?.secure_url);
-
-  //         setLoader(false);
-  //       })
-  //       // .then((data) => {
-
-  //       // })
-  //       .catch((error) => {
-  //         setLoader(false);
-  //         console.log(error, 'error error');
-  //         // toast.error(error?.data?.message, {
-  //         //   position: "top-center",
-  //         //   autoClose: 2000,
-  //         //   hideProgressBar: false,
-  //         //   closeOnClick: true,
-  //         //   pauseOnHover: true,
-  //         //   draggable: true,
-  //         //   progress: undefined,
-  //         // });
-  //       });
-  //   } else {
-  //     handleSave();
-  //   }
-  // };
-
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    // const {
-    //   firstName,
-    //   lastName,
-    //   phone,
-    //   streetName,
-    //   bio,
-    //   displayName,
-    //   speciality,
-    //   degree,
-    //   gdcNo,
-    //   buildingName,
-    //   postCode,
-
-    //   city,
-
-    //   image,
-    // } = data;
-    // console.log(data, "student profile date");
-    // return
-    try {
-      setLoader(true); // setIsLoading(true);
-
-      console.log(lastRef.current.value);
-      console.log(firstName);
-
-      // return;
-      const formdata = new FormData();
-
-      formdata.append('firstName', firstName ? firstName : '');
-      // formdata.append("password", password ? password : "");
-      formdata.append('phone', phone ? phone : '');
-      formdata.append('lastName', lastRef.current.value);
-      formdata.append('bio', bio);
-      formdata.append('streetName', streetName);
-      formdata.append('displayName', displayName);
-      // formdata.append('speciality', speciality);
-      // formdata.append('degree', degree);
-
-      // formdata.append("education", educationJSON);
-      // formdata.append("profileBio", profileBioJSON);
-      // formdata.append("hourlyRate", hourlyRate ? hourlyRate : "");
-      // formdata.append("profilePicture", image ? image : "");
-      formdata.append('id', user._id);
-      const response = await fetcher(`/api/user`, {
-        method: 'PATCH',
-        body: formdata,
-      });
-      console.log(response.body, 'patch');
-      mutate({ user: response.user }, false);
-      toast.success('Your profile has been updated');
-    } catch (e) {
-      toast.error(e.message);
-    } finally {
-      setLoader(false);
-      // setIsLoading(false);
+  const handleInputChange = async (e) => {
+    setCity('');
+    setPostCode('');
+    const input = e.target.value;
+    setAddress(input);
+    setShowAddress(input);
+    if (input) {
+      const suggestions = await getAddressSuggestions(input);
+      console.log(suggestions, 'suggestion');
+      setSuggestions(suggestions);
+    } else {
+      setSuggestions([]);
     }
+  };
+
+  const handleAddressSelect = async (selectedAddress, addressShow) => {
+    console.log(addressShow, 'addressShow');
+    // setShowAddress
+    setShowAddress(addressShow);
+    setAddress(selectedAddress);
+    setSuggestions([]);
+
+    const response = await getAddressData(selectedAddress, addressShow).then(
+      (res) => {
+        console.log(res, 'my response');
+        if (res) {
+          setPostCode(res.postalCode);
+          setCity(res.city);
+        }
+        // setCity(data?.city);
+      }
+    );
+    setData(response);
+    console.log(data, 'all data -----');
+    console.log(response, 'handleAddressSelect response');
   };
 
   const handleSave = (e, secureUrl) => {
     e.preventDefault();
-    const treatmentTypeJSON = JSON.stringify(tags);
-    console.log(treatmentTypeJSON, 'treatmentTypeJSON');
+
+    console.log(streetName, 'strret name');
+    console.log(showAddress, 'showAddress name');
     // return;
-    console.log(imageFiles, 'imageFiles');
+    const treatmentTypeJSON = JSON.stringify(tags);
+
     // return;
     setLoader(true);
     const formData = new FormData();
@@ -232,20 +170,14 @@ const EditProfilePage = () => {
     formData.append('displayName', displayName);
     formData.append('gdcNo', gdcNo);
     formData.append('buildingName', buildingName);
-    formData.append('streetName', streetName);
-    formData.append('city', city);
-    formData.append('postCode', postCode);
+    formData.append('streetName', showAddress ? showAddress : streetName);
+    formData.append('city', city ? city : data?.city);
+    formData.append('postCode', postCode ? postCode : data?.postalCode);
     formData.append('bio', bio);
     formData.append('phone', phone);
     formData.append('treatment_type', treatmentTypeJSON);
     formData.append('courtesyTitle', selectedOption);
     formData.append('profile_photo', imageFiles);
-
-    // if (imageFiles) {
-    //   formData.append('image', secureUrl);
-    // } else {
-    //   formData.append('image', pickedImage);
-    // }
 
     axios
       .patch(`${server}/api/user`, formData, {
@@ -273,68 +205,6 @@ const EditProfilePage = () => {
           progress: undefined,
         });
       });
-    // console.log(secureUrl, 'promise secure url');
-    // // e.preventDefault();
-    // console.log(tags, 'treatment');
-    // // return;
-    // setLoader(true);
-
-    // // return;
-    // const options = {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // };
-    // axios
-    //   .patch(`${server}/api/user`, {
-    //     firstName,
-    //     lastName,
-    //     userName,
-    //     displayName,
-    //     gdcNo,
-    //     buildingName,
-    //     streetName,
-    //     city,
-    //     postCode,
-    //     bio,
-    //     phone,
-    //     options,
-    //     treatment_type: tags,
-    //     courtesyTitle: selectedOption,
-
-    //     ...(imageFiles ? { image: secureUrl } : { image: pickedImage }),
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data.user, 'res after updatae');
-    //     setLoader(false);
-    //     if (res.status == 200) {
-    //       dispatch(fetchUser(res?.data?.user));
-    //       setLoader(false);
-
-    //       toast.success('Your Profile Update Successfully', {
-    //         position: 'top-center',
-    //         autoClose: 2000,
-    //         hideProgressBar: false,
-    //         closeOnClick: true,
-    //         pauseOnHover: true,
-    //         draggable: true,
-    //         progress: undefined,
-    //       });
-    //       // Router.replace("/dentist/view-profile");
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     setLoader(false);
-    //     toast.error(error?.data?.message, {
-    //       position: 'top-center',
-    //       autoClose: 2000,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //     });
-    //   });
   };
   const uploadFileHandler = () => {
     console.log('hereeee');
@@ -446,12 +316,14 @@ const EditProfilePage = () => {
                 className={'order-2'}
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
+                // required
               />
               <AuthInput
                 placeholder={'First Name'}
                 className={'order-3'}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
+                required
               />
               <AuthInput
                 placeholder={'Last Name'}
@@ -459,6 +331,7 @@ const EditProfilePage = () => {
                 ref={lastRef}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
+                required
               />
               <AuthInput
                 placeholder={'Email Address'}
@@ -471,42 +344,77 @@ const EditProfilePage = () => {
                 className={'w-[92.5%] lg:w-[45%] order-6'}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                // required
               />
               <AuthInput
                 placeholder={'Display Name'}
                 className={'order-7'}
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
+                required
               />
               <AuthInput
                 placeholder={'GDC Number'}
                 className={'order-8'}
                 value={gdcNo}
                 onChange={(e) => setGdcNo(e.target.value)}
+                required
               />
               <AuthInput
                 placeholder={'Practice Building number/ Name'}
                 className={'order-9'}
                 value={buildingName}
                 onChange={(e) => setBuildingName(e.target.value)}
+                required
               />
-              <AuthInput
-                placeholder={'Practice Street Name'}
-                className={'order-10'}
-                value={streetName}
-                onChange={(e) => setStreetName(e.target.value)}
-              />
+              <div className="order-10 w-[45%] relative">
+                <AuthInput
+                  placeholder={'Practice Street Name'}
+                  className={'!w-full'}
+                  value={showAddress ? showAddress : streetName}
+                  // onChange={(e) => setStreetName(e.target.value)}
+                  onChange={handleInputChange}
+                  required
+                />
+                <div class="absolute right-100 bg-white shadow-xl w-full top-[50px] mt-0 pt-0 rounded-[7px] pb-0">
+                  {suggestions.length > 0 && (
+                    <ul className="mt-0 rounded-[7px] p-[10px] space-y-2 bg-white border border-gray-300 w-full rounded-b-md shadow-md">
+                      {suggestions.map((suggestion, index) => (
+                        <>
+                          {console.log(suggestion, 'dsassdsadsdsa')}
+                          <li
+                            className="hover:bg-gray-100 p-1"
+                            key={index}
+                            onClick={() => {
+                              handleAddressSelect(suggestion[1], suggestion[0]);
+                            }}
+                          >
+                            {suggestion[0]}
+                          </li>
+                        </>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
               <AuthInput
                 placeholder={'Practice City'}
                 className={'order-11'}
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
+                value={city ? city : data?.city}
+                onChange={(e) => {
+                  setCity(e.target.value);
+                  // if (data) {
+                  //   setCity(data.city);
+                  // }
+                }}
+                required
               />
               <AuthInput
                 placeholder={'Practice Post Code'}
                 className={'order-12'}
-                value={postCode}
+                value={postCode ? postCode : data?.postalCode}
                 onChange={(e) => setPostCode(e.target.value)}
+                required
               />
 
               <div className="lg:w-[45%] flex mt-5 lg:mt-0 mb-[72px]  justify-start items-start lg:order-[13] order-[14]">
@@ -548,7 +456,7 @@ const EditProfilePage = () => {
                 <></>
               )}
               <p className="text-[18px] font-semibold">Treatment Type:</p>
-              <div className='w-full'>
+              <div className="w-full">
                 <TagsInput
                   value={tags}
                   onChange={handleChange}
