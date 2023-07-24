@@ -11,6 +11,7 @@ import AuthInput from '@/components/Inputs/AuthInput';
 import { server } from 'config';
 import { fetchUser } from 'redux/actions/auth';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-hot-toast';
 // import { server } from '../../../config';
 // import { toast } from 'react-toastify';
 // import { fetchUser } from '@/redux/actions/auth';
@@ -23,8 +24,9 @@ const Login = () => {
   const [loader, setLoader] = useState(false);
 
   const handleSubmit = async (e) => {
-    setLoader(true);
     e.preventDefault();
+
+    setLoader(true);
     // console.log(email, password);
     // Send a POST request to the login API endpoint
     let data = {
@@ -64,6 +66,10 @@ const Login = () => {
       })
       .catch((error) => {
         console.log(error, 'sign in error');
+        if (error.response.status == 401) {
+          toast.error('Email or Password is incorrect');
+          setLoader(false);
+        }
         // toast.error(error?.data?.message, {
         //   position: 'top-center',
         //   autoClose: 2000,
@@ -98,7 +104,7 @@ const Login = () => {
 
             <form
               onSubmit={(e) => {
-                e.preventDefault();
+                // e.preventDefault();
                 handleSubmit(e);
                 // Router.replace("/dentist/view-profile");
               }}
@@ -110,12 +116,14 @@ const Login = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
                 <AuthInput
                   type={'password'}
                   className={''}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
 
                 <div className="flex justify-end w-full">

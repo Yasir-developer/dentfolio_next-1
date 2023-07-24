@@ -12,6 +12,7 @@ import multer from 'multer';
 import nc from 'next-connect';
 
 const upload = multer({ dest: '/tmp' });
+var savePath = [];
 
 const handler = nc(ncOpts);
 if (process.env.CLOUDINARY_URL) {
@@ -38,75 +39,74 @@ const fileFilter = (req, file, cb) => {
   }
 };
 handler.post(
-  upload.single('cases_photo', 3),
+  // upload.array('cases_photo', 3),
+  upload.fields([
+    {
+      name: 'cases_photo',
+      maxCount: 3,
+    },
+  ]),
   // console.log(upload, 'upload=='),
+  // upload.single('cases_photo1'),
+  // upload.single('cases_photo2'),
 
   ...auths,
 
   async (req, res) => {
-    var path = [];
+    // const path = [];
     // let path = [];
-    console.log(req.files, 'req.files====');
-    if (req.files) {
-      const uploadPromises = req.files.map((element) => {
-        return cloudinary.uploader.upload(element.path, {
-          width: 512,
-          height: 512,
-          crop: 'fill',
-        });
-      });
-
-      Promise.all(uploadPromises)
-        .then((results) => {
-          console.log(results, 'rresults');
-          path = results.map((res) => {
-            console.log(res, 'path path');
-            // path.push(res.secure_url);
-          });
-          let savePath = path;
-          console.log(savePath, 'savepath');
-
-          // console.log(path, '=======');
-
-          // Do whatever you want with the 'path' array here, e.g., send it in the response.
-        })
-        .catch((error) => {
-          console.error('Error uploading images:', error);
-          // Handle errors here
-        });
-    }
-    // req.files.map((element) => {
-    //   console.log(element, 'eq.file.path');
-    //   const image = cloudinary.uploader
-    //     .upload(element.path, {
-    //       width: 512,
-    //       height: 512,
-    //       crop: 'fill',
-    //     })
-    //     .then((res) => {
-    //       console.log(res.secure_url, 'response secure urls ====');
-    //       path.push(res.secure_url);
-    //     });
-
-    //   console.log(path, 'path after pushed array');
-    // });
-
-    // path = image.secure_url;
-    // console.log(path, 'my path');
-
-    // }
+    console.log(req.files, 'req.files cases ');
     // return;
-    console.log(path, 'before const =======');
-    const cases = await insertCase(req.db, {
-      case_title: req.body.title,
-      description: req.body.description,
-      caseType: req.body.tags,
-      visibility: req.body.selectedOption == 'public' ? 1 : 0,
-      dentistId: req.user._id,
-      cases_photo: path,
-    });
-    console.log(path, 'after const =======');
-    return res.json({ cases });
+    // return;
+    try {
+      if (req.files) {
+        const uploadPromises = req?.files?.cases_photo?.map((element) => {
+          return cloudinary.uploader.upload(element.path, {
+            width: 512,
+            height: 512,
+            crop: 'fill',
+          });
+        });
+        // let savePath =[]
+
+        const results = await Promise.all(uploadPromises);
+        results.map((res) => {
+          savePath.push(res.secure_url);
+        });
+        // .then((results) => {
+        //   // console.log(results, 'rresults');
+        //   results.map((res) => {
+        //     //  savePath.push(res.secure_url)
+
+        //     console.log(res, 'path path');
+        //     savePath.push(res.secure_url);
+        //     console.log(savePath, 'savePath');
+        //   });
+        // console.log(savePath, 'savepath');
+
+        // console.log(path, '=======');
+
+        // Do whatever you want with the 'path' array here, e.g., send it in the response.
+        // })
+      }
+
+      console.log(savePath, 'before const =======');
+      // return;
+      const cases = await insertCase(req.db, {
+        case_title: req.body.title,
+        description: req.body.description,
+        caseType: req.body.tags,
+        visibility: req.body.selectedOption == 'public' ? 1 : 0,
+        dentistId: req.user._id,
+        cases_photo: savePath,
+      });
+      console.log(cases, 'after const =======');
+      savePath = [];
+      return res.json({ cases });
+    } catch (err) {
+      console.log(err, 'err');
+    }
+    // console.log(err)
   }
 );
 
@@ -119,10 +119,10 @@ handler.get(
   ...auths,
 
   async (req, res) => {
-    const getCase = await getCases(req.db, {
+    const cases = await getCases(req.db, {
       dentistId: req.user._id,
     });
-    return res.json({ getCase });
+    return res.json({ cases });
   }
 );
 export default handler;

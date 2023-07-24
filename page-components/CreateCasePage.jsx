@@ -4,30 +4,19 @@ import Router from 'next/router';
 import { server } from '../config';
 import React, { useRef, useState, useEffect } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-hot-toast';
 
 const CreateCasePage = () => {
   const { user } = useSelector((state) => state.auth);
 
-  const treatmentType = [
-    {
-      type: 'Aligners',
-    },
-    {
-      type: 'Aligners',
-    },
-    {
-      type: 'Aligners',
-    },
-  ];
   const [selectedOption, setSelectedOption] = useState('public');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [caseType, setCaseType] = useState(treatmentType);
   const [loader, setLoader] = useState(false);
   const [imageFiles, setImageFiles] = useState([]);
   const [pickedImage, setPickedImage] = useState([]);
@@ -43,8 +32,14 @@ const CreateCasePage = () => {
     setTags(tags);
   };
   const onImageChange = (e) => {
+    // setImageFiles(e.target.files);
+    console.log(e.target.files, 'e.target.files');
+
     const files = Array.from(e.target.files);
-    console.log(files, 'all');
+    // setImageFiles([...e.target.files]);
+
+    // console.log(first)
+    // console.log(files, 'all');
 
     if (files) {
       setImageFiles(files);
@@ -64,6 +59,14 @@ const CreateCasePage = () => {
       console.log(pickedImage, 'pickedImage');
     }
   };
+
+  const emptFields = () => {
+    setTitle('');
+    setDescription('');
+    setTags([]);
+    setPickedImage([]);
+    setImageFiles([]);
+  };
   const uploadFileHandler = () => {
     uploadFileref.current.click();
   };
@@ -73,10 +76,18 @@ const CreateCasePage = () => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
+    const caseTypeJSON = JSON.stringify(tags);
+
     console.log(title, 'Title');
     console.log(description, 'description');
     console.log(tags, 'tags');
     console.log(selectedOption, 'selectedOption');
+    console.log(imageFiles, 'imageFiles imageFiles');
+    // const sweeterArray = imageFiles.forEach((sweetItem) => {
+    //   console.log(sweetItem, 'sweetItem');
+    //   return sweetItem;
+    // });
+
     setLoader(true);
     const finalData = {
       title,
@@ -94,85 +105,57 @@ const CreateCasePage = () => {
     const formData = new FormData();
     formData.append('dentistId', user?._id);
 
-    formData.append('case_title', title);
+    formData.append('title', title);
     formData.append('description', description);
 
-    formData.append('caseType', 'abc');
-    formData.append('visibility', 1);
-    formData.append('cases_photo', imageFiles);
-    console.log(imageFiles, 'formData');
+    formData.append('tags', caseTypeJSON);
+    formData.append('selectedOption', selectedOption);
+    // formData.append('cases_photo', imageFiles);
+
+    // formData.append(
+    //   'cases_photo',
+    //   // sweeterArray
+    //   imageFiles.forEach((sweetItem) => {
+    //     return sweetItem;
+    //   })
+    // );
+
+    imageFiles.forEach((file, index) => {
+      console.log(file, 'file ==============');
+      formData.append('cases_photo', file);
+    });
+
+    // console.log(imageFiles, 'formData');
     axios
       .post(`${server}/api/cases`, formData, options)
       .then((res) => {
         console.log(res, 'job post response..');
         // return;
-        if (res.status == 201) {
+        if (res.status == 200) {
           setLoader(false);
-          toast.success('Case Created Successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-          Router.replace('/dentist/view-profile');
+          toast.success('Case Created Successfully');
+          emptFields();
+          // Router.replace('/dentist/view-profile');
         } else if (res.status == 400) {
           setLoader(false);
-          toast.error(res.errors[0], {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          // toast.error(res.errors[0], {
+          //   position: 'top-center',
+          //   autoClose: 2000,
+          //   hideProgressBar: false,
+          //   closeOnClick: true,
+          //   pauseOnHover: true,
+          //   draggable: true,
+          //   progress: undefined,
+          // });
         }
       })
       .catch((error) => {
         setLoader(false);
         console.log(error);
-        if (
-          error?.response?.data?.errors &&
-          error.response.data.errors.length > 0
-        ) {
-          toast.error(error?.response?.data?.errors[0], {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        } else if (error?.response?.data?.message) {
-          // setLoader(false);
-          toast.error(error?.response?.data?.message, {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        } else {
-          toast.error(error?.message, {
-            position: 'top-center',
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
-        }
       });
   };
 
-  const notify = () => toast('Wow so easy!');
+  // const notify = () => toast('Wow so easy!');
 
   return (
     <div className="flex items-center justify-center bg-white">
@@ -196,8 +179,9 @@ const CreateCasePage = () => {
           </div> */}
         {/* </div> */}
         <form
+          enctype="multipart/form-data"
           onSubmit={(e) => {
-            e.preventDefault();
+            // e.preventDefault();
             submitHandler(e);
             // Router.push("/dentist/create-case");
           }}
@@ -210,6 +194,7 @@ const CreateCasePage = () => {
                 className={'w-full lg:!w-[90%]'}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                required
               />
               <textarea
                 placeholder="Case Description"
@@ -217,6 +202,7 @@ const CreateCasePage = () => {
                 rows={4}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
+                required
               />
             </div>
             <div className="flex lg:flex-row flex-col pt-5 lg:items-center justify-start items-start">
@@ -231,7 +217,9 @@ const CreateCasePage = () => {
                     value="public"
                     className="ml-0 lg:ml-[15px] mr-[5px]"
                     checked={selectedOption === 'public'}
-                    onChange={() => handleRadioBtn('public')}
+                    onChange={() => {
+                      handleRadioBtn('public');
+                    }}
                   />
                   Public
                 </label>
@@ -305,9 +293,10 @@ const CreateCasePage = () => {
             </div>
 
             <BlueButtons
+              loading={loader}
               buttonText={'Save'}
               className={'bg-[#D4D4D4] rounded-[7px] mt-10'}
-              onClick={() => notify}
+              // onClick={() => notify}
             />
           </div>
         </form>

@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import profile from '../../public/images/profile1.png';
 import Image from 'next/image';
 import { FaMapMarkerAlt, FaTimes } from 'react-icons/fa';
 import checkCircle from '../../public/images/check-circle2.svg';
-import GoogleMapReact from 'google-map-react';
+import mapOptions from './map-options.json';
 
-import map from '../../public/images/map.png';
 import AuthInput from '../Inputs/AuthInput';
-import BlueButtons from '../Buttons/BlueButtons';
+import GoogleMap from 'google-maps-react-markers';
+import Marker from '../marker';
+import { GOOGLE_MAPS_API_KEY } from 'config';
 const DoctorBasicDetail = (props) => {
-  const GOOGLE_MAPS_API_KEY = 'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo';
-
-  console.log(props, 'props ===');
   const [showModal, setShowModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showContact, setShowContact] = useState(false);
-  const [mapApiLoaded, setmapApiLoaded] = useState(false);
-  const [mapApi, setmapApi] = useState(null);
-  const [mapInstance, setmapInstance] = useState(null);
+
+  const mapRef = useRef(null);
+  const [mapReady, setMapReady] = useState(false);
   useEffect(() => {
     // console.log(window.location, "window");
     if (typeof window !== undefined) {
@@ -35,15 +33,17 @@ const DoctorBasicDetail = (props) => {
     // }
   }, [showContact]);
 
-  const apiHasLoaded = (map, maps) => {
-    // this.setState({
-    //   mapApiLoaded: true,
-    //   mapInstance: map,
-    //   mapApi: maps,
-    // });
-    setmapApiLoaded(true);
-    setmapInstance(map);
-    setmapApi(maps);
+  const onGoogleApiLoaded = ({ map, maps }) => {
+    mapRef.current = map;
+    setMapReady(true);
+  };
+
+  const onMarkerClick = (e, { markerId, lat, lng }) => {
+    console.log('This is ->', markerId);
+
+    // inside the map instance you can call any google maps method
+    mapRef.current.setCenter({ lat, lng });
+    // rif. https://developers.google.com/maps/documentation/javascript/reference?hl=it
   };
   const thankYouModal = () => {
     return (
@@ -161,15 +161,7 @@ const DoctorBasicDetail = (props) => {
       </div>
     );
   };
-  const AnyReactComponent = ({ text }) => (
-    <div>
-      <FaMapMarkerAlt
-        size={25}
-        // color={"#62a945"}
-        color={'red'}
-      />
-    </div>
-  );
+
   return (
     <div className="sizingStyles flex flex-col lg:flex-row justify-between">
       {showModal && conversationModal()}
@@ -220,36 +212,66 @@ const DoctorBasicDetail = (props) => {
         </div>
       </div>
 
+      <div className="h-[500px] w-[50%] rounded-[7px] py-10">
+        {/* {mapReady && (
+          <div>Map is ready. See for logs in developer console.</div>
+        )} */}
+        <GoogleMap
+          apiKey={GOOGLE_MAPS_API_KEY}
+          defaultCenter={{
+            lat: props?.data?.latitude,
+            lng: props?.data?.longitude,
+          }}
+          defaultZoom={15}
+          options={mapOptions}
+          mapMinHeight="400px"
+          onGoogleApiLoaded={onGoogleApiLoaded}
+          onChange={(map) => console.log('Map moved', map)}
+        >
+          {/* {coordinates.map(({ lat, lng, name }, index) => ( */}
+          <Marker
+            // key={index}
+            lat={props?.data?.latitude}
+            lng={props?.data?.longitude}
+            onClick={onMarkerClick}
+          />
+          {/* ))} */}
+        </GoogleMap>
+      </div>
+
       {/* {servicelatitude != "" ? ( */}
       {/* <div className="business_map_section">
           <div className="map_frame_section"> */}
-      <GoogleMapReact
-        bootstrapURLKeys={{
-          key: GOOGLE_MAPS_API_KEY,
-        }}
-        defaultCenter={{
-          lat:
-            // servicelatitude == ""
-            //   ? 10.99835602
-            //   :
-            parseFloat(20),
-          lng:
-            // servicelongitude == ""
-            //   ?
-            //   77.01502627
-            //   :
-            parseFloat(20),
-        }}
-        defaultZoom={15}
-        // yesIWantToUseGoogleMapApiInternals
-        onGoogleApiLoaded={({ map, maps }) => apiHasLoaded(map, maps)}
-      >
-        <AnyReactComponent
-          lat={parseFloat(20)}
-          lng={parseFloat(20)}
-          text="My Marker"
-        />
-      </GoogleMapReact>
+      {/* <div className="h-[500px] w-[50%] rounded-[7px] py-10">
+        <GoogleMapReact
+          bootstrapURLKeys={{
+            key: GOOGLE_MAPS_API_KEY,
+          }}
+          className="rounded-[7px]"
+          defaultCenter={{
+            lat:
+              // servicelatitude == ""
+              //   ? 10.99835602
+              //   :
+              parseFloat(props?.data?.latitude),
+            lng:
+              // servicelongitude == ""
+              //   ?
+              //   77.01502627
+              //   :
+              parseFloat(props?.data?.longitude),
+          }}
+          defaultZoom={15}
+          // yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={({ map, maps }) => apiHasLoaded(map, maps)}
+        >
+          <AnyReactComponent
+            lat={parseFloat(props?.data?.latitude)}
+            lng={parseFloat(props?.data?.longitude)}
+            text="My Marker"
+          />
+        </GoogleMapReact>
+      </div> */}
       {/* </div>
         </div> */}
       {/* ) : (

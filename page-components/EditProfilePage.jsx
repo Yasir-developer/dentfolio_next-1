@@ -161,6 +161,7 @@ const EditProfilePage = () => {
 
     // return;
     setLoader(true);
+    console.log(imageFiles, 'imageFilesimageFilesimageFiles');
     const formData = new FormData();
     formData.append('id', user?._id);
 

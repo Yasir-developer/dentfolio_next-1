@@ -4,16 +4,11 @@ export async function insertCase(
   db,
   { case_title, description, visibility, caseType, dentistId, cases_photo }
 ) {
-  console.log(case_title, 'content');
-  console.log(description, 'description');
-  console.log(visibility, 'visibility');
-  console.log(caseType, 'caseType');
-  console.log(dentistId, 'dentistId');
   const cases = {
     case_title,
     description,
     visibility,
-    caseType,
+    caseType: JSON.parse(caseType),
     dentistId,
     cases_photo,
     // createdAt: new Date(),
@@ -28,10 +23,7 @@ export async function insertCase(
   //     .toArray();
 }
 export async function getCases(db, { dentistId }) {
-  console.log(dentistId.toString());
-  console.log(typeof dentistId.toString());
   const newCase = await db.collection('cases').find({ dentistId }).toArray();
   // .find({dentistId:new ObjectId(dentistId.toString())}).toArray();
-  console.log(newCase, 'cases');
   return newCase;
 }
