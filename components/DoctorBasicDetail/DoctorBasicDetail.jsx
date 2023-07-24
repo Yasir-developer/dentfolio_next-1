@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import profile from '../../public/images/profile1.png';
 import Image from 'next/image';
-import { FaTimes } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaTimes } from 'react-icons/fa';
 import checkCircle from '../../public/images/check-circle2.svg';
+import GoogleMapReact from 'google-map-react';
 
 import map from '../../public/images/map.png';
 import AuthInput from '../Inputs/AuthInput';
 import BlueButtons from '../Buttons/BlueButtons';
 const DoctorBasicDetail = (props) => {
+  const GOOGLE_MAPS_API_KEY = 'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo';
+
   console.log(props, 'props ===');
   const [showModal, setShowModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showContact, setShowContact] = useState(false);
-
+  const [mapApiLoaded, setmapApiLoaded] = useState(false);
+  const [mapApi, setmapApi] = useState(null);
+  const [mapInstance, setmapInstance] = useState(null);
   useEffect(() => {
     // console.log(window.location, "window");
     if (typeof window !== undefined) {
@@ -30,6 +35,16 @@ const DoctorBasicDetail = (props) => {
     // }
   }, [showContact]);
 
+  const apiHasLoaded = (map, maps) => {
+    // this.setState({
+    //   mapApiLoaded: true,
+    //   mapInstance: map,
+    //   mapApi: maps,
+    // });
+    setmapApiLoaded(true);
+    setmapInstance(map);
+    setmapApi(maps);
+  };
   const thankYouModal = () => {
     return (
       <div className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50 bg-gray-900 z-[999]">
@@ -146,6 +161,15 @@ const DoctorBasicDetail = (props) => {
       </div>
     );
   };
+  const AnyReactComponent = ({ text }) => (
+    <div>
+      <FaMapMarkerAlt
+        size={25}
+        // color={"#62a945"}
+        color={'red'}
+      />
+    </div>
+  );
   return (
     <div className="sizingStyles flex flex-col lg:flex-row justify-between">
       {showModal && conversationModal()}
@@ -196,9 +220,45 @@ const DoctorBasicDetail = (props) => {
         </div>
       </div>
 
-      <div className="py-10">
+      {/* {servicelatitude != "" ? ( */}
+      {/* <div className="business_map_section">
+          <div className="map_frame_section"> */}
+      <GoogleMapReact
+        bootstrapURLKeys={{
+          key: GOOGLE_MAPS_API_KEY,
+        }}
+        defaultCenter={{
+          lat:
+            // servicelatitude == ""
+            //   ? 10.99835602
+            //   :
+            parseFloat(20),
+          lng:
+            // servicelongitude == ""
+            //   ?
+            //   77.01502627
+            //   :
+            parseFloat(20),
+        }}
+        defaultZoom={15}
+        // yesIWantToUseGoogleMapApiInternals
+        onGoogleApiLoaded={({ map, maps }) => apiHasLoaded(map, maps)}
+      >
+        <AnyReactComponent
+          lat={parseFloat(20)}
+          lng={parseFloat(20)}
+          text="My Marker"
+        />
+      </GoogleMapReact>
+      {/* </div>
+        </div> */}
+      {/* ) : (
+        <></>
+      )} */}
+
+      {/* <div className="py-10">
         <Image src={map} alt="logo" />
-      </div>
+      </div> */}
     </div>
   );
 };

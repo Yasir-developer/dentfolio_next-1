@@ -1,4 +1,6 @@
 // import { ncOpts } from '@/api-lib/nc';
+import { getSession } from '@/api-lib/middlewares/session';
+
 import DentistTabs from '@/components/DentistTabs/DentistTabs';
 import DoctorBasicDetail from '@/components/DoctorBasicDetail/DoctorBasicDetail';
 import PreviousCases from '@/components/PreviousCases/PreviousCases';
@@ -9,6 +11,7 @@ import ViewProfilePage from '@/page-components/ViewProfilePage';
 // import { database } from '@/api-lib/middlewares';
 
 import axios from 'axios';
+import nextConnect from 'next-connect';
 import React, { useEffect, useState } from 'react';
 // import { server } from "../../../config";
 // import { connectToDatabase } from "../../db";
@@ -29,5 +32,13 @@ const viewprofile = ({ data }) => {
     </div>
   );
 };
+
+export async function getServerSideProps({ req, res }) {
+  // await nextConnect().use(database).run(context.req, context.res);
+  const MySession = await getSession(req, res);
+  console.log(MySession, 'MySessions');
+
+  return { props: {} };
+}
 
 export default viewprofile;

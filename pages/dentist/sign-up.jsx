@@ -47,6 +47,9 @@ const Signup = () => {
   const [speciality, setSpeciality] = useState('');
   const [degree, setDegree] = useState('');
   const [showAddress, setShowAddress] = useState('');
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
+
   const router = useRouter();
   // const GOOGLE_MAPS_API_KEY = 'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo';
 
@@ -75,6 +78,13 @@ const Signup = () => {
     setSuggestions([]);
 
     const response = await getAddressData(selectedAddress, addressShow);
+    // .then(
+    //   (response) => {
+    //     console.log(response, 'response');
+    //     setLatitude(response.location.location.lat);
+    //     setLongitude(response.location.location.long);
+    //   }
+    // );
     setData(response);
     console.log(data, 'daasdsadsd');
     if (data) {
@@ -85,7 +95,9 @@ const Signup = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(showAddress, data?.city, data?.postalCode, 'here');
+    // console.log(showAddress, data?.city, data?.postalCode, 'here');
+    // console.log(latitude, longitude, 'here longitude lat');
+    // console.log(data.location.location.lat, 'data');
     // return;
     if (termsAccepted && privacyAccepted) {
       setLoader(true);
@@ -106,6 +118,8 @@ const Signup = () => {
           streetName: streetName ? streetName : showAddress,
           city: city ? city : data?.city,
           postCode: postCode ? postCode : data?.postalCode,
+          latitude: data.location.location.lat,
+          longitude: data.location.location.lng,
         })
         .then((response) => {
           if (response.status == 201) {
