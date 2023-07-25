@@ -66,14 +66,36 @@ const PreviousCases = () => {
                 className="border rounded-[7px] border-[#F6EBEB] border-b flex flex-col-reverse lg:flex-row items-center px-3 mt-7"
                 key={index}
               >
-                <Image
-                  src={'/images/case2.png'}
-                  alt="logo"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  className="w-full h-full max-w-[300px] lg:w-auto lg:h-[170px] my-3"
-                />
+                <div className="flex flex-col my-3 gap-y-[3px]">
+                  {(item?.cases_photo && item?.cases_photo?.length > 1) ? 
+                  (item.cases_photo.map((img,imgIndex) => {
+                    return (
+                        imgIndex <= 1 ? 
+                        <Image
+                          src={img}
+                          alt="logo"
+                          width={0}
+                          height={0}
+                          sizes="100vw"
+                          className="w-full h-full max-h-[85px] lg:w-auto"
+                        />
+                        : ''
+                      )
+                    
+                  })) : (
+
+                    <Image
+                      src={'/images/case2.png'}
+                      alt="logo"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-full h-full max-w-[300px] lg:w-auto lg:h-[170px] my-3"
+                    />
+                  )
+                }
+                  
+                </div>
 
                 <div className="flex flex-col lg:px-5 pt-5 pb-5 justify-center">
                   <h2 className="text-left text-[21px] text-custom-blue font-semibold">
