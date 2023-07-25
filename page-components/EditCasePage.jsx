@@ -38,7 +38,6 @@ const EditCasePage = () => {
         console.log(response, 'getCase');
       })
       .catch(function (error) {
-        // handle error
         console.log(error, 'get Error');
       })
   }
