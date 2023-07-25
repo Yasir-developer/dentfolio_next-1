@@ -13,33 +13,15 @@ const EditCaseCard = ({ img_url, name, description, id, types, showModalProp }) 
           key={id}
         >
           <div className="flex flex-col my-3 gap-y-[3px]">
-              {(img_url && img_url.length > 1) ? 
-              (img_url.map((img,imgIndex) => {
-                return (
-                    imgIndex <= 1 ? 
-                    <Image
-                      src={img}
-                      alt="logo"
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      className="w-full h-full max-h-[85px] lg:w-auto"
-                    />
-                    : ''
-                  )
-                
-              })) : (
-
                 <Image
-                  src={'/images/case2.png'}
+                  src={img_url ? img_url : '/images/case2.png'}
                   alt="logo"
                   width={0}
                   height={0}
                   sizes="100vw"
                   className="w-full h-full max-w-[300px] lg:w-auto lg:h-[170px] my-3"
                 />
-              )
-            }
+              
               
           </div>
 

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { server } from '../config';
 import { FaTimes } from "react-icons/fa";
 import AuthInput from "@/components/Inputs/AuthInput";
+import Select from 'react-select';
 
 const EditCasePage = () => {
   const caseTypes = [
@@ -25,9 +26,33 @@ const EditCasePage = () => {
   const [cases, setCases] = useState(caseTypes)
   const [showModal, setShowModal] = useState(false)
   const [caseObj, setCaseObj] = useState({})
+  const [tags, setTags] = useState([]);
   useEffect(() => {
     getCases()
   },[]);
+
+ 
+  const handleChange = (tags) => {
+    setTags(tags);
+  };
+  const options = [
+    'Aligners',
+    'Bridges',
+    'Bonding',
+    'Composite Bonding',
+    'Crowns',
+    'Dentures',
+    'Implants',
+    'Invisalign',
+    'Onlays',
+    'Orthodontics',
+    'Periodontal Treatment',
+    'Restorations',
+    'Root canal treatment',
+    'Smile Makeover',
+    'Veneers',
+    'Whitening'
+  ];
   
   const showModalHandler = (itemObj) => {
     console.log('working');
@@ -35,7 +60,14 @@ const EditCasePage = () => {
 
     setShowModal(true);
     setCaseObj(itemObj)
+    setTags(itemObj.caseType)
   };
+
+  const closeModalHandler = () => {
+    setShowModal(false);
+    setCaseObj({})
+    setTags([])
+  }
 
   const getCases = () => {
     const options = {
@@ -61,7 +93,7 @@ const EditCasePage = () => {
           <div className="mx-5">
             <button
               className="absolute right-[20px] top-[20px]  "
-              onClick={() => setShowModal(false)}
+              onClick={() => closeModalHandler()}
             >
               <FaTimes className="text-[#616161] w-[18px] h-[18px]" />
             </button>
@@ -85,12 +117,23 @@ const EditCasePage = () => {
                 className="inputStyles w-full mt-0"
                 rows="4"
               >{item.description}</textarea>
+              <div className="w-full">
+                <Select
+                  value={tags}
+                  onChange={handleChange}
+                  // onChange={handleSelectChange}
+                  options={options}
+                  isClearable
+                  isSearchable
+                  isMulti
+                />
+              </div>
 
               <button
                 type="submit"
                 className="bg-custom-blue hover:bg-blue-600 text-white font-poppins font-medium py-2 mt-5 mb-7 px-[45px] rounded lg:justify-end text-sm"
                 onClick={() => {
-                  setShowModal(false);
+                  closeModalHandler();
                 }}
               >
                 Send
@@ -123,7 +166,7 @@ const EditCasePage = () => {
               id={item._id}
               name={item.case_title}
               description={item.description}
-              img_url={item.cases_photo}
+              img_url={(item.cases_photo || item.cases_photo.length > 0) ? item.cases_photo : null}
               types={item.caseType}
               showModalProp={()=>showModalHandler(item)}
             />

@@ -114,24 +114,42 @@ const EditProfilePage = () => {
     console.log(tags, 'use effect tags');
   }, [user]);
 
-  const options = [
-    { value: 'Aligners', label: 'Aligners' },
-    { value: 'Bridges', label: 'Bridges' },
-    { value: 'Composite Bonding', label: 'Composite Bonding' },
-    { value: 'Crowns', label: 'Crowns ' },
-    { value: 'Dentures', label: 'Dentures ' },
-    { value: 'Implants', label: 'Implants ' },
-    { value: 'Invisalign', label: 'Invisalign ' },
-    { value: 'Onlays', label: 'Onlays' },
-    { value: 'Orthodontics', label: 'Orthodontics' },
-    { value: 'Periodontal Treatment', label: 'Periodontal Treatment' },
-    { value: 'Restorations', label: 'Restorations' },
-    { value: ' Root canal treatment', label: ' Root canal treatment' },
-    { value: 'Smile Makeover', label: 'Smile Makeover' },
-    { value: 'Veneers', label: 'Veneers' },
-    { value: 'Whitening', label: 'Whitening' },
+  // const options = [
+  //   { value: 'Aligners', label: 'Aligners' },
+  //   { value: 'Bridges', label: 'Bridges' },
+  //   { value: 'Composite Bonding', label: 'Composite Bonding' },
+  //   { value: 'Crowns', label: 'Crowns ' },
+  //   { value: 'Dentures', label: 'Dentures ' },
+  //   { value: 'Implants', label: 'Implants ' },
+  //   { value: 'Invisalign', label: 'Invisalign ' },
+  //   { value: 'Onlays', label: 'Onlays' },
+  //   { value: 'Orthodontics', label: 'Orthodontics' },
+  //   { value: 'Periodontal Treatment', label: 'Periodontal Treatment' },
+  //   { value: 'Restorations', label: 'Restorations' },
+  //   { value: ' Root canal treatment', label: ' Root canal treatment' },
+  //   { value: 'Smile Makeover', label: 'Smile Makeover' },
+  //   { value: 'Veneers', label: 'Veneers' },
+  //   { value: 'Whitening', label: 'Whitening' },
 
-    // Add more options as needed
+  //   // Add more options as needed
+  // ];
+  const options = [
+    'Aligners',
+    'Bridges',
+    'Bonding',
+    'Composite Bonding',
+    'Crowns',
+    'Dentures',
+    'Implants',
+    'Invisalign',
+    'Onlays',
+    'Orthodontics',
+    'Periodontal Treatment',
+    'Restorations',
+    'Root canal treatment',
+    'Smile Makeover',
+    'Veneers',
+    'Whitening'
   ];
 
   const handleChange = (tags) => {

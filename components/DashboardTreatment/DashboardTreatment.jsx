@@ -73,7 +73,7 @@ const TreatmentProvide = (props) => {
                 <Image src={checkCircle} alt="logo" className="mx-auto" />
 
                 <p className="text-custom-black text-[18px] font-semibold mt-3">
-                  {item.label}
+                  {item}
                 </p>
               </div>
             );
