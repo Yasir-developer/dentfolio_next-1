@@ -100,7 +100,7 @@ const PreviousCases = () => {
                           key={dataIndex}
                         >
                           <p className="text-center text-custom-black text-[14px] font-semibold">
-                            {data}
+                            {data?.label}
                           </p>
                         </div>
                       ))}
