@@ -39,75 +39,56 @@ const fileFilter = (req, file, cb) => {
   }
 };
 handler.post(
-  // upload.array('cases_photo', 3),
-  upload.fields([
-    {
-      name: 'cases_photo',
-      maxCount: 3,
-    },
-  ]),
-  // console.log(upload, 'upload=='),
-  // upload.single('cases_photo1'),
-  // upload.single('cases_photo2'),
+  upload.single('cases_photo'),
 
   ...auths,
 
   async (req, res) => {
-    // const path = [];
-    // let path = [];
     console.log(req.files, 'req.files cases ');
-    // return;
-    // return;
-    try {
-      if (req.files) {
-        const uploadPromises = req?.files?.cases_photo?.map((element) => {
-          return cloudinary.uploader.upload(element.path, {
-            width: 512,
-            height: 512,
-            crop: 'fill',
-          });
-        });
-        // let savePath =[]
+    //Multiple Work
+    // try {
+    //   if (req.files) {
+    //     const uploadPromises = req?.files?.cases_photo?.map((element) => {
+    //       return cloudinary.uploader.upload(element.path, {
+    //         width: 512,
+    //         height: 512,
+    //         crop: 'fill',
+    //       });
+    //     });
 
-        const results = await Promise.all(uploadPromises);
-        results.map((res) => {
-          savePath.push(res.secure_url);
-        });
-        // .then((results) => {
-        //   // console.log(results, 'rresults');
-        //   results.map((res) => {
-        //     //  savePath.push(res.secure_url)
+    //     const results = await Promise.all(uploadPromises);
+    //     results.map((res) => {
+    //       savePath.push(res.secure_url);
+    //     });
 
-        //     console.log(res, 'path path');
-        //     savePath.push(res.secure_url);
-        //     console.log(savePath, 'savePath');
-        //   });
-        // console.log(savePath, 'savepath');
+    //   }
 
-        // console.log(path, '=======');
-
-        // Do whatever you want with the 'path' array here, e.g., send it in the response.
-        // })
-      }
-
-      console.log(savePath, 'before const =======');
-      // return;
-      const cases = await insertCase(req.db, {
-        case_title: req.body.title,
-        description: req.body.description,
-        caseType: req.body.tags,
-        visibility: req.body.selectedOption == 'public' ? 1 : 0,
-        dentistId: req.user._id,
-        cases_photo: savePath,
+    let path;
+    console.log(path, 'path========');
+    if (req.file) {
+      console.log(req.file.path, 'req.file=======');
+      const image = await cloudinary.uploader.upload(req.file.path, {
+        width: 512,
+        height: 512,
+        crop: 'fill',
       });
-      console.log(cases, 'after const =======');
-      savePath = [];
-      return res.json({ cases });
-    } catch (err) {
-      console.log(err, 'err');
+      path = image.secure_url;
+      console.log(path, 'my path');
     }
-    // console.log(err)
+    // return;
+    const cases = await insertCase(req.db, {
+      case_title: req.body.title,
+      description: req.body.description,
+      caseType: req.body.tags,
+      visibility: req.body.selectedOption == 'public' ? 1 : 0,
+      dentistId: req.user._id,
+      cases_photo: path,
+    });
+    console.log(cases, 'after const =======');
+    // savePath = [];
+    return res.json({ cases });
   }
+  // console.log(err)
 );
 
 export const config = {
