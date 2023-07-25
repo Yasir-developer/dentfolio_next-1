@@ -36,22 +36,23 @@ const EditCasePage = () => {
     setTags(tags);
   };
   const options = [
-    'Aligners',
-    'Bridges',
-    'Bonding',
-    'Composite Bonding',
-    'Crowns',
-    'Dentures',
-    'Implants',
-    'Invisalign',
-    'Onlays',
-    'Orthodontics',
-    'Periodontal Treatment',
-    'Restorations',
-    'Root canal treatment',
-    'Smile Makeover',
-    'Veneers',
-    'Whitening'
+    { value: 'Aligners', label: 'Aligners' },
+    { value: 'Bridges', label: 'Bridges' },
+    { value: 'Composite Bonding', label: 'Composite Bonding' },
+    { value: 'Crowns', label: 'Crowns ' },
+    { value: 'Dentures', label: 'Dentures ' },
+    { value: 'Implants', label: 'Implants ' },
+    { value: 'Invisalign', label: 'Invisalign ' },
+    { value: 'Onlays', label: 'Onlays' },
+    { value: 'Orthodontics', label: 'Orthodontics' },
+    { value: 'Periodontal Treatment', label: 'Periodontal Treatment' },
+    { value: 'Restorations', label: 'Restorations' },
+    { value: ' Root canal treatment', label: ' Root canal treatment' },
+    { value: 'Smile Makeover', label: 'Smile Makeover' },
+    { value: 'Veneers', label: 'Veneers' },
+    { value: 'Whitening', label: 'Whitening' },
+
+    // Add more options as needed
   ];
   
   const showModalHandler = (itemObj) => {
@@ -166,7 +167,7 @@ const EditCasePage = () => {
               id={item._id}
               name={item.case_title}
               description={item.description}
-              img_url={(item.cases_photo || item.cases_photo.length > 0) ? item.cases_photo : null}
+              img_url={item.cases_photo}
               types={item.caseType}
               showModalProp={()=>showModalHandler(item)}
             />

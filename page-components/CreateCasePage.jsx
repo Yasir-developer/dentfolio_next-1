@@ -5,11 +5,12 @@ import { server } from '../config';
 import React, { useRef, useState, useEffect } from 'react';
 import { FaPlus, FaTrash } from 'react-icons/fa';
 // import { ToastContainer, toast } from 'react-toastify';
-import TagsInput from 'react-tagsinput';
+// import TagsInput from 'react-tagsinput';
 import 'react-tagsinput/react-tagsinput.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
+import Select from 'react-select';
 
 const CreateCasePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -24,9 +25,27 @@ const CreateCasePage = () => {
   const [tags, setTags] = useState([]);
   const uploadFileref = useRef(null);
 
-  useEffect(() => {
-    console.log(tags);
-  }, [tags]);
+ 
+
+  const options = [
+    { value: 'Aligners', label: 'Aligners' },
+    { value: 'Bridges', label: 'Bridges' },
+    { value: 'Composite Bonding', label: 'Composite Bonding' },
+    { value: 'Crowns', label: 'Crowns ' },
+    { value: 'Dentures', label: 'Dentures ' },
+    { value: 'Implants', label: 'Implants ' },
+    { value: 'Invisalign', label: 'Invisalign ' },
+    { value: 'Onlays', label: 'Onlays' },
+    { value: 'Orthodontics', label: 'Orthodontics' },
+    { value: 'Periodontal Treatment', label: 'Periodontal Treatment' },
+    { value: 'Restorations', label: 'Restorations' },
+    { value: ' Root canal treatment', label: ' Root canal treatment' },
+    { value: 'Smile Makeover', label: 'Smile Makeover' },
+    { value: 'Veneers', label: 'Veneers' },
+    { value: 'Whitening', label: 'Whitening' },
+
+    // Add more options as needed
+  ];
 
   const handleChange = (tags) => {
     setTags(tags);
@@ -244,13 +263,22 @@ const CreateCasePage = () => {
               <p className="text-[18px] font-semibold">Case Type:</p>
               <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 mt-3">
                 <div className="w-full">
-                  <TagsInput
+                <Select
+                  value={tags}
+                  onChange={handleChange}
+                  // onChange={handleSelectChange}
+                  options={options}
+                  isClearable
+                  isSearchable
+                  isMulti
+                />
+                  {/* <TagsInput
                     value={tags}
                     onChange={handleChange}
                     inputProps={{
                       className: 'fonts-poppins',
                     }}
-                  />
+                  /> */}
                 </div>
                 {/* {treatmentType.map((data, dataIndex) => (
                   <div
@@ -277,7 +305,6 @@ const CreateCasePage = () => {
               <input
                 ref={uploadFileref}
                 onChange={(e) => onImageChange(e)}
-                multiple
                 type="file"
                 className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] text-[14px] bg-custom-dashboard-bg hidden"
                 placeholder="Upload Photos"

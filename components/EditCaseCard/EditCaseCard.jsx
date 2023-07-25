@@ -3,7 +3,8 @@ import React from "react";
 import BlueButtons from "../Buttons/BlueButtons";
 import { FaEllipsisV } from "react-icons/fa";
 
-const EditCaseCard = ({ img_url, name, description, id, types, showModalProp }) => {
+const EditCaseCard = ({ img_url, name, description, id,types, showModalProp }) => {
+  console.log(types)
   return (
     <div className="w-full">
       <div className="mb-10">
@@ -41,7 +42,7 @@ const EditCaseCard = ({ img_url, name, description, id, types, showModalProp }) 
                   key={dataIndex}
                 >
                   <p className="text-center text-custom-black text-[14px] font-semibold">
-                    {data}
+                    {data.label}
                   </p>
                 </div>
               ))}
