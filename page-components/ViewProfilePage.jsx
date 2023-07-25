@@ -16,13 +16,6 @@ const ViewProfilePage = () => {
   const [loader, setLoader] = useState(true);
 
   const { user } = useSelector((state) => state.auth);
-  console.log(user, 'user all data');
-  // console.log(user, 'user');
-  // useEffect(() => {
-  //   if (user) {
-  //     handleProfile();
-  //   }
-  // }, []);
 
   const handleProfile = () => {
     const options = {

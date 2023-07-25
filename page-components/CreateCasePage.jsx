@@ -191,7 +191,8 @@ const CreateCasePage = () => {
             <div className="w-[90%] flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-1 items-center justify-start">
               <AuthInput
                 placeholder={'Case Title'}
-                className={'w-full lg:!w-[90%]'}
+                className={'w-full lg:!w-full'}
+                containerClassName={'w-full lg:!w-[90%]'}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required

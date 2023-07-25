@@ -10,6 +10,7 @@ import GoogleMap from 'google-maps-react-markers';
 import Marker from '../marker';
 import { GOOGLE_MAPS_API_KEY } from 'config';
 const DoctorBasicDetail = (props) => {
+  console.log(props, 'DoctorBasicDetail');
   const [showModal, setShowModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showContact, setShowContact] = useState(false);
@@ -109,14 +110,16 @@ const DoctorBasicDetail = (props) => {
                 /> */}
                 <AuthInput
                   placeholder={'Full Name'}
-                  className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-[90%] w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
+                  className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-full w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
+                  containerClassName="w-full"
                   // btnStyle={ma}
                 />
 
                 <AuthInput
                   placeholder={'Phone Number'}
-                  className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-[90%] w-full py-3  text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
+                  className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-full w-full py-3  text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
                   type={'tel'}
+                  containerClassName="w-full"
                 />
                 {/* <input
                   type="tel"
@@ -128,6 +131,7 @@ const DoctorBasicDetail = (props) => {
                   placeholder={'Email Address'}
                   className="border border-custom-grey rounded-[7px]  lg:mt-0 w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
                   type={'email'}
+                  containerClassName="w-full"
                 />
                 {/* <input
                   type="email"
@@ -212,15 +216,15 @@ const DoctorBasicDetail = (props) => {
         </div>
       </div>
 
-      <div className="h-[500px] w-[50%] rounded-[7px] py-10">
+      <div className="h-[500px] lg:w-[50%] w-full rounded-[7px] py-10">
         {/* {mapReady && (
           <div>Map is ready. See for logs in developer console.</div>
         )} */}
         <GoogleMap
           apiKey={GOOGLE_MAPS_API_KEY}
           defaultCenter={{
-            lat: props?.data?.latitude,
-            lng: props?.data?.longitude,
+            lat: parseFloat(props?.data?.latitude),
+            lng: parseFloat(props?.data?.longitude),
           }}
           defaultZoom={15}
           options={mapOptions}
@@ -231,8 +235,8 @@ const DoctorBasicDetail = (props) => {
           {/* {coordinates.map(({ lat, lng, name }, index) => ( */}
           <Marker
             // key={index}
-            lat={props?.data?.latitude}
-            lng={props?.data?.longitude}
+            lat={parseFloat(props?.data?.latitude)}
+            lng={parseFloat(props?.data?.longitude)}
             onClick={onMarkerClick}
           />
           {/* ))} */}

@@ -7,8 +7,8 @@ import Router from 'next/router';
 import React, { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
-import { FaTrash, FaPlus } from 'react-icons/fa';
-import { HiChevronDown } from 'react-icons/hi';
+import Select from 'react-select';
+
 // import { useDispatch, useSelector } from 'react-redux';
 // import { toast } from 'react-toastify';
 // import logoWhite from "../../public/images";
@@ -54,8 +54,12 @@ const EditProfilePage = () => {
   const [imageFiles, setImageFiles] = useState(null);
   const [imageSecureUrl, setImageSecureUrl] = useState('');
   const [imageData, setImageData] = useState('');
-
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
   const [tags, setTags] = useState([]);
+  const [speciality, setSpeciality] = useState('');
+  const [degree, setDegree] = useState('');
+
   // const { data: { user } = {}, mutate } = useCurrentUser();
 
   const dropdownRef = useRef(null);
@@ -84,7 +88,7 @@ const EditProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(city, 'city');
+    console.log(user, 'city');
     if (user) {
       console.log(user.city, 'user,city');
       setFirstName(user?.firstName);
@@ -92,6 +96,10 @@ const EditProfilePage = () => {
       setSelectedOption(user?.courtesyTitle);
       setBuildingName(user?.buildingName);
       setStreetName(user?.streetName);
+      setLatitude(parseFloat(user?.latitude));
+      setLongitude(parseFloat(user?.longitude));
+      setSpeciality(user?.speciality);
+      setDegree(user?.degree);
       setGdcNo(user?.gdcNo);
       setDisplayName(user?.displayName);
       setCity(user?.city);
@@ -106,6 +114,26 @@ const EditProfilePage = () => {
     console.log(tags, 'use effect tags');
   }, [user]);
 
+  const options = [
+    { value: 'Aligners', label: 'Aligners' },
+    { value: 'Bridges', label: 'Bridges' },
+    { value: 'Composite Bonding', label: 'Composite Bonding' },
+    { value: 'Crowns', label: 'Crowns ' },
+    { value: 'Dentures', label: 'Dentures ' },
+    { value: 'Implants', label: 'Implants ' },
+    { value: 'Invisalign', label: 'Invisalign ' },
+    { value: 'Onlays', label: 'Onlays' },
+    { value: 'Orthodontics', label: 'Orthodontics' },
+    { value: 'Periodontal Treatment', label: 'Periodontal Treatment' },
+    { value: 'Restorations', label: 'Restorations' },
+    { value: ' Root canal treatment', label: ' Root canal treatment' },
+    { value: 'Smile Makeover', label: 'Smile Makeover' },
+    { value: 'Veneers', label: 'Veneers' },
+    { value: 'Whitening', label: 'Whitening' },
+
+    // Add more options as needed
+  ];
+
   const handleChange = (tags) => {
     setTags(tags);
   };
@@ -118,6 +146,7 @@ const EditProfilePage = () => {
     setCity('');
     setPostCode('');
     const input = e.target.value;
+    setStreetName(input);
     setAddress(input);
     setShowAddress(input);
     if (input) {
@@ -136,16 +165,17 @@ const EditProfilePage = () => {
     setAddress(selectedAddress);
     setSuggestions([]);
 
-    const response = await getAddressData(selectedAddress, addressShow).then(
-      (res) => {
-        console.log(res, 'my response');
-        if (res) {
-          setPostCode(res.postalCode);
-          setCity(res.city);
-        }
-        // setCity(data?.city);
-      }
-    );
+    const response = await getAddressData(selectedAddress, addressShow);
+    // .then(
+    //   (res) => {
+    //     console.log(res, 'my response');
+    //     if (res) {
+    //       setPostCode(res.postalCode);
+    //       setCity(res.city);
+    //     }
+    //     // setCity(data?.city);
+    //   }
+    // );
     setData(response);
     console.log(data, 'all data -----');
     console.log(response, 'handleAddressSelect response');
@@ -153,7 +183,8 @@ const EditProfilePage = () => {
 
   const handleSave = (e, secureUrl) => {
     e.preventDefault();
-
+    console.log(data?.location?.location?.lat, 'data?.location?.location?.lat');
+    // return;
     console.log(streetName, 'strret name');
     console.log(showAddress, 'showAddress name');
     // return;
@@ -172,8 +203,24 @@ const EditProfilePage = () => {
     formData.append('gdcNo', gdcNo);
     formData.append('buildingName', buildingName);
     formData.append('streetName', showAddress ? showAddress : streetName);
+    formData.append(
+      'latitude',
+      data?.location?.location?.lat
+        ? data?.location?.location?.lat
+        : user?.latitude
+    );
+    formData.append(
+      'longitude',
+      data?.location?.location?.lng
+        ? data?.location?.location?.lng
+        : user?.longitude
+    );
     formData.append('city', city ? city : data?.city);
+
     formData.append('postCode', postCode ? postCode : data?.postalCode);
+    formData.append('speciality', speciality);
+    formData.append('degree', degree);
+
     formData.append('bio', bio);
     formData.append('phone', phone);
     formData.append('treatment_type', treatmentTypeJSON);
@@ -227,6 +274,10 @@ const EditProfilePage = () => {
       console.log(pickedImage, 'pickedImage');
     }
   };
+
+  // const handleSelectChange = (selectedOption) => {
+  //   setSelectedOption(selectedOption);
+  // };
 
   const courtesyData = [
     {
@@ -290,10 +341,12 @@ const EditProfilePage = () => {
               // handleSubmit(e);
             }
           >
-            <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-1 items-center">
-              <div className="relative flex items-center border bg-custom-dashboard-bg border-custom-grey rounded-[7px] p-3 w-[45%] placeholder-slate-400 text-[16px] font-light mb-5">
+            <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-1">
+              <div className="w-[45%] text-[16px] font-light">
+                <p className="font-normal">Courtesy Title</p>
+
                 <select
-                  className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] text-[14px] bg-custom-dashboard-bg"
+                  className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] p-3  rounded-[7px] text-[14px] bg-custom-dashboard-bg border border-custom-grey"
                   value={selectedOption}
                   onChange={handleSelectChange}
                 >
@@ -315,66 +368,107 @@ const EditProfilePage = () => {
               <AuthInput
                 placeholder={'User Name'}
                 className={'order-2'}
+                containerClassName={'w-[45%]'}
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
+                label="User Name"
                 // required
               />
               <AuthInput
                 placeholder={'First Name'}
                 className={'order-3'}
+                containerClassName={'w-[45%]'}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 required
+                label="First Name"
               />
               <AuthInput
                 placeholder={'Last Name'}
                 className={'order-4'}
+                containerClassName={'w-[45%]'}
                 ref={lastRef}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 required
+                label="Last Name"
               />
               <AuthInput
                 placeholder={'Email Address'}
-                className={'w-[92.5%] lg:w-[45%] order-5'}
+                className={'order-6'}
+                containerClassName={'w-[92.5%] lg:w-[45%]'}
                 value={user?.email}
                 disabled
+                label="Email"
               />
               <AuthInput
                 placeholder={'Phone'}
-                className={'w-[92.5%] lg:w-[45%] order-6'}
+                className={'order-6'}
+                containerClassName={'w-[92.5%] lg:w-[45%]'}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                label="Phone Number"
+
+                // required
+              />
+
+              <AuthInput
+                placeholder={'Speciality Title'}
+                className={'order-6'}
+                containerClassName={'w-[92.5%] lg:w-[45%]'}
+                value={speciality}
+                onChange={(e) => setSpeciality(e.target.value)}
+                label="Speciality Title"
+
+                // required
+              />
+
+              <AuthInput
+                placeholder={'Degree'}
+                className={'order-6'}
+                containerClassName={'w-[92.5%] lg:w-[45%]'}
+                value={degree}
+                onChange={(e) => setDegree(e.target.value)}
+                label="Degree"
+
                 // required
               />
               <AuthInput
                 placeholder={'Display Name'}
                 className={'order-7'}
+                containerClassName={'w-[45%]'}
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
+                label="Display Name"
                 required
               />
               <AuthInput
                 placeholder={'GDC Number'}
                 className={'order-8'}
+                containerClassName={'w-[45%]'}
                 value={gdcNo}
                 onChange={(e) => setGdcNo(e.target.value)}
+                label="GDC No"
                 required
               />
               <AuthInput
                 placeholder={'Practice Building number/ Name'}
                 className={'order-9'}
+                containerClassName={'w-[45%]'}
                 value={buildingName}
                 onChange={(e) => setBuildingName(e.target.value)}
                 required
+                label="Building Name"
               />
-              <div className="order-10 w-[45%] relative">
+              <div className="w-[45%] relative">
                 <AuthInput
                   placeholder={'Practice Street Name'}
-                  className={'!w-full'}
+                  className={'order-10'}
+                  containerClassName={'w-full'}
                   value={showAddress ? showAddress : streetName}
                   // onChange={(e) => setStreetName(e.target.value)}
                   onChange={handleInputChange}
+                  label="Street Name"
                   required
                 />
                 <div class="absolute right-100 bg-white shadow-xl w-full top-[50px] mt-0 pt-0 rounded-[7px] pb-0">
@@ -401,20 +495,21 @@ const EditProfilePage = () => {
               <AuthInput
                 placeholder={'Practice City'}
                 className={'order-11'}
+                containerClassName={'w-[45%]'}
                 value={city ? city : data?.city}
                 onChange={(e) => {
                   setCity(e.target.value);
-                  // if (data) {
-                  //   setCity(data.city);
-                  // }
                 }}
+                label="City"
                 required
               />
               <AuthInput
                 placeholder={'Practice Post Code'}
                 className={'order-12'}
+                containerClassName={'w-[45%]'}
                 value={postCode ? postCode : data?.postalCode}
                 onChange={(e) => setPostCode(e.target.value)}
+                label="Postal Code"
                 required
               />
 
@@ -436,16 +531,21 @@ const EditProfilePage = () => {
                   </p>
                 </button>
               </div>
-
-              <textarea
-                placeholder="Bio"
-                className="w-[92.5%] lg:text-[16px] text-[14px] lg:w-[45%] border bg-custom-dashboard-bg border-custom-grey rounded-[7px] p-3 focus:outline-none lg:order-[14] order-[13]"
-                rows={3}
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-              ></textarea>
+              {/* <div> */}
+              <div className="order-[13] w-[92.5%] lg:w-[45%]">
+                <p>Bio</p>
+                <textarea
+                  placeholder="Bio"
+                  className=" lg:text-[16px] text-[14px] w-full border bg-custom-dashboard-bg border-custom-grey rounded-[7px] p-3 focus:outline-none lg:order-[14] "
+                  rows={3}
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                ></textarea>
+              </div>
+              {/* </div> */}
             </div>
             <div className="lg:w-[45%] flex flex-col mt-[-33px] justify-start items-start">
+              <p>Profile Photo</p>
               {pickedImage ? (
                 <Image
                   src={pickedImage}
@@ -457,14 +557,24 @@ const EditProfilePage = () => {
                 <></>
               )}
               <p className="text-[18px] font-semibold">Treatment Type:</p>
+
               <div className="w-full">
-                <TagsInput
+                <Select
+                  value={tags}
+                  onChange={handleChange}
+                  // onChange={handleSelectChange}
+                  options={options}
+                  isClearable
+                  isSearchable
+                  isMulti
+                />
+                {/* <TagsInput
                   value={tags}
                   onChange={handleChange}
                   inputProps={{
                     className: 'fonts-poppins',
                   }}
-                />
+                /> */}
               </div>
 
               {/* <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 mt-3">

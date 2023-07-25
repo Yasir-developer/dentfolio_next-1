@@ -113,6 +113,7 @@ const Login = () => {
                 <AuthInput
                   placeholder={'Email Address'}
                   className={'w-full'}
+                  containerClassName={'!w-full'}
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -122,6 +123,7 @@ const Login = () => {
                   type={'password'}
                   className={''}
                   value={password}
+                  containerClassName={'!w-full'}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />

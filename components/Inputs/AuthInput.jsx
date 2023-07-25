@@ -16,6 +16,7 @@ const AuthInput = forwardRef(function AuthInput(
     maxLength,
     required,
     disabled,
+    label,
     ...rest
   },
   ref
@@ -30,7 +31,10 @@ const AuthInput = forwardRef(function AuthInput(
     // <div className="relative">
     <>
       {type !== 'password' ? (
-        <>
+        <div
+          className={`${containerClassName ? ` ${containerClassName}` : ''}`}
+        >
+          {label ? <p>{label}</p> : <></>}
           <input
             type={showPassword ? 'text' : type}
             id={id}
@@ -44,7 +48,7 @@ const AuthInput = forwardRef(function AuthInput(
             style={btnStyle}
             maxLength={maxLength}
             // place
-            className={`focus:outline-none border w-[45%] border-custom-grey rounded-[7px] p-3 bg-custom-dashboard-bg placeholder-slate-400 lg:text-[16px] text-[14px] font-normal mb-5 ${className}`}
+            className={`focus:outline-none border w-full border-custom-grey rounded-[7px] p-3 bg-custom-dashboard-bg placeholder-slate-400 lg:text-[16px] text-[14px] font-normal mb-5 ${className}`}
           />
 
           {/* <button
@@ -58,10 +62,10 @@ const AuthInput = forwardRef(function AuthInput(
             <HiEye className="text-gray-400" />
           )}
         </button> */}
-        </>
+        </div>
       ) : (
         <div
-          className={`relative flex items-center border border-custom-grey rounded-[7px] p-3 w-[100%] lg:w-full placeholder-slate-400 bg-custom-dashboard-bg font-light mb-5 ${containerClassName}`}
+          className={`relative flex items-center border border-custom-grey rounded-[7px] p-3 placeholder-slate-400 bg-custom-dashboard-bg font-light mb-5 ${containerClassName}`}
         >
           <>
             <input
