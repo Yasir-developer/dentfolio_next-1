@@ -173,6 +173,7 @@ const Signup = () => {
               <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-2 items-center justify-center">
                 <AuthInput
                   ref={emailRef}
+                  containerClassName={'w-[45%]'}
                   placeholder={'First Name'}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -180,6 +181,7 @@ const Signup = () => {
                 />
                 <AuthInput
                   placeholder={'Last Name'}
+                  containerClassName={'w-[45%]'}
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   required
@@ -188,7 +190,7 @@ const Signup = () => {
                 <AuthInput
                   placeholder={'Email Address'}
                   type={'email'}
-                  className={'w-[92.5%] lg:w-[45%]'}
+                  containerClassName={'w-[92.5%] lg:w-[45%]'}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -196,7 +198,7 @@ const Signup = () => {
 
                 <AuthInput
                   placeholder={'Display Name'}
-                  className={'w-[92.5%] lg:w-[45%]'}
+                  containerClassName={'w-[92.5%] lg:w-[45%]'}
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   required
@@ -206,7 +208,7 @@ const Signup = () => {
                   ref={passwordRef}
                   type={'password'}
                   // className={"!w-[45%]"}
-                  containerClassName={'!w-[45%]'}
+                  containerClassName={'w-[45%]'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -214,7 +216,7 @@ const Signup = () => {
                   placeholder={'Speciality Title'}
                   // type={"password"}
                   // className={"!w-[45%]"}
-                  containerClassName={'!w-[45%]'}
+                  containerClassName={'w-[45%]'}
                   value={speciality}
                   onChange={(e) => setSpeciality(e.target.value)}
                   required
@@ -223,7 +225,7 @@ const Signup = () => {
                   placeholder={'Degree'}
                   // type={"password"}
                   // className={"!w-[45%]"}
-                  containerClassName={'!w-[45%]'}
+                  containerClassName={'w-[45%]'}
                   value={degree}
                   onChange={(e) => setDegree(e.target.value)}
                   required
@@ -233,6 +235,7 @@ const Signup = () => {
                   placeholder={'GDC Number'}
                   value={gdcNo}
                   onChange={(e) => setGdcNo(e.target.value)}
+                  containerClassName={'w-[45%]'}
                   required
                 />
                 <AuthInput
@@ -240,9 +243,9 @@ const Signup = () => {
                   value={buildingName}
                   onChange={(e) => setBuildingName(e.target.value)}
                   required
-                  className={'lg:!w-[45%] !w-[92.5%]'}
+                  containerClassName={'w-[45%]'}
                 />
-                <div className="lg:w-[45%] z-[999] w-[92.5%] relative">
+                <div className="z-[999] w-[45%] relative">
                   <AuthInput
                     placeholder={'Practice Street Name'}
                     value={showAddress}
@@ -250,6 +253,7 @@ const Signup = () => {
                     // onChange={(e) => setStreetName(e.target.value)}
                     required
                     className={'!w-full'}
+                    containerClassName={'w-full'}
                   />
                   <div class="absolute right-100 bg-white shadow-xl w-full top-[50px] mt-0 pt-0 rounded-[7px] pb-0">
                     {suggestions.length > 0 && (
@@ -312,12 +316,14 @@ const Signup = () => {
                   placeholder={'Practice City'}
                   value={city ? city : data?.city}
                   onChange={(e) => setCity(e.target.value)}
+                  containerClassName={'w-[45%]'}
                   required
                 />
                 <AuthInput
                   placeholder={'Practice Post Code'}
                   value={postCode ? postCode : data?.postalCode}
                   onChange={(e) => setPostCode(e.target.value)}
+                  containerClassName={'w-[45%]'}
                   required
                 />
               </div>
