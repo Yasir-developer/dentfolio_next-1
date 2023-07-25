@@ -80,9 +80,13 @@ handler.patch(
       bio,
       phone,
       courtesyTitle,
+      speciality,
+      degree,
       profile_photo,
       treatment_type,
       previous_case,
+      latitude,
+      longitude,
     } = req.body;
 
     let username;
@@ -112,6 +116,11 @@ handler.patch(
         ...(gdcNo && { gdcNo }),
         ...(buildingName && { buildingName }),
         ...(streetName && { streetName }),
+        ...(latitude && { latitude }),
+        ...(longitude && { longitude }),
+        ...(speciality && { speciality }),
+        ...(degree && { degree }),
+
         ...(city && { city }),
         ...(postCode && { postCode }),
         ...(phone && { phone }),

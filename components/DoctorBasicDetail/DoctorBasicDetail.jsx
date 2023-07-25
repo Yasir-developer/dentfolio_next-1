@@ -10,6 +10,7 @@ import GoogleMap from 'google-maps-react-markers';
 import Marker from '../marker';
 import { GOOGLE_MAPS_API_KEY } from 'config';
 const DoctorBasicDetail = (props) => {
+  console.log(props, 'DoctorBasicDetail');
   const [showModal, setShowModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showContact, setShowContact] = useState(false);
@@ -222,8 +223,8 @@ const DoctorBasicDetail = (props) => {
         <GoogleMap
           apiKey={GOOGLE_MAPS_API_KEY}
           defaultCenter={{
-            lat: props?.data?.latitude,
-            lng: props?.data?.longitude,
+            lat: parseFloat(props?.data?.latitude),
+            lng: parseFloat(props?.data?.longitude),
           }}
           defaultZoom={15}
           options={mapOptions}
@@ -234,8 +235,8 @@ const DoctorBasicDetail = (props) => {
           {/* {coordinates.map(({ lat, lng, name }, index) => ( */}
           <Marker
             // key={index}
-            lat={props?.data?.latitude}
-            lng={props?.data?.longitude}
+            lat={parseFloat(props?.data?.latitude)}
+            lng={parseFloat(props?.data?.longitude)}
             onClick={onMarkerClick}
           />
           {/* ))} */}

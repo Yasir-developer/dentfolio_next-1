@@ -7,8 +7,8 @@ import Router from 'next/router';
 import React, { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
-import { FaTrash, FaPlus } from 'react-icons/fa';
-import { HiChevronDown } from 'react-icons/hi';
+import Select from 'react-select';
+
 // import { useDispatch, useSelector } from 'react-redux';
 // import { toast } from 'react-toastify';
 // import logoWhite from "../../public/images";
@@ -54,8 +54,12 @@ const EditProfilePage = () => {
   const [imageFiles, setImageFiles] = useState(null);
   const [imageSecureUrl, setImageSecureUrl] = useState('');
   const [imageData, setImageData] = useState('');
-
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
   const [tags, setTags] = useState([]);
+  const [speciality, setSpeciality] = useState('');
+  const [degree, setDegree] = useState('');
+
   // const { data: { user } = {}, mutate } = useCurrentUser();
 
   const dropdownRef = useRef(null);
@@ -84,7 +88,7 @@ const EditProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(city, 'city');
+    console.log(user, 'city');
     if (user) {
       console.log(user.city, 'user,city');
       setFirstName(user?.firstName);
@@ -92,6 +96,10 @@ const EditProfilePage = () => {
       setSelectedOption(user?.courtesyTitle);
       setBuildingName(user?.buildingName);
       setStreetName(user?.streetName);
+      setLatitude(parseFloat(user?.latitude));
+      setLongitude(parseFloat(user?.longitude));
+      setSpeciality(user?.speciality);
+      setDegree(user?.degree);
       setGdcNo(user?.gdcNo);
       setDisplayName(user?.displayName);
       setCity(user?.city);
@@ -106,6 +114,26 @@ const EditProfilePage = () => {
     console.log(tags, 'use effect tags');
   }, [user]);
 
+  const options = [
+    { value: 'Aligners', label: 'Aligners' },
+    { value: 'Bridges', label: 'Bridges' },
+    { value: 'Composite Bonding', label: 'Composite Bonding' },
+    { value: 'Crowns', label: 'Crowns ' },
+    { value: 'Dentures', label: 'Dentures ' },
+    { value: 'Implants', label: 'Implants ' },
+    { value: 'Invisalign', label: 'Invisalign ' },
+    { value: 'Onlays', label: 'Onlays' },
+    { value: 'Orthodontics', label: 'Orthodontics' },
+    { value: 'Periodontal Treatment', label: 'Periodontal Treatment' },
+    { value: 'Restorations', label: 'Restorations' },
+    { value: ' Root canal treatment', label: ' Root canal treatment' },
+    { value: 'Smile Makeover', label: 'Smile Makeover' },
+    { value: 'Veneers', label: 'Veneers' },
+    { value: 'Whitening', label: 'Whitening' },
+
+    // Add more options as needed
+  ];
+
   const handleChange = (tags) => {
     setTags(tags);
   };
@@ -118,6 +146,7 @@ const EditProfilePage = () => {
     setCity('');
     setPostCode('');
     const input = e.target.value;
+    setStreetName(input);
     setAddress(input);
     setShowAddress(input);
     if (input) {
@@ -136,16 +165,17 @@ const EditProfilePage = () => {
     setAddress(selectedAddress);
     setSuggestions([]);
 
-    const response = await getAddressData(selectedAddress, addressShow).then(
-      (res) => {
-        console.log(res, 'my response');
-        if (res) {
-          setPostCode(res.postalCode);
-          setCity(res.city);
-        }
-        // setCity(data?.city);
-      }
-    );
+    const response = await getAddressData(selectedAddress, addressShow);
+    // .then(
+    //   (res) => {
+    //     console.log(res, 'my response');
+    //     if (res) {
+    //       setPostCode(res.postalCode);
+    //       setCity(res.city);
+    //     }
+    //     // setCity(data?.city);
+    //   }
+    // );
     setData(response);
     console.log(data, 'all data -----');
     console.log(response, 'handleAddressSelect response');
@@ -153,7 +183,8 @@ const EditProfilePage = () => {
 
   const handleSave = (e, secureUrl) => {
     e.preventDefault();
-
+    console.log(data?.location?.location?.lat, 'data?.location?.location?.lat');
+    // return;
     console.log(streetName, 'strret name');
     console.log(showAddress, 'showAddress name');
     // return;
@@ -172,8 +203,24 @@ const EditProfilePage = () => {
     formData.append('gdcNo', gdcNo);
     formData.append('buildingName', buildingName);
     formData.append('streetName', showAddress ? showAddress : streetName);
+    formData.append(
+      'latitude',
+      data?.location?.location?.lat
+        ? data?.location?.location?.lat
+        : user?.latitude
+    );
+    formData.append(
+      'longitude',
+      data?.location?.location?.lng
+        ? data?.location?.location?.lng
+        : user?.longitude
+    );
     formData.append('city', city ? city : data?.city);
+
     formData.append('postCode', postCode ? postCode : data?.postalCode);
+    formData.append('speciality', speciality);
+    formData.append('degree', degree);
+
     formData.append('bio', bio);
     formData.append('phone', phone);
     formData.append('treatment_type', treatmentTypeJSON);
@@ -227,6 +274,10 @@ const EditProfilePage = () => {
       console.log(pickedImage, 'pickedImage');
     }
   };
+
+  // const handleSelectChange = (selectedOption) => {
+  //   setSelectedOption(selectedOption);
+  // };
 
   const courtesyData = [
     {
@@ -360,6 +411,28 @@ const EditProfilePage = () => {
 
                 // required
               />
+
+              <AuthInput
+                placeholder={'Speciality Title'}
+                className={'order-6'}
+                containerClassName={'w-[92.5%] lg:w-[45%]'}
+                value={speciality}
+                onChange={(e) => setSpeciality(e.target.value)}
+                label="Speciality Title"
+
+                // required
+              />
+
+              <AuthInput
+                placeholder={'Degree'}
+                className={'order-6'}
+                containerClassName={'w-[92.5%] lg:w-[45%]'}
+                value={degree}
+                onChange={(e) => setDegree(e.target.value)}
+                label="Degree"
+
+                // required
+              />
               <AuthInput
                 placeholder={'Display Name'}
                 className={'order-7'}
@@ -484,14 +557,24 @@ const EditProfilePage = () => {
                 <></>
               )}
               <p className="text-[18px] font-semibold">Treatment Type:</p>
+
               <div className="w-full">
-                <TagsInput
+                <Select
+                  value={tags}
+                  onChange={handleChange}
+                  // onChange={handleSelectChange}
+                  options={options}
+                  isClearable
+                  isSearchable
+                  isMulti
+                />
+                {/* <TagsInput
                   value={tags}
                   onChange={handleChange}
                   inputProps={{
                     className: 'fonts-poppins',
                   }}
-                />
+                /> */}
               </div>
 
               {/* <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 mt-3">

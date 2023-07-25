@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const DashboardHeader = ({ menuToggler }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-
+  console.log(user, 'user');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   useEffect(() => {
@@ -69,7 +69,7 @@ const DashboardHeader = ({ menuToggler }) => {
           <div className="lg:border-l border-l-[#c8bfc3] flex">
             <div className="flex flex-row items-center justify-center lg:pr-[80px] lg:pl-[30px] ">
               <Image
-                src={'/images/profileImg.png'}
+                src={user?.profile_photo}
                 alt="logo"
                 width={51}
                 height={51}
