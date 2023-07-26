@@ -66,7 +66,7 @@ const PreviousCases = () => {
                 className="border rounded-[7px] border-[#F6EBEB] border-b flex flex-col-reverse lg:flex-row items-center px-3 mt-7"
                 key={index}
               >
-                <div className="flex flex-col my-3 gap-y-[3px]">
+                <div className="flex flex-col my-3 gap-y-[3px] w-[30%]">
                   {/* return ( */}
 
                   <Image
@@ -75,11 +75,11 @@ const PreviousCases = () => {
                     width={0}
                     height={0}
                     sizes="100vw"
-                    className="w-full h-full max-h-[85px] lg:w-auto"
+                    className="w-full h-full lg:w-auto"
                   />
                 </div>
 
-                <div className="flex flex-col lg:px-5 pt-5 pb-5 justify-center">
+                <div className="flex flex-col lg:px-5 pt-5 pb-5 justify-center w-[70%]">
                   <h2 className="text-left text-[21px] text-custom-blue font-semibold">
                     {item?.case_title}
                     {/* Composite Bonding */}

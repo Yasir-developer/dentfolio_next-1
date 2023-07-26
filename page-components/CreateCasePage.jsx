@@ -19,7 +19,7 @@ const CreateCasePage = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [loader, setLoader] = useState(false);
-  const [imageFiles, setImageFiles] = useState([]);
+  const [imageFiles, setImageFiles] = useState(null);
   const [pickedImage, setPickedImage] = useState([]);
 
   const [tags, setTags] = useState([]);
@@ -51,32 +51,40 @@ const CreateCasePage = () => {
     setTags(tags);
   };
   const onImageChange = (e) => {
-    // setImageFiles(e.target.files);
-    console.log(e.target.files, 'e.target.files');
-
-    const files = Array.from(e.target.files);
-    // setImageFiles([...e.target.files]);
-
-    // console.log(first)
-    // console.log(files, 'all');
-
-    if (files) {
-      setImageFiles(files);
-      console.log(imageFiles, 'kdskskdsa');
+    // const files = Array.from(e.target.files);
+    const [file] = e.target.files;
+    if (file) {
+      setImageFiles(file);
       // console.log(formatBytes(file.size), "formatBytes(file.size)");
       // if (parseFloat(formatBytes(file.size)) > 5) return toast.error('File can not be larger than 5 mb')
-      // if (!files.name.match(/\.(jpg|jpeg|png|gif)$/)) {
-      //   console.log('no file');
-      //   return toast.error('Please select valid image.');
-      // }
+      if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+        console.log('no file');
+        return toast.error('Please select valid image.');
+      }
       // setImgObj(file);
-      console.log(files, 'my files');
-      const urls = files.map((file) => URL.createObjectURL(file));
-      console.log(urls, 'urls ---');
-      setPickedImage(urls);
-      // setPickedImage(URL.createObjectURL(files));
+      console.log(file, 'my files');
+      setPickedImage(URL.createObjectURL(file));
       console.log(pickedImage, 'pickedImage');
     }
+
+
+    // if (files) {
+    //   setImageFiles(files);
+    //   console.log(imageFiles, 'kdskskdsa');
+    //   // console.log(formatBytes(file.size), "formatBytes(file.size)");
+    //   // if (parseFloat(formatBytes(file.size)) > 5) return toast.error('File can not be larger than 5 mb')
+    //   // if (!files.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+    //   //   console.log('no file');
+    //   //   return toast.error('Please select valid image.');
+    //   // }
+    //   // setImgObj(file);
+    //   console.log(files, 'my files');
+    //   const urls = files.map((file) => URL.createObjectURL(file));
+    //   console.log(urls, 'urls ---');
+    //   setPickedImage(urls);
+    //   // setPickedImage(URL.createObjectURL(files));
+    //   console.log(pickedImage, 'pickedImage');
+    // }
   };
 
   const emptFields = () => {
@@ -129,7 +137,7 @@ const CreateCasePage = () => {
 
     formData.append('tags', caseTypeJSON);
     formData.append('selectedOption', selectedOption);
-    // formData.append('cases_photo', imageFiles);
+    formData.append('cases_photo', imageFiles);
 
     // formData.append(
     //   'cases_photo',
@@ -139,10 +147,10 @@ const CreateCasePage = () => {
     //   })
     // );
 
-    imageFiles.forEach((file, index) => {
-      console.log(file, 'file ==============');
-      formData.append('cases_photo', file);
-    });
+    // imageFiles.forEach((file, index) => {
+    //   console.log(file, 'file ==============');
+    //   formData.append('cases_photo', file);
+    // });
 
     // console.log(imageFiles, 'formData');
     axios

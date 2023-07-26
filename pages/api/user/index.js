@@ -17,9 +17,9 @@ if (process.env.CLOUDINARY_URL) {
     username: api_key,
     password: api_secret,
   } = new URL(process.env.CLOUDINARY_URL);
-  console.log(cloud_name, 'cloud_name');
-  console.log(api_key, 'api_key');
-  console.log(api_secret, 'api_secret');
+  // console.log(cloud_name, 'cloud_name');
+  // console.log(api_key, 'api_key');
+  // console.log(api_secret, 'api_secret');
 
   cloudinary.config({
     cloud_name,

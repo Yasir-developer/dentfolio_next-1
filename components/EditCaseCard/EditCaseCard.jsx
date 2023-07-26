@@ -13,20 +13,20 @@ const EditCaseCard = ({ img_url, name, description, id,types, showModalProp }) =
           className="border rounded-[7px] border-[#F6EBEB] relative flex lg:flex-row flex-col-reverse px-3 mt-7"
           key={id}
         >
-          <div className="flex flex-col my-3 gap-y-[3px]">
+          <div className="flex flex-col my-3 gap-y-[3px] w-[30%]">
                 <Image
                   src={img_url ? img_url : '/images/case2.png'}
                   alt="logo"
                   width={0}
                   height={0}
                   sizes="100vw"
-                  className="w-full h-full max-w-[300px] lg:w-auto lg:h-[170px] my-3"
+                  className="w-full h-full lg:w-auto my-3"
                 />
               
               
           </div>
 
-          <div className="flex flex-wrap lg:px-5 pt-5 pb-5 items-center lg:items-start">
+          <div className="flex flex-wrap lg:px-5 pt-5 pb-5 items-center w-[70%]">
             <h2 className="lg;text-center lg:text-left text-[21px] text-custom-blue font-semibold my-2 lg:w-full w-[90%]">
               {name}
             </h2>

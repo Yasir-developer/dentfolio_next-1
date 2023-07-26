@@ -3,6 +3,7 @@ import {
   getTeacherById,
   insertCase,
   getCases,
+  updateCaseById
   // insertPost,
 } from '@/api-lib/db';
 import { auths, database, validateBody } from '@/api-lib/middlewares';
@@ -91,6 +92,60 @@ handler.post(
   // console.log(err)
 );
 
+handler.patch(
+  upload.single('cases_photo'),
+
+  async (req, res) => {
+    if(!req.body.id){
+      return res.status(400).json({error:'Case ID not found'})
+    }
+    let path;
+    console.log(path, 'path========');
+    if (req.file) {
+      console.log(req.file.path, 'req.file=======');
+      const image = await cloudinary.uploader.upload(req.file.path, {
+        width: 512,
+        height: 512,
+        crop: 'fill',
+      });
+      path = image.secure_url;
+      console.log(path, 'my path');
+    }
+
+    // console.log(req.body)
+    const {
+      id,
+      dentistId,
+      title,
+      description,
+      tags,
+      selectedOption,
+    } = req.body;
+    // console.log(dentistId)
+    // console.log(id)
+    // console.log(title)
+    // console.log(description)
+    // console.log(tags)
+    // console.log(selectedOption)
+    console.log(path)
+
+    const caseUpdate = await updateCaseById(
+      // req.db,
+      req.db,
+      req.body.id ? req.body.id : '',
+      {
+        // ...(username && { username }),
+        ...(title && { case_title:title }),
+        ...(description && { description }),
+        ...(tags && { caseType:tags }),
+        ...(selectedOption && { visibility: selectedOption == 'public' }),
+        ...(path && { cases_photo:path }),
+      }
+    );
+    console.log(caseUpdate, 'caseUpdate');
+    res.json({ caseUpdate });
+  }
+)
 export const config = {
   api: {
     bodyParser: false,

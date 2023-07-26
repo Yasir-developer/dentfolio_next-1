@@ -27,3 +27,26 @@ export async function getCases(db, { dentistId }) {
   // .find({dentistId:new ObjectId(dentistId.toString())}).toArray();
   return newCase;
 }
+export async function updateCaseById(db, id,{ case_title, description,
+  visibility,
+  caseType,
+  cases_photo,}) {
+  if(!id){
+    return {error:'id not found'}
+  }
+  return db
+    .collection('cases')
+    .findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: {
+        case_title,
+        description,
+        visibility,
+        caseType: JSON.parse(caseType),
+        cases_photo
+
+      } },
+      { returnDocument: 'after', projection: { password: 0 } }
+    )
+    .then(({ value }) => value);
+}
