@@ -12,17 +12,17 @@ const handler = nc(ncOpts);
 handler.use(database);
 
 handler.post(
-  validateBody({
-    type: 'object',
-    properties: {
-      // username: ValidateProps.user.username,
-      // name: ValidateProps.user.name,
-      password: ValidateProps.user.password,
-      email: ValidateProps.user.email,
-    },
-    required: ['password', 'email'],
-    additionalProperties: true,
-  }),
+  // validateBody({
+  //   type: 'object',
+  //   properties: {
+  //     // username: ValidateProps.user.username,
+  //     // name: ValidateProps.user.name,
+  //     password: ValidateProps.user.password,
+  //     email: ValidateProps.user.email,
+  //   },
+  //   required: ['password', 'email'],
+  //   additionalProperties: true,
+  // }),
   ...auths,
   async (req, res) => {
     // const db = await getMongoDb();

@@ -531,7 +531,20 @@ const EditProfilePage = () => {
                 required
               />
 
-              <div className="lg:w-[45%] flex mt-5 lg:mt-0 mb-[72px]  justify-start items-start lg:order-[13] order-[14]">
+              <div className="lg:w-[45%] flex flex-col gap-y-5 mt-5 lg:mt-0 mb-[72px]  justify-start items-start lg:order-[13] order-[14]">
+                <div>
+                  <p>Profile Photo</p>
+                  {pickedImage ? (
+                    <Image
+                      src={pickedImage}
+                      width={105}
+                      height={105}
+                      className="rounded-[102.5px] max-w-[130px] lg:max-w-[205px]"
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
                 <input
                   onChange={(e) => onImageChange(e)}
                   ref={uploadFileref}
@@ -563,17 +576,6 @@ const EditProfilePage = () => {
               {/* </div> */}
             </div>
             <div className="lg:w-[45%] flex flex-col mt-[-33px] justify-start items-start">
-              <p>Profile Photo</p>
-              {pickedImage ? (
-                <Image
-                  src={pickedImage}
-                  width={105}
-                  height={105}
-                  className="rounded-[102.5px] max-w-[130px] lg:max-w-[205px]"
-                />
-              ) : (
-                <></>
-              )}
               <p className="text-[18px] font-semibold">Treatment Type:</p>
 
               <div className="w-full">
@@ -586,34 +588,7 @@ const EditProfilePage = () => {
                   isSearchable
                   isMulti
                 />
-                {/* <TagsInput
-                  value={tags}
-                  onChange={handleChange}
-                  inputProps={{
-                    className: 'fonts-poppins',
-                  }}
-                /> */}
               </div>
-
-              {/* <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 mt-3">
-                {treatment.map((data, dataIndex) => (
-                  <div
-                    className="bg-custom-blue-light flex items-center justify-center h-10 px-5 rounded-[7px] grid-cols-2"
-                    key={dataIndex}
-                  >
-                    <p className="text-center text-custom-black text-[14px] font-semibold">
-                      {data.type}
-                    </p>
-                    <FaTrash className="w-5 h-5 pl-[10px]" />
-                  </div>
-                ))}
-                <div className="flex items-center justify-center h-10 px-3 py-3 rounded-[7px] bg-[#EBFAF8]">
-                  <p className="text-center text-custom-black text-[14px] font-semibold">
-                    Add More
-                  </p>
-                  <FaPlus className="w-5 h-5 pl-[10px] " />
-                </div>
-              </div> */}
             </div>
             <div>
               <BlueButtons
