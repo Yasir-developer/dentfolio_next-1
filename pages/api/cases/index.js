@@ -100,7 +100,7 @@ handler.patch(
       return res.status(400).json({error:'Case ID not found'})
     }
     let path;
-    console.log(path, 'path========');
+    console.log(req.file, 'path========');
     if (req.file) {
       console.log(req.file.path, 'req.file=======');
       const image = await cloudinary.uploader.upload(req.file.path, {
@@ -110,6 +110,8 @@ handler.patch(
       });
       path = image.secure_url;
       console.log(path, 'my path');
+    }else{
+      return res.status(400).json({error:'Please Select an Image'})
     }
 
     // console.log(req.body)
@@ -121,13 +123,7 @@ handler.patch(
       tags,
       selectedOption,
     } = req.body;
-    // console.log(dentistId)
-    // console.log(id)
-    // console.log(title)
-    // console.log(description)
-    // console.log(tags)
-    // console.log(selectedOption)
-    console.log(path)
+    
 
     const caseUpdate = await updateCaseById(
       // req.db,

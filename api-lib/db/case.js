@@ -34,6 +34,7 @@ export async function updateCaseById(db, id,{ case_title, description,
   if(!id){
     return {error:'id not found'}
   }
+  console.log(cases_photo,'cases_photo case.js')
   return db
     .collection('cases')
     .findOneAndUpdate(

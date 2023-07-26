@@ -37,6 +37,7 @@ const EditCasePage = () => {
   const [imageFiles, setImageFiles] = useState(null);
   const [pickedImage, setPickedImage] = useState(null);
   const [loader, setLoader] = useState(false);
+  const [pageLoader, setPageLoader] = useState(false);
   const [id, setId] = useState(null);
   const uploadFileref = useRef(null);
   useEffect(() => {
@@ -56,12 +57,9 @@ const EditCasePage = () => {
   };
 
   const onImageChange = (e) => {
-    // const files = Array.from(e.target.files);
     const [file] = e.target.files;
     if (file) {
       setImageFiles(file);
-      // console.log(formatBytes(file.size), "formatBytes(file.size)");
-      // if (parseFloat(formatBytes(file.size)) > 5) return toast.error('File can not be larger than 5 mb')
       if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
         console.log('no file');
         return toast.error('Please select valid image.');
@@ -93,9 +91,6 @@ const EditCasePage = () => {
   ];
   
   const showModalHandler = (itemObj) => {
-    console.log('working');
-    console.log(showModal, 'showModal');
-
     setShowModal(true);
     setCaseObj(itemObj)
     setTags(itemObj.caseType)
@@ -118,6 +113,11 @@ const EditCasePage = () => {
   }
 
   const updateHandler = () => {
+    if(!imageFiles && !pickedImage){
+      toast.error('select image pls');
+      return;
+    }
+    setLoader(true)
     const finalData = {
       id,
       title,
@@ -140,7 +140,8 @@ const EditCasePage = () => {
 
     formData.append('tags', JSON.stringify(tags));
     formData.append('selectedOption', selectedOption);
-    imageFiles ? formData.append('cases_photo', imageFiles) : '';
+    
+    imageFiles ? formData.append('cases_photo', imageFiles) : formData.append('cases_photo', pickedImage);
     console.log(finalData)
     axios
       .patch(`${server}/api/cases`, formData, {
@@ -160,27 +161,21 @@ const EditCasePage = () => {
           setTags([])
           setImageFiles(null)
           setPickedImage(null)
+          setLoader(false)
           getCases()
         }
       })
       .catch((error) => {
         console.log(error)
+        toast.error(error?.response?.data?.error);
         setLoader(false);
-        toast.error(error?.data?.message, {
-          position: 'top-center',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
       });
     
     
   }
 
   const getCases = () => {
+    setPageLoader(true)
     const options = {
       headers: {
         "Content-Type": "application/json",
@@ -189,9 +184,9 @@ const EditCasePage = () => {
     axios
       .get(`${server}/api/cases`)
       .then(function (response) {
-        // handle success
         console.log(response, 'getCase');
         setCases(response.data.cases)
+        setPageLoader(false)
       })
       .catch(function (error) {
         console.log(error, 'get Error');
@@ -303,7 +298,7 @@ const EditCasePage = () => {
                 />
                 <button
                   type="button"
-                  className="py-2 px-8 bg-[#D4D4D4] rounded-[7px] h-12 mt-5"
+                  className="py-2 px-8 bg-[#D4D4D4] rounded-[7px] h-12 my-5"
                   onClick={() => uploadFileHandler()}
                 >
                   <p className="text-left text-[16px] font-semibold">
@@ -334,7 +329,7 @@ const EditCasePage = () => {
   return (
     <>
     {showModal && conversationModal(caseObj)}
-      <div className="items-center justify-center">
+      <div className="items-center justify-center h-full">
         <div className="lg:my-8 my-5 mx-auto w-[90%]">
           <h1 className="lg:text-[32px] text-[28px] lg:font-semibold font-medium">
             Edit Case
@@ -342,8 +337,20 @@ const EditCasePage = () => {
 
           <p className="mt-2 text-[16px] font-light mb-5">Update Information</p>
         </div>
-        <div className="lg:py-5 py-2 flex w-[90%] border-custom-grey rounded-[7px] flex-col items-center justify-start mx-auto mb-8">
-          {cases.map((item, index) => (
+        <div className={`lg:py-5 py-2 flex w-[90%] border-custom-grey rounded-[7px] flex-col items-center mx-auto mb-8 ${pageLoader ? 'justify-center h-full' : 'justify-start'}`}>
+          {pageLoader ? <div aria-label="Loading..." role="status">
+          <svg class="h-[200px] w-[200px] animate-spin" viewBox="3 3 18 18">
+            <path
+              className="fill-indigo-200"
+              d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
+            ></path>
+            <path
+              className="fill-[#0769cc]"
+              d="M16.9497 7.05015C14.2161 4.31648 9.78392 4.31648 7.05025 7.05015C6.65973 7.44067 6.02656 7.44067 5.63604 7.05015C5.24551 6.65962 5.24551 6.02646 5.63604 5.63593C9.15076 2.12121 14.8492 2.12121 18.364 5.63593C18.7545 6.02646 18.7545 6.65962 18.364 7.05015C17.9734 7.44067 17.3403 7.44067 16.9497 7.05015Z"
+            ></path>
+          </svg>
+          {/* </div> */}
+        </div> : cases.map((item, index) => (
             <EditCaseCard
               key={index}
               id={item._id}
