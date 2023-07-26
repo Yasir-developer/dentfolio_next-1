@@ -1,10 +1,55 @@
-import BlueButtons from "@/components/Buttons/BlueButtons";
-import AuthInput from "@/components/Inputs/AuthInput";
-import React, { useState } from "react";
-import { FaEye } from "react-icons/fa";
+import BlueButtons from '@/components/Buttons/BlueButtons';
+import AuthInput from '@/components/Inputs/AuthInput';
+import axios from 'axios';
+import { server } from 'config';
+import React, { useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { FaEye } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 const SettingsPage = () => {
-  const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
+  const { user } = useSelector((state) => state.auth);
+  console.log(user.email, 'user.email');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmPassword] = useState('');
+  const [loader, setLoader] = useState(false);
+
+  const changePassword = (e) => {
+    e.preventDefault();
+    if (password != confirmpassword) {
+      toast.error('Password and Confirm Password should be same');
+    } else {
+      setLoader(true);
+
+      const data = {
+        email: user.email,
+        password,
+      };
+
+      const options = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      axios
+        .post(`${server}/api/changePassword/${user._id}`, data, options)
+        .then((res) => {
+          console.log(res, 'password response..');
+          // return;
+          if (res.status == 200) {
+            setLoader(false);
+            toast.success('Password updated Successfully');
+            // emptFields();
+            // Router.replace('/dentist/view-profile');
+          } else if (res.status == 400) {
+            setLoader(false);
+          }
+        })
+        .catch((error) => {
+          setLoader(false);
+          console.log(error);
+        });
+    }
+  };
   return (
     <div className="items-center justify-center ">
       <div className=" my-8 mx-auto w-[90%]">
@@ -19,61 +64,27 @@ const SettingsPage = () => {
         <h2 className="font-medium text-[18px]">Reset Password </h2>
         {/* <p className="font-medium text-[16px] my-3">New Password </p> */}
         <div className="mt-5 lg:w-[30%] w-[90%]">
-          {/* <div className="relative flex items-center bg-custom-dashboard-bg border border-custom-grey rounded-[7px] p-3 lg:w-[30%] w-[90%] placeholder-slate-400 text-[16px] font-light mb-5"> */}
-            <>
-              <AuthInput
-                type={"password"}
-                className={""}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder={'New Password'}
-              />
-              {/* <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                className={`focus:outline-none text-[16px] w-[80%] lg:w-[100%] font-light bg-custom-dashboard-bg `}
-              />
-              <FaEye
-                // style={{
-                //   color: "#9F9F9F",
-                //   width: "17px",
-                //   height: "17px",
-                // }}
+          <form onSubmit={(e) => changePassword(e)}>
+            {/* <div className="relative flex items-center bg-custom-dashboard-bg border border-custom-grey rounded-[7px] p-3 lg:w-[30%] w-[90%] placeholder-slate-400 text-[16px] font-light mb-5"> */}
+            <AuthInput
+              type={'password'}
+              className={''}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder={'New Password'}
+            />
 
-                className="w-4 h-4 text-[#9F9F9F] ml-8 lg:ml-0"
-              /> */}
-            </>
-          {/* </div> */}
-          {/* <p className="font-medium text-[16px] my-3">New Password </p> */}
+            {/* <div className="relative flex items-center bg-custom-dashboard-bg border border-custom-grey rounded-[7px] p-3 lg:w-[30%]  w-[90%] placeholder-slate-400 text-[16px] font-light mb-5"> */}
+            <AuthInput
+              type={'password'}
+              className={''}
+              value={confirmpassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder={'Confirm New Password'}
+            />
 
-          {/* <div className="relative flex items-center bg-custom-dashboard-bg border border-custom-grey rounded-[7px] p-3 lg:w-[30%]  w-[90%] placeholder-slate-400 text-[16px] font-light mb-5"> */}
-            <>
-              <AuthInput
-                type={"password"}
-                className={""}
-                value={confirmpassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder={'Confirm New Password'}
-              />
-              {/* <input
-                type="password"
-                id="password"
-                placeholder="Confirm New Password"
-                className={`focus:outline-none text-[16px] w-[80%] lg:w-[100%] font-light bg-custom-dashboard-bg`}
-              />
-              <FaEye
-                // style={{
-                //   color: "#9F9F9F",
-                //   width: "17px",
-                //   height: "17px",
-                // }}
-                className="w-4 h-4 text-[#9F9F9F] ml-8 lg:ml-0"
-              /> */}
-            </>
-          {/* </div> */}
-
-          <BlueButtons buttonText={"Save"} />
+            <BlueButtons buttonText={'Save'} loading={loader} />
+          </form>
         </div>
       </div>
       {/* <DashboardFooter /> */}

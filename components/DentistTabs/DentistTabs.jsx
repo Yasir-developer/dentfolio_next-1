@@ -17,12 +17,16 @@ import CreateCasePage from '@/page-components/CreateCasePage';
 import BlueButtons from '../Buttons/BlueButtons';
 import SettingsPage from '@/page-components/SettingsPage';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { Router, useRouter } from 'next/router';
 import EditProfilePage from '@/page-components/EditProfilePage';
 import Billing from '@/page-components/BillingPage';
 import BillingHistory from '@/page-components/BillingHistory';
+import { logoutUser } from 'redux/actions/auth';
+import { useDispatch } from 'react-redux';
 const DentistTabs = (props) => {
   console.log(props, 'props');
+  const dispatch = useDispatch();
+
   const router = useRouter();
   // console.log(router, "routrer.quey");
   const [activeTab, setActiveTab] = useState('editProfile');
@@ -39,6 +43,11 @@ const DentistTabs = (props) => {
     }
   };
 
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    dispatch(logoutUser());
+    router.replace('/dentist/dentist-plan');
+  };
   return (
     <div className="flex flex-wrap h-full">
       {/* Menu Panel */}
@@ -204,7 +213,7 @@ const DentistTabs = (props) => {
               'bg-white fixed my-[40px] mx-[20px] !text-custom-blue px-[50px] text-[16px] font-medium'
             }
             buttonText={'Sign Out'}
-            onClick={() => router.push('/dentist/dentist-plan')}
+            onClick={(e) => handleLogout(e)}
           />
         </div>
         <div className=" lg:w-[85%] w-full flex flex-col justify-between">

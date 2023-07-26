@@ -3,3 +3,4 @@ export * from './token';
 export * from './user';
 export * from './dentist';
 export * from './case';
+export * from './change-password';
