@@ -16,9 +16,10 @@ const EditCaseCard = ({
   caseData,
   fetchCases,
 }) => {
-  // console.log(caseData, 'id---------');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   useEffect(() => {
     // Add event listener to handle clicks outside the dropdown
     const handleOutsideClick = (event) => {
@@ -41,75 +42,18 @@ const EditCaseCard = ({
 
   const handleDeleteClick = async () => {
     // Call the onDeleteClick prop passed from CasesList to handle the delete
+    setIsModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    setIsModalOpen(false); // Close the modal when confirmed
     onDeleteClick();
-    setDropdownOpen(false); // Close the dropdown after handling the click
   };
 
-  // const handleDeleteClick = async () => {
-  //   try {
-  //     // Optimistically remove the case immediately from the frontend
-  //     // const updatedCases = cases.filter((caseItem) => caseItem.id !== currentCaseId);
-  //     // setCases(updatedCases);
-
-  //     // Call the deleteCase API (modify the URL as needed)
-  //     await axios.delete(`${server}/api/cases/${id}`, {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //     });
-  //     setCases((prevCases) =>
-  //       prevCases.filter((caseItem) => caseItem.id !== id)
-  //     );
-  //   } catch (error) {
-  //     console.error('Error deleting case:', error);
-
-  //     // If the API call fails, rollback the frontend change by fetching cases again
-  //     // fetchCases;
-  //   } finally {
-  //     // Close the dropdown after handling the click
-  //     setDropdownOpen(false);
-  //   }
-  // };
-  const handleDelete = (e) => {
-    e.preventDefault();
-    console.log(id, 'after');
-    return;
-    setLoader(true);
-
-    axios
-      .delete(`${server}/api/cases${id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        email: email,
-        password: password,
-        firstName,
-        lastName,
-        speciality,
-        degree,
-        displayName,
-        gdcNo,
-        buildingName,
-        streetName: streetName ? streetName : showAddress,
-        city: city ? city : data?.city,
-        postCode: postCode ? postCode : data?.postalCode,
-        latitude: data.location.location.lat,
-        longitude: data.location.location.lng,
-      })
-      .then((response) => {
-        if (response.status == 201) {
-          dispatch(fetchUser(response?.data?.user));
-
-          toast.success('Your account has been created');
-          router.replace('/dentist/view-profile');
-        }
-      })
-      .catch((error) => {
-        if (error?.response?.data?.error) {
-          toast.error(error?.response?.data?.error.message);
-        }
-        setLoader(false);
-        // console.log(e, 'erororor');
-      });
+  const cancelDelete = () => {
+    setIsModalOpen(false); // Close the modal when canceled
   };
+
   return (
     <div className="w-full">
       <div className="mb-10">
@@ -161,6 +105,28 @@ const EditCaseCard = ({
                   </div>
                 )}
               </div>
+
+              {isModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-[999]">
+                  <div className="bg-white p-8 rounded shadow-lg">
+                    <p>Do you want to delete this case?</p>
+                    <div className="mt-4 flex justify-end">
+                      <button
+                        className="px-4 py-2 mr-2 bg-custom-blue text-white rounded hover:bg-sky-500"
+                        onClick={confirmDelete} // Call confirmDelete when confirmed
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                        onClick={cancelDelete} // Call cancelDelete when canceled
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
             <p className="text-left text-[12px] lg:text-[16px] font-light w-full">
               {description}
