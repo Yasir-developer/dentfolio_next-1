@@ -27,27 +27,33 @@ export async function getCases(db, { dentistId }) {
   // .find({dentistId:new ObjectId(dentistId.toString())}).toArray();
   return newCase;
 }
-export async function updateCaseById(db, id,{ case_title, description,
-  visibility,
-  caseType,
-  cases_photo,}) {
-  if(!id){
-    return {error:'id not found'}
+export async function updateCaseById(
+  db,
+  id,
+  { case_title, description, visibility, caseType, cases_photo }
+) {
+  if (!id) {
+    return { error: 'id not found' };
   }
-  console.log(cases_photo,'cases_photo case.js')
+  console.log(cases_photo, 'cases_photo case.js');
   return db
     .collection('cases')
     .findOneAndUpdate(
       { _id: new ObjectId(id) },
-      { $set: {
-        case_title,
-        description,
-        visibility,
-        caseType: JSON.parse(caseType),
-        cases_photo
-
-      } },
+      {
+        $set: {
+          case_title,
+          description,
+          visibility,
+          caseType: JSON.parse(caseType),
+          cases_photo,
+        },
+      },
       { returnDocument: 'after', projection: { password: 0 } }
     )
     .then(({ value }) => value);
+}
+
+export function deleteCase(db, id) {
+  return db.collection('cases').deleteOne({ _id: new ObjectId(id) });
 }

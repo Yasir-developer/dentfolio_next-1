@@ -12,6 +12,9 @@ let indexesCreated = false;
 async function createIndexes(db) {
   await Promise.all([
     db.collection('users').createIndexes([{ key: { email: 1 }, unique: true }]),
+    db.collection('users').createIndex({ location: '2dsphere' }),
+
+    // db.createIndex(location: '2dsphere' ),
   ]);
   indexesCreated = true;
 }

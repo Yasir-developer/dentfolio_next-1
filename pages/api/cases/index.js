@@ -3,7 +3,7 @@ import {
   getTeacherById,
   insertCase,
   getCases,
-  updateCaseById
+  updateCaseById,
   // insertPost,
 } from '@/api-lib/db';
 import { auths, database, validateBody } from '@/api-lib/middlewares';
@@ -13,7 +13,6 @@ import multer from 'multer';
 import nc from 'next-connect';
 
 const upload = multer({ dest: '/tmp' });
-var savePath = [];
 
 const handler = nc(ncOpts);
 if (process.env.CLOUDINARY_URL) {
@@ -65,16 +64,12 @@ handler.post(
     //   }
 
     let path;
-    console.log(path, 'path========');
+    // console.log(path, 'path========');
     if (req.file) {
       console.log(req.file.path, 'req.file=======');
-      const image = await cloudinary.uploader.upload(req.file.path, {
-        width: 512,
-        height: 512,
-        crop: 'fill',
-      });
+      const image = await cloudinary.uploader.upload(req.file.path);
       path = image.secure_url;
-      console.log(path, 'my path');
+      // console.log(path, 'my path');
     }
     // return;
     const cases = await insertCase(req.db, {
@@ -85,7 +80,7 @@ handler.post(
       dentistId: req.user._id,
       cases_photo: path,
     });
-    console.log(cases, 'after const =======');
+    // console.log(cases, 'after const =======');
     // savePath = [];
     return res.json({ cases });
   }
@@ -96,34 +91,24 @@ handler.patch(
   upload.single('cases_photo'),
 
   async (req, res) => {
-    if(!req.body.id){
-      return res.status(400).json({error:'Case ID not found'})
+    if (!req.body.id) {
+      return res.status(400).json({ error: 'Case ID not found' });
     }
     let path;
     console.log(req.file, 'path========');
     if (req.file) {
       console.log(req.file.path, 'req.file=======');
-      const image = await cloudinary.uploader.upload(req.file.path, {
-        width: 512,
-        height: 512,
-        crop: 'fill',
-      });
+      const image = await cloudinary.uploader.upload(req.file.path);
       path = image.secure_url;
       console.log(path, 'my path');
-    }else{
-      return res.status(400).json({error:'Please Select an Image'})
     }
+    // else{
+    //   return res.status(400).json({error:'Please Select an Image'})
+    // }
 
     // console.log(req.body)
-    const {
-      id,
-      dentistId,
-      title,
-      description,
-      tags,
-      selectedOption,
-    } = req.body;
-    
+    const { id, dentistId, title, description, tags, selectedOption } =
+      req.body;
 
     const caseUpdate = await updateCaseById(
       // req.db,
@@ -131,17 +116,17 @@ handler.patch(
       req.body.id ? req.body.id : '',
       {
         // ...(username && { username }),
-        ...(title && { case_title:title }),
+        ...(title && { case_title: title }),
         ...(description && { description }),
-        ...(tags && { caseType:tags }),
+        ...(tags && { caseType: tags }),
         ...(selectedOption && { visibility: selectedOption == 'public' }),
-        ...(path && { cases_photo:path }),
+        ...(req?.file?.path && { cases_photo: path }),
       }
     );
-    console.log(caseUpdate, 'caseUpdate');
+    // console.log(caseUpdate, 'caseUpdate');
     res.json({ caseUpdate });
   }
-)
+);
 export const config = {
   api: {
     bodyParser: false,

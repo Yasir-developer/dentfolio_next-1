@@ -1,35 +1,37 @@
-import DashboardFooter from "@/components/DashboardFooter/DashboardFooter";
-import EditCaseCard from "@/components/EditCaseCard/EditCaseCard";
-import React, { useEffect, useState, useRef } from "react";
+import DashboardFooter from '@/components/DashboardFooter/DashboardFooter';
+import EditCaseCard from '@/components/EditCaseCard/EditCaseCard';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import Image from "next/image";
+import Image from 'next/image';
 import { server } from '../config';
-import { FaTimes } from "react-icons/fa";
-import AuthInput from "@/components/Inputs/AuthInput";
+import { FaTimes } from 'react-icons/fa';
+import AuthInput from '@/components/Inputs/AuthInput';
 import Select from 'react-select';
 import { useSelector } from 'react-redux';
-import { toast } from "react-hot-toast";
-import BlueButtons from "@/components/Buttons/BlueButtons";
+import { toast } from 'react-hot-toast';
+import BlueButtons from '@/components/Buttons/BlueButtons';
 
 const EditCasePage = () => {
   const caseTypes = [
     {
-      cases_photo: ["/images/case2.png"],
-      case_title: "Composite Bonding",
-      description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet consectetur adipiscing elit Curabitur congue sapien non efficitur sollicitudin.",
-      caseType: ["Aligners", "Bridges", "Implants", "Root Canal Treatment"],
+      cases_photo: ['/images/case2.png'],
+      case_title: 'Composite Bonding',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet consectetur adipiscing elit Curabitur congue sapien non efficitur sollicitudin.',
+      caseType: ['Aligners', 'Bridges', 'Implants', 'Root Canal Treatment'],
     },
     {
-      cases_photo: ["/images/case1.png"],
-      case_title: "Bonding",
-      description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet consectetur adipiscing elit Curabitur congue sapien non efficitur sollicitudin.",
-      caseType: ["Aligners", "Root Canal Treatment", "Bridges", "Implants"],
+      cases_photo: ['/images/case1.png'],
+      case_title: 'Bonding',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet consectetur adipiscing elit Curabitur congue sapien non efficitur sollicitudin.',
+      caseType: ['Aligners', 'Root Canal Treatment', 'Bridges', 'Implants'],
     },
   ];
   const { user } = useSelector((state) => state.auth);
-  const [cases, setCases] = useState([])
-  const [showModal, setShowModal] = useState(false)
-  const [caseObj, setCaseObj] = useState({})
+  const [cases, setCases] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [caseObj, setCaseObj] = useState({});
   const [tags, setTags] = useState([]);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -41,10 +43,9 @@ const EditCasePage = () => {
   const [id, setId] = useState(null);
   const uploadFileref = useRef(null);
   useEffect(() => {
-    getCases()
-  },[]);
+    getCases();
+  }, []);
 
- 
   const handleChange = (tags) => {
     setTags(tags);
   };
@@ -89,42 +90,43 @@ const EditCasePage = () => {
 
     // Add more options as needed
   ];
-  
+
   const showModalHandler = (itemObj) => {
     setShowModal(true);
-    setCaseObj(itemObj)
-    setTags(itemObj.caseType)
-    setDescription(itemObj.description)
-    setTitle(itemObj.case_title)
-    setSelectedOption(itemObj.visibility ? 'public' : 'private')
+    setCaseObj(itemObj);
+    setTags(itemObj.caseType);
+    setDescription(itemObj.description);
+    setTitle(itemObj.case_title);
+    setSelectedOption(itemObj.visibility ? 'public' : 'private');
     setPickedImage(itemObj.cases_photo);
-    setId(itemObj._id)
+    setId(itemObj._id);
   };
 
   const closeModalHandler = () => {
     setShowModal(false);
-    setCaseObj({})
-    setTags([])
-    setDescription()
-    setTitle()
-    setSelectedOption()
+    setCaseObj({});
+    setTags([]);
+    setDescription();
+    setTitle();
+    setSelectedOption();
     setPickedImage(null);
-    setId(null)
-  }
+    setId(null);
+  };
 
   const updateHandler = () => {
-    if(!imageFiles && !pickedImage){
+    console.log(imageFiles, pickedImage, '----------');
+    if (!imageFiles && !pickedImage) {
       toast.error('select image pls');
       return;
     }
-    setLoader(true)
+    setLoader(true);
     const finalData = {
       id,
       title,
       description,
       tags,
       selectedOption,
-      imageFiles
+      imageFiles,
     };
     const options = {
       headers: {
@@ -140,9 +142,10 @@ const EditCasePage = () => {
 
     formData.append('tags', JSON.stringify(tags));
     formData.append('selectedOption', selectedOption);
-    
-    imageFiles ? formData.append('cases_photo', imageFiles) : formData.append('cases_photo', pickedImage);
-    console.log(finalData)
+
+    formData.append('cases_photo', imageFiles);
+    // : formData.append('cases_photo', pickedImage);
+    console.log(finalData);
     axios
       .patch(`${server}/api/cases`, formData, {
         headers: {
@@ -153,47 +156,76 @@ const EditCasePage = () => {
         // console.log(res.data.user, 'res after update');
         setLoader(false);
         if (res.status === 200) {
-          console.log(res)
+          console.log(res);
           // dispatch(fetchUser(res?.data?.user));
           toast.success('Profile Updated');
           setShowModal(false);
-          setCaseObj({})
-          setTags([])
-          setImageFiles(null)
-          setPickedImage(null)
-          setLoader(false)
-          getCases()
+          // setCaseObj({});
+          // setTags([]);
+          // setImageFiles(null);
+          // setPickedImage(null);
+          setLoader(false);
+          getCases();
         }
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         toast.error(error?.response?.data?.error);
         setLoader(false);
       });
-    
-    
-  }
+  };
+
+  const handleDeleteClick = async (id, index) => {
+    setLoader(true);
+    console.log(id, 'my id');
+    // return;
+    try {
+      // Optimistically remove the case immediately from the frontend
+      // const updatedCases = cases.filter((caseItem) => caseItem.id !== currentCaseId);
+      // setCases(updatedCases);
+
+      // Call the deleteCase API (modify the URL as needed)
+      cases.splice(index, 1);
+      await axios.delete(`${server}/api/cases/${id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      toast.success('Cases Deleted Successfully');
+      setCases((prevCases) =>
+        prevCases.filter((caseItem) => caseItem.id !== id)
+      );
+      setLoader(false);
+    } catch (error) {
+      toast.success('Error deleting case');
+      // ('Error deleting case:', error);
+
+      // If the API call fails, rollback the frontend change by fetching cases again
+      // fetchCases;
+    } finally {
+      // Close the dropdown after handling the click
+      // setDropdownOpen(false);
+    }
+  };
 
   const getCases = () => {
-    setPageLoader(true)
+    setPageLoader(true);
     const options = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
     axios
       .get(`${server}/api/cases`)
       .then(function (response) {
         console.log(response, 'getCase');
-        setCases(response.data.cases)
-        setPageLoader(false)
+        setCases(response.data.cases);
+        setPageLoader(false);
       })
       .catch(function (error) {
         console.log(error, 'get Error');
-      })
-  }
+      });
+  };
   const conversationModal = (item) => {
-    
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-gray-900 z-[9999]">
         <div className="bg-white p-6 rounded-[7px] shadow-lg lg:w-[60%] w-[90%] relative">
@@ -211,12 +243,13 @@ const EditCasePage = () => {
                 </h2>
               </div>
             </div>
-            <form 
-            onSubmit={(e) => {
-              e.preventDefault()
-              updateHandler()
-            }}
-            className="pt-5">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                updateHandler();
+              }}
+              className="pt-5"
+            >
               <AuthInput
                 placeholder={'Title'}
                 className="border border-custom-grey rounded-[7px] lg:mt-0 w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
@@ -230,7 +263,9 @@ const EditCasePage = () => {
                 className="inputStyles w-full mt-0"
                 rows="10"
                 onChange={(e) => setDescription(e.target.value)}
-              >{description}</textarea>
+              >
+                {description}
+              </textarea>
 
               <div className="flex lg:flex-row flex-col my-5 lg:items-center justify-start items-start">
                 <p className="lg:text-[18px] text-[16px] font-semibold">
@@ -306,7 +341,7 @@ const EditCasePage = () => {
                   </p>
                 </button>
               </div>
-              <BlueButtons buttonText={"Send"} loading={loader} />
+              <BlueButtons buttonText={'Save'} loading={loader} />
               {/* <button
                 type="submit"
                 className="bg-custom-blue hover:bg-blue-600 text-white font-poppins font-medium py-2 mt-5 mb-7 px-[45px] rounded lg:justify-end text-sm"
@@ -324,11 +359,9 @@ const EditCasePage = () => {
     );
   };
 
-
-
   return (
     <>
-    {showModal && conversationModal(caseObj)}
+      {showModal && conversationModal(caseObj)}
       <div className="items-center justify-center h-full">
         <div className="lg:my-8 my-5 mx-auto w-[90%]">
           <h1 className="lg:text-[32px] text-[28px] lg:font-semibold font-medium">
@@ -337,30 +370,41 @@ const EditCasePage = () => {
 
           <p className="mt-2 text-[16px] font-light mb-5">Update Information</p>
         </div>
-        <div className={`lg:py-5 py-2 flex w-[90%] border-custom-grey rounded-[7px] flex-col items-center mx-auto mb-8 ${pageLoader ? 'justify-center h-full' : 'justify-start'}`}>
-          {pageLoader ? <div aria-label="Loading..." role="status">
-          <svg class="h-[200px] w-[200px] animate-spin" viewBox="3 3 18 18">
-            <path
-              className="fill-indigo-200"
-              d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
-            ></path>
-            <path
-              className="fill-[#0769cc]"
-              d="M16.9497 7.05015C14.2161 4.31648 9.78392 4.31648 7.05025 7.05015C6.65973 7.44067 6.02656 7.44067 5.63604 7.05015C5.24551 6.65962 5.24551 6.02646 5.63604 5.63593C9.15076 2.12121 14.8492 2.12121 18.364 5.63593C18.7545 6.02646 18.7545 6.65962 18.364 7.05015C17.9734 7.44067 17.3403 7.44067 16.9497 7.05015Z"
-            ></path>
-          </svg>
-          {/* </div> */}
-        </div> : cases.map((item, index) => (
-            <EditCaseCard
-              key={index}
-              id={item._id}
-              name={item.case_title}
-              description={item.description}
-              img_url={item.cases_photo}
-              types={item.caseType}
-              showModalProp={()=>showModalHandler(item)}
-            />
-          ))}
+        <div
+          className={`lg:py-5 py-2 flex w-[90%] border-custom-grey rounded-[7px] flex-col items-center mx-auto mb-8 ${
+            pageLoader ? 'justify-center h-full' : 'justify-start'
+          }`}
+        >
+          {pageLoader ? (
+            <div aria-label="Loading..." role="status">
+              <svg class="h-[200px] w-[200px] animate-spin" viewBox="3 3 18 18">
+                <path
+                  className="fill-indigo-200"
+                  d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
+                ></path>
+                <path
+                  className="fill-[#0769cc]"
+                  d="M16.9497 7.05015C14.2161 4.31648 9.78392 4.31648 7.05025 7.05015C6.65973 7.44067 6.02656 7.44067 5.63604 7.05015C5.24551 6.65962 5.24551 6.02646 5.63604 5.63593C9.15076 2.12121 14.8492 2.12121 18.364 5.63593C18.7545 6.02646 18.7545 6.65962 18.364 7.05015C17.9734 7.44067 17.3403 7.44067 16.9497 7.05015Z"
+                ></path>
+              </svg>
+              {/* </div> */}
+            </div>
+          ) : (
+            cases.map((item, index) => (
+              <EditCaseCard
+                key={index}
+                casesData={item}
+                id={item._id}
+                name={item.case_title}
+                description={item.description}
+                img_url={item.cases_photo}
+                types={item.caseType}
+                onDeleteClick={() => handleDeleteClick(item._id, index)}
+                // fetchCases={getCases}
+                showModalProp={() => showModalHandler(item)}
+              />
+            ))
+          )}
         </div>
         {/* <DashboardFooter /> */}
       </div>

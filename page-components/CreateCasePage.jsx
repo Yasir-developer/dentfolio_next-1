@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import Select from 'react-select';
+import Image from 'next/image';
 
 const CreateCasePage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -20,12 +21,10 @@ const CreateCasePage = () => {
   const [description, setDescription] = useState('');
   const [loader, setLoader] = useState(false);
   const [imageFiles, setImageFiles] = useState(null);
-  const [pickedImage, setPickedImage] = useState([]);
+  const [pickedImage, setPickedImage] = useState('');
 
   const [tags, setTags] = useState([]);
   const uploadFileref = useRef(null);
-
- 
 
   const options = [
     { value: 'Aligners', label: 'Aligners' },
@@ -67,7 +66,6 @@ const CreateCasePage = () => {
       console.log(pickedImage, 'pickedImage');
     }
 
-
     // if (files) {
     //   setImageFiles(files);
     //   console.log(imageFiles, 'kdskskdsa');
@@ -91,8 +89,8 @@ const CreateCasePage = () => {
     setTitle('');
     setDescription('');
     setTags([]);
-    setPickedImage([]);
-    setImageFiles([]);
+    setPickedImage('');
+    setImageFiles(null);
   };
   const uploadFileHandler = () => {
     uploadFileref.current.click();
@@ -115,6 +113,13 @@ const CreateCasePage = () => {
     //   return sweetItem;
     // });
 
+    if (tags.length <= 0) {
+      toast.error('Please select Case Type');
+      return;
+    } else if (pickedImage == '') {
+      toast.error('Please select an Image');
+      return;
+    }
     setLoader(true);
     const finalData = {
       title,
@@ -271,15 +276,15 @@ const CreateCasePage = () => {
               <p className="text-[18px] font-semibold">Case Type:</p>
               <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 mt-3">
                 <div className="w-full">
-                <Select
-                  value={tags}
-                  onChange={handleChange}
-                  // onChange={handleSelectChange}
-                  options={options}
-                  isClearable
-                  isSearchable
-                  isMulti
-                />
+                  <Select
+                    value={tags}
+                    onChange={handleChange}
+                    // onChange={handleSelectChange}
+                    options={options}
+                    isClearable
+                    isSearchable
+                    isMulti
+                  />
                   {/* <TagsInput
                     value={tags}
                     onChange={handleChange}
@@ -309,7 +314,17 @@ const CreateCasePage = () => {
             </div>
 
             <div className="mt-10">
-              <p className="text-[18px] font-semibold">Upload Photos:</p>
+              <p className="text-[18px] font-semibold">Upload Photo:</p>
+              {pickedImage ? (
+                <Image
+                  src={pickedImage}
+                  width={200}
+                  height={200}
+                  className="rounded-[7px]"
+                />
+              ) : (
+                <></>
+              )}
               <input
                 ref={uploadFileref}
                 onChange={(e) => onImageChange(e)}
@@ -323,7 +338,7 @@ const CreateCasePage = () => {
                 onClick={() => uploadFileHandler()}
               >
                 <p className="text-left text-[16px] font-semibold">
-                  Select Images
+                  Select Image
                 </p>
               </button>
             </div>

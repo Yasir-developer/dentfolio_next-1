@@ -6,14 +6,10 @@ import PrivatePatients from '../../page-components/PrivatePatients';
 import { FaLongArrowAltDown, FaStethoscope } from 'react-icons/fa';
 import MonthlyPlan from '../MonthlyPlan/MonthlyPlan';
 import Router from 'next/router';
+import { useSelector } from 'react-redux';
 const DentistMemberBanner = () => {
-  const stepImages = [
-    '/image/doctor.png',
-    '/image/doctor.png',
-    '/image/doctor.png',
-    '/image/doctor.png',
-    '/image/doctor.png',
-  ];
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <>
       <div
@@ -60,19 +56,23 @@ const DentistMemberBanner = () => {
             <p className="mb-4 text-black font-normal lg:text-[18px] text-[12px] w-[80%] lg:px-0 px-3">
               Start your free 1-month trial today. Cancel anytime
             </p>
-            <BlueButtons
-              buttonText="Start my Free Month"
-              className={
-                'lg:text-[16px] text-[14px] lg:font-semibold font-normal  mb-[30px] lg:mb-0 mx-3'
-              }
-              onClick={(e) => {
-                e.preventDefault();
+            {user ? (
+              <></>
+            ) : (
+              <BlueButtons
+                buttonText="Start my Free Month"
+                className={
+                  'lg:text-[16px] text-[14px] lg:font-semibold font-normal  mb-[30px] lg:mb-0 mx-3'
+                }
+                onClick={(e) => {
+                  e.preventDefault();
 
-                Router.push('/dentist/sign-up');
-              }}
-              // className="lg:!px-8  mx-auto"
-              // btnStyle={ margin: "20px" }
-            />
+                  Router.push('/dentist/sign-up');
+                }}
+                // className="lg:!px-8  mx-auto"
+                // btnStyle={ margin: "20px" }
+              />
+            )}
           </div>
           <div className="w-[45%] dentistPlanImageContainer hidden lg:block">
             <Image
