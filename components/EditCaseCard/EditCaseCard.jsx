@@ -15,6 +15,8 @@ const EditCaseCard = ({
   onDeleteClick,
   caseData,
   fetchCases,
+  hideEdit=false,
+  hideDelete=false
 }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -59,10 +61,10 @@ const EditCaseCard = ({
       <div className="mb-10">
         {/* <div> */}
         <div
-          className="border rounded-[7px] border-[#F6EBEB] relative flex lg:flex-row flex-col-reverse px-3 mt-7"
+          className="border rounded-[7px] border-[#F6EBEB] relative flex lg:flex-row flex-col px-3 mt-7"
           key={id}
         >
-          <div className="flex flex-col my-3 gap-y-[3px] w-[15%]">
+          <div className="flex flex-col my-3 gap-y-[3px] lg:w-[15%] w-full justify-center">
             <Image
               src={img_url ? img_url : '/images/case2.png'}
               alt="logo"
@@ -73,83 +75,87 @@ const EditCaseCard = ({
             />
           </div>
 
-          <div className="flex flex-wrap lg:px-5 pt-5 pb-5 items-start justify-center w-[85%] flex-col gap-y-3">
-            <h2 className="lg;text-center lg:text-left text-[21px] text-custom-blue font-semibold my-2 lg:w-full w-[90%]">
+          <div className="flex flex-wrap lg:px-5 mt-5 pb-5 items-start justify-center lg:w-[85%] w-full flex-col gap-y-3 relative">
+            <h2 className="lg;text-center lg:text-left text-[21px] text-custom-blue font-semibold lg:w-full w-[90%]">
               {name}
             </h2>
-            <div>
-              <div className="flex" ref={dropdownRef}>
-                {/* <div className="flex items-center justify-center px-2 rounded-l-md cursor-pointer"> */}
-                <FaEllipsisV
-                  onClick={() => toggleDropdown()}
-                  className="static w-[5%] lg:absolute lg:right-0 lg:top-0 lg:w-[18px] lg:h-[18px] font-black lg:mx-[3px] lg:mb-[3px] lg:mt-[5px] cursor-pointer"
-                />
-                {isDropdownOpen && (
-                  <div class="absolute top-[30px] right-[5px] w-48 bg-white rounded-lg shadow-xl cursor-pointer">
-                    <p
-                      class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleDeleteClick(); // Router.push('/dentist/settings');
-                      }}
-                    >
-                      Delete Case
-                    </p>
-                    {/* <a
-                        href="#"
-                        class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
+            {!hideDelete ? 
+              <div className='absolute right-0 top-0'>
+                <div ref={dropdownRef}>
+                  {/* <div className="flex items-center justify-center px-2 rounded-l-md cursor-pointer"> */}
+                  <FaEllipsisV
+                    onClick={() => toggleDropdown()}
+                    className="static   lg:w-[18px] lg:h-[18px] font-black lg:mx-[3px] lg:mb-[3px] lg:mt-[5px] cursor-pointer"
+                  />
+                  {isDropdownOpen && (
+                    <div class="absolute top-[30px] right-[5px] w-48 bg-white rounded-lg shadow-xl cursor-pointer">
+                      <p
+                        class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleDeleteClick(); // Router.push('/dentist/settings');
+                        }}
                       >
-                        Support
-                      </a> */}
-                    {/* </div> */}
-                  </div>
-                )}
-              </div>
+                        Delete Case
+                      </p>
+                      {/* <a
+                          href="#"
+                          class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
+                        >
+                          Support
+                        </a> */}
+                      {/* </div> */}
+                    </div>
+                  )}
+                </div>
 
-              {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-[999]">
-                  <div className="bg-white p-8 rounded shadow-lg">
-                    <p>Do you want to delete this case?</p>
-                    <div className="mt-4 flex justify-end">
-                      <button
-                        className="px-4 py-2 mr-2 bg-custom-blue text-white rounded hover:bg-sky-500"
-                        onClick={confirmDelete} // Call confirmDelete when confirmed
-                      >
-                        Confirm
-                      </button>
-                      <button
-                        className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
-                        onClick={cancelDelete} // Call cancelDelete when canceled
-                      >
-                        Cancel
-                      </button>
+                {isModalOpen && (
+                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-[999]">
+                    <div className="bg-white p-8 rounded shadow-lg">
+                      <p>Do you want to delete this case?</p>
+                      <div className="mt-4 flex justify-end">
+                        <button
+                          className="px-4 py-2 mr-2 bg-custom-blue text-white rounded hover:bg-sky-500"
+                          onClick={confirmDelete} // Call confirmDelete when confirmed
+                        >
+                          Confirm
+                        </button>
+                        <button
+                          className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                          onClick={cancelDelete} // Call cancelDelete when canceled
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>:''
+            }
             <p className="text-left text-[12px] lg:text-[16px] font-light w-full">
               {description}
             </p>
-            <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 mt-3">
+            <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5">
               {types?.map((data, dataIndex) => (
                 <div
                   className="bg-custom-blue-light flex items-center justify-center h-8 px-3 rounded-[7px]"
                   key={dataIndex}
                 >
-                  <p className="text-center text-custom-black text-[14px] font-semibold">
+                  <p className="text-center text-custom-black lg:text-[14px] text-[11px] font-semibold">
                     {data.label}
                   </p>
                 </div>
               ))}
             </div>
-            <div className="justify-start w-full">
-              <BlueButtons
-                buttonText={'Edit'}
-                className={'mx-auto my-2 '}
-                onClick={() => showModalProp()}
-              />
-            </div>
+            {!hideEdit ? 
+              <div className="justify-start w-full">
+                <BlueButtons
+                  buttonText={'Edit'}
+                  className={'mx-auto my-2 '}
+                  onClick={() => showModalProp()}
+                />
+              </div>:''
+            }
           </div>
           {/* <FaEllipsisV
             style={{

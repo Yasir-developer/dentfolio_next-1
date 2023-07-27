@@ -228,7 +228,7 @@ const EditCasePage = () => {
   const conversationModal = (item) => {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-gray-900 z-[9999]">
-        <div className="bg-white p-6 rounded-[7px] shadow-lg lg:w-[60%] w-[90%] relative">
+        <div className="bg-white p-6 rounded-[7px] shadow-lg lg:w-[60%] w-[90%] relative h-[95%] overflow-y-scroll my-[40px]">
           <div className="mx-5">
             <button
               className="absolute right-[20px] top-[20px]  "

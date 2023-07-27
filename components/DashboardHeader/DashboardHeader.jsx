@@ -69,7 +69,7 @@ const DashboardHeader = ({ menuToggler }) => {
           </div> */}
 
           <div className="lg:border-l border-l-[#c8bfc3] flex">
-            <div className="flex flex-row items-center justify-center lg:pr-[80px] lg:pl-[30px] ">
+            <div className="flex flex-row items-center justify-center lg:pr-[80px] lg:pl-[30px] " >
               <Image
                 src={user?.profile_photo ? user?.profile_photo : profile}
                 alt="logo"
@@ -77,9 +77,11 @@ const DashboardHeader = ({ menuToggler }) => {
                 height={51}
                 sizes="100vw"
                 className="rounded-[25.5px]"
+                ref={dropdownRef}
+                onClick={toggleDropdown}
               />
 
-              <h2 className="hidden lg:block text-custom-blue text-[16px] font-semibold px-2">
+              <h2 className="hidden lg:block text-custom-blue text-[16px] font-semibold px-2" ref={dropdownRef} onClick={toggleDropdown}>
                 {user?.displayName}
                 {/* Dylan Taylor */}
               </h2>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 import { server } from 'config';
+import EditCaseCard from '@/components/EditCaseCard/EditCaseCard';
 
 const PreviousCases = () => {
   const [loader, setLoader] = useState(true);
@@ -68,52 +69,75 @@ const PreviousCases = () => {
             cases.map((item, index) => {
               console.log(item, 'item');
               return (
-                <div
-                  className="border rounded-[7px] border-[#F6EBEB] border-b flex flex-col-reverse lg:flex-row items-center px-3 mt-7"
+                <EditCaseCard
                   key={index}
-                >
-                  <div className="flex flex-col my-3 gap-y-[3px] w-[30%]">
-                    {/* return ( */}
+                  casesData={item}
+                  id={item._id}
+                  name={item.case_title}
+                  description={item.description}
+                  img_url={item?.cases_photo != null ? item?.cases_photo : '/images/case2.png'}
+                  types={item.caseType}
+                  onDeleteClick={() => handleDeleteClick(item._id, index)}
+                  // fetchCases={getCases}
+                  showModalProp={() => showModalHandler(item)}
+                  hideEdit={true}
+                  hideDelete={true}
+                />
+                // <div
+                //   className="border rounded-[7px] border-[#F6EBEB] border-b flex flex-col-reverse lg:flex-row items-center px-3 mt-7"
+                //   key={index}
+                // >
+                //   <div className="flex flex-col my-3 gap-y-[3px] w-[15%]">
+                //     {/* return ( */}
+                //     {item?.cases_photo != null ? 
+                //     <Image
+                //       src={item?.cases_photo}
+                //       alt="logo"
+                //       width={0}
+                //       height={0}
+                //       sizes="100vw"
+                //       className="w-full my-3"
+                //     />:
+                //     <Image
+                //       src={'/images/case2.png'}
+                //       alt="logo"
+                //       width={0}
+                //       height={0}
+                //       sizes="100vw"
+                //       className="w-full my-3"
+                //     />
+                //   }
+                //   </div>
 
-                    <Image
-                      src={item?.cases_photo}
-                      alt="logo"
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      className="w-full h-full lg:w-auto"
-                    />
-                  </div>
-
-                  <div className="flex flex-col lg:px-5 pt-5 pb-5 justify-center w-[70%]">
-                    <h2 className="text-left text-[21px] text-custom-blue font-semibold">
-                      {item?.case_title}
-                      {/* Composite Bonding */}
-                    </h2>
-                    <div className="flex flex-col">
-                      <p className="lg:text-left text-[12px] lg:text-[16px] font-normal">
-                        {item?.description}
-                        {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Curabitur congue, sapien non efficitur sollicitudin, ex
-                      risus semper diam, sed ornare libero urna ac leo sit amet
-                      consectetur adipiscing elit Curabitur congue sapien non
-                      efficitur sollicitudin. */}
-                      </p>
-                      <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 mt-3">
-                        {item?.caseType?.map((data, dataIndex) => (
-                          <div
-                            className="bg-custom-blue-light flex items-center justify-center h-8 px-3 rounded-[7px]"
-                            key={dataIndex}
-                          >
-                            <p className="text-center text-custom-black text-[14px] font-semibold">
-                              {data?.label}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                //   <div className="flex flex-col lg:px-5 pt-5 pb-5 justify-center w-[85%]">
+                //     <h2 className="text-left text-[21px] text-custom-blue font-semibold">
+                //       {item?.case_title}
+                //       {/* Composite Bonding */}
+                //     </h2>
+                //     <div className="flex flex-col">
+                //       <p className="lg:text-left text-[12px] lg:text-[16px] font-normal">
+                //         {item?.description}
+                //         {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                //       Curabitur congue, sapien non efficitur sollicitudin, ex
+                //       risus semper diam, sed ornare libero urna ac leo sit amet
+                //       consectetur adipiscing elit Curabitur congue sapien non
+                //       efficitur sollicitudin. */}
+                //       </p>
+                //       <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 mt-3">
+                //         {item?.caseType?.map((data, dataIndex) => (
+                //           <div
+                //             className="bg-custom-blue-light flex items-center justify-center h-8 px-3 rounded-[7px]"
+                //             key={dataIndex}
+                //           >
+                //             <p className="text-center text-custom-black lg:text-[14px] text-[11px] font-semibold">
+                //               {data?.label}
+                //             </p>
+                //           </div>
+                //         ))}
+                //       </div>
+                //     </div>
+                //   </div>
+                // </div>
               );
             })
           ) : (
@@ -123,7 +147,7 @@ const PreviousCases = () => {
           <>
             {' '}
             <div aria-label="Loading..." role="status">
-              <svg class="h-[200px] w-[200px] animate-spin" viewBox="3 3 18 18">
+              <svg class="h-[100px] w-[100px] animate-spin mx-auto" viewBox="3 3 18 18">
                 <path
                   className="fill-indigo-200"
                   d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
