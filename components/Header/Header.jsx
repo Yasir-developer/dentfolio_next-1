@@ -1,12 +1,19 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { HiChevronDown } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
 
 const AppHeader = () => {
   const router = useRouter();
-  const { user } = useSelector((state) => state.auth);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
+  const { user } = useSelector((state) => state.auth);
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
   // console.log(router, "router");
   return (
     <>
@@ -37,7 +44,126 @@ const AppHeader = () => {
                 </Link>
               </div>
               {user ? (
-                <></>
+                <>
+                  <div className="flex">
+                    <div className="flex flex-row items-center justify-center lg:pr-[80px] lg:pl-[30px]">
+                      <Image
+                        src={
+                          user?.profile_photo ? user?.profile_photo : profile
+                        }
+                        alt="logo"
+                        width={51}
+                        height={51}
+                        sizes="100vw"
+                        className="rounded-[25.5px] cursor-pointer"
+                        onClick={() => router.push('/dentist/view-profile')}
+                      />
+
+                      <h2
+                        className="hidden lg:block text-custom-blue text-[16px] font-semibold px-2 cursor-pointer"
+                        onClick={() => router.push('/dentist/view-profile')}
+                      >
+                        {user?.displayName}
+                        {/* Dylan Taylor */}
+                      </h2>
+                      {/* className="hidden md:block" */}
+                      {/* <div
+                        className="flex"
+                        style={{ zIndex: 1 }}
+                        ref={dropdownRef}
+                      >
+                        <div
+                          className="flex items-center justify-center px-2 rounded-l-md cursor-pointer"
+                          onClick={toggleDropdown}
+                        >
+                          <HiChevronDown
+                            className={`transform  h-5 w-5 text-[#919191] ${
+                              isDropdownOpen ? 'rotate-180' : 'rotate-0'
+                            }`}
+                          />
+
+                          {!isDropdownOpen && (
+                            <div class=" mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
+                              <p
+                                class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
+                                onClick={() => {
+                                  // handleOptionSelect;
+                                  router.push('/dentist/profile/view-profile');
+                                }}
+                              >
+                                Profile
+                              </p>
+
+                              <p
+                                class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
+                                onClick={() => {
+                                  router.push('/dentist/profile/edit-profile');
+
+                                  // handleOptionSelect;
+                                  // Router.push('/dentist/settings');
+                                }}
+                              >
+                                Edit Profile
+                              </p>
+
+                              <p
+                                class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
+                                onClick={() => {
+                                  router.push('/dentist/profile/edit-profile');
+
+                                  // handleOptionSelect;
+                                  // Router.push('/dentist/settings');
+                                }}
+                              >
+                                Create Case
+                              </p>
+                              <p
+                                class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
+                                onClick={() => {
+                                  router.push('/dentist/profile/edit-profile');
+
+                                  // handleOptionSelect;
+                                  // Router.push('/dentist/settings');
+                                }}
+                              >
+                                Edit Case
+                              </p>
+
+                              <a
+                                // href="#"
+                                onClick={(e) => {
+                                  // handleOptionSelect;
+                                  // Router.push('/dentist/dentist-plan');
+                                  // handleLogout(e);
+                                }}
+                                class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
+                              >
+                                Sign out
+                              </a>
+                            </div>
+                          )}
+                        </div>
+                      </div> */}
+                      {/* <Dropdown className="d-inline mx-2">
+                <Dropdown.Toggle>
+                  <FaAngleDown
+                    style={{
+                      color: "#919191",
+                      width: "20px",
+                      height: "20px",
+                    }}
+                    className="hidden lg:block"
+                  />
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                  <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                  <Dropdown.Item href="#">Menu Item</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown> */}
+                    </div>
+                  </div>
+                </>
               ) : (
                 <div className="lg:flex lg:gap-x-2">
                   <button
