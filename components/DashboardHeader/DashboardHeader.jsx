@@ -98,30 +98,6 @@ const DashboardHeader = ({ menuToggler }) => {
                   />
 
                   {isDropdownOpen && (
-                    // <div className="bg-white border border-gray-300 rounded-r-md shadow-md mt-[80px]">
-                    //   {/* Dropdown items */}
-                    //   <ul className="py-2">
-                    //     <li
-                    //       className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                    //       onClick={() => {
-                    //         handleOptionSelect;
-                    //         Router.push("/dentist/settings?tab=settings");
-                    //       }}
-                    //     >
-                    //       Settings
-                    //     </li>
-                    //     <li
-                    //       className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                    //       onClick={() => {
-                    //         handleOptionSelect;
-                    //         Router.push("/dentist/dentist-plan");
-                    //       }}
-                    //     >
-                    //       Sign Out
-                    //     </li>
-                    //   </ul>
-                    // </div>
-
                     <div class="absolute top-[40px] right-[5px] mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
                       <p
                         class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"

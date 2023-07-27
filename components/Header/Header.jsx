@@ -67,7 +67,7 @@ const AppHeader = () => {
                         {/* Dylan Taylor */}
                       </h2>
                       {/* className="hidden md:block" */}
-                      {/* <div
+                      <div
                         className="flex"
                         style={{ zIndex: 1 }}
                         ref={dropdownRef}
@@ -82,8 +82,8 @@ const AppHeader = () => {
                             }`}
                           />
 
-                          {!isDropdownOpen && (
-                            <div class=" mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
+                          {isDropdownOpen && (
+                            <div class="absolute top-[50px] mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
                               <p
                                 class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
                                 onClick={() => {
@@ -91,42 +91,7 @@ const AppHeader = () => {
                                   router.push('/dentist/profile/view-profile');
                                 }}
                               >
-                                Profile
-                              </p>
-
-                              <p
-                                class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
-                                onClick={() => {
-                                  router.push('/dentist/profile/edit-profile');
-
-                                  // handleOptionSelect;
-                                  // Router.push('/dentist/settings');
-                                }}
-                              >
-                                Edit Profile
-                              </p>
-
-                              <p
-                                class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
-                                onClick={() => {
-                                  router.push('/dentist/profile/edit-profile');
-
-                                  // handleOptionSelect;
-                                  // Router.push('/dentist/settings');
-                                }}
-                              >
-                                Create Case
-                              </p>
-                              <p
-                                class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
-                                onClick={() => {
-                                  router.push('/dentist/profile/edit-profile');
-
-                                  // handleOptionSelect;
-                                  // Router.push('/dentist/settings');
-                                }}
-                              >
-                                Edit Case
+                                Dashboard
                               </p>
 
                               <a
@@ -143,7 +108,7 @@ const AppHeader = () => {
                             </div>
                           )}
                         </div>
-                      </div> */}
+                      </div>
                       {/* <Dropdown className="d-inline mx-2">
                 <Dropdown.Toggle>
                   <FaAngleDown
