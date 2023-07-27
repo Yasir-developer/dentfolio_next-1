@@ -6,7 +6,8 @@ import TreatmentProvide from '@/components/TreatmentProvide/TreatmentProvide';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 // import { server } from "../../config";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetUser } from 'redux/actions/auth';
 
 const ViewProfilePage = () => {
   const [profile, setProfile] = useState({});
@@ -14,8 +15,19 @@ const ViewProfilePage = () => {
   const [casesData, setCasesData] = useState([]);
 
   const [loader, setLoader] = useState(true);
+  const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
+
+  // useEffect(() => {
+  //   if (user) {
+  //     setLoader(false);
+  //   }
+
+  //   return () => {
+  //     // dispatch(resetUser());
+  //   };
+  // }, [user]);
 
   const handleProfile = () => {
     const options = {
@@ -44,14 +56,15 @@ const ViewProfilePage = () => {
       {/* <DentistTabs> */}
       {/* <EditCasePage /> */}
       {/* <h1>Edit case</h1> */}
-      <div className="">
-        {!loader ? (
+
+      {!loader ? (
+        <div className="w-full flex items-center justify-center">
           <div
             aria-label="Loading..."
             role="status"
             className="justify-center items-center text-center"
           >
-            <svg class="h-6 w-6 animate-spin" viewBox="3 3 18 18">
+            <svg class="h-[100px] w-[100px] animate-spin" viewBox="3 3 18 18">
               <path
                 class="fill-indigo-200"
                 d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
@@ -62,15 +75,15 @@ const ViewProfilePage = () => {
               ></path>
             </svg>
           </div>
-        ) : (
-          <>
-            <DoctorBasicDetail data={user} />
-            <DashboardTreatment treatmentData={user?.treatment_type} />
-            {/* <TreatmentProvide /> */}
-            <PreviousCases cases={casesData} />
-          </>
-        )}
-      </div>
+        </div>
+      ) : (
+        <>
+          <DoctorBasicDetail data={user} />
+          <DashboardTreatment treatmentData={user?.treatment_type} />
+          {/* <TreatmentProvide /> */}
+          <PreviousCases cases={casesData} />
+        </>
+      )}
     </div>
   );
 };
