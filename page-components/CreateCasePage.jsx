@@ -281,9 +281,10 @@ const CreateCasePage = () => {
                     onChange={handleChange}
                     // onChange={handleSelectChange}
                     options={options}
-                    isClearable
+                    isClearable={false}
                     isSearchable
                     isMulti
+                    // unstyled
                   />
                   {/* <TagsInput
                     value={tags}

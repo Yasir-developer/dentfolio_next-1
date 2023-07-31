@@ -100,7 +100,8 @@ handler.patch(
       console.log(req.file.path, 'req.file=======');
       const image = await cloudinary.uploader.upload(req.file.path);
       path = image.secure_url;
-      console.log(path, 'my path');
+      // console.log(path, 'my path');
+      // return;
     }
     // else{
     //   return res.status(400).json({error:'Please Select an Image'})
@@ -122,6 +123,9 @@ handler.patch(
         ...(selectedOption && { visibility: selectedOption == 'public' }),
         ...(req?.file?.path && { cases_photo: path }),
       }
+      // if(req?.file?.path){
+      //   cases_photo = req
+      // }
     );
     // console.log(caseUpdate, 'caseUpdate');
     res.json({ caseUpdate });

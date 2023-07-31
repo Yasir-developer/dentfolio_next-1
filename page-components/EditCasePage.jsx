@@ -7,9 +7,10 @@ import { server } from '../config';
 import { FaTimes } from 'react-icons/fa';
 import AuthInput from '@/components/Inputs/AuthInput';
 import Select from 'react-select';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import BlueButtons from '@/components/Buttons/BlueButtons';
+import { saveFiles } from 'redux/actions/cases';
 
 const EditCasePage = () => {
   const caseTypes = [
@@ -28,6 +29,8 @@ const EditCasePage = () => {
       caseType: ['Aligners', 'Root Canal Treatment', 'Bridges', 'Implants'],
     },
   ];
+  const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.auth);
   const [cases, setCases] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -61,6 +64,7 @@ const EditCasePage = () => {
     const [file] = e.target.files;
     if (file) {
       setImageFiles(file);
+      dispatch(saveFiles(file));
       if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
         console.log('no file');
         return toast.error('Please select valid image.');
@@ -142,8 +146,10 @@ const EditCasePage = () => {
 
     formData.append('tags', JSON.stringify(tags));
     formData.append('selectedOption', selectedOption);
-
-    formData.append('cases_photo', imageFiles);
+    // if (imageFiles && imageFiles.length > 0) {
+    formData.append('cases_photo', imageFiles ? imageFiles : '');
+    // }
+    // formData.append('cases_photo', imageFiles);
     // : formData.append('cases_photo', pickedImage);
     console.log(finalData);
     axios
@@ -306,7 +312,7 @@ const EditCasePage = () => {
                   onChange={handleChange}
                   // onChange={handleSelectChange}
                   options={options}
-                  isClearable
+                  isClearable={false}
                   isSearchable
                   isMulti
                 />

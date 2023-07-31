@@ -32,26 +32,44 @@ export async function updateCaseById(
   id,
   { case_title, description, visibility, caseType, cases_photo }
 ) {
+  // console.log(cases_photo,'cases_photo')
+
   if (!id) {
     return { error: 'id not found' };
   }
+
+  const updateData = {
+    case_title,
+    description,
+    caseType,
+    visibility,
+  };
   console.log(cases_photo, 'cases_photo case.js');
+  if (cases_photo !== undefined) {
+    updateData.cases_photo = cases_photo;
+  }
+  if (caseType) {
+    updateData.caseType = JSON.parse(caseType);
+  }
   return db
     .collection('cases')
     .findOneAndUpdate(
       { _id: new ObjectId(id) },
       {
-        $set: {
-          case_title,
-          description,
-          visibility,
-          caseType: JSON.parse(caseType),
-          cases_photo,
-        },
+        $set: updateData,
+        // case_title,
+        // description,
+        // visibility,
+        // // caseType: JSON.parse(caseType),
+        // cases_photo,
       },
       { returnDocument: 'after', projection: { password: 0 } }
     )
-    .then(({ value }) => value);
+    .then(({ value }) => {
+      console.log(value, 'db values');
+
+      value;
+    });
 }
 
 export function deleteCase(db, id) {
