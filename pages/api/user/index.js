@@ -110,6 +110,7 @@ handler.patch(
       req.body.id ? req.body.id : req.user._id,
       {
         // ...(username && { username }),
+
         ...(firstName && { firstName }),
         ...(userName && { userName }),
         ...(displayName && { displayName }),
@@ -129,6 +130,9 @@ handler.patch(
         ...(req?.file?.path && { profile_photo: path }),
         ...(treatment_type && { treatment_type: JSON.parse(treatment_type) }),
         ...(previous_case && { previous_case }),
+        // ...(previous_case && { previous_case }),
+
+        // ...(c && { previous_case }),
 
         ...(typeof bio === 'string' && { bio }),
         // ...(profilePicture && { profilePicture }),

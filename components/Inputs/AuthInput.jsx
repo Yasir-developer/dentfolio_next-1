@@ -75,6 +75,7 @@ const AuthInput = forwardRef(function AuthInput(
               onChange={onChange}
               placeholder={placeholder ? placeholder : 'Password'}
               required
+              maxLength={maxLength}
               className={`focus:outline-none w-[100%] lg:w-[100%] lg:text-[16px] text-[14px] font-light bg-custom-dashboard-bg ${className}`}
             />
             {showPassword ? (

@@ -43,6 +43,7 @@ export async function findUserByEmail(db, email) {
 }
 
 export async function updateUserById(db, id, data) {
+  console.log(data, 'subs data');
   return db
     .collection('users')
     .findOneAndUpdate(
@@ -89,6 +90,7 @@ export async function insertUser(
     email,
     // name,
     // username,
+    customer: {},
     bio,
     firstName,
     lastName,
@@ -116,6 +118,16 @@ export async function insertUser(
   user._id = insertedId;
   return user;
 }
+
+// export async function insertUserByPaymentIds(db, { payment_id }) {
+//   const user = {
+//     payment_id,
+//   };
+//   // const password = await bcrypt.hash(originalPassword, 10);
+//   const { insertedId } = await db.collection('users').insertOne({ ...user });
+//   user._id = insertedId;
+//   return user;
+// }
 
 export async function updateUserPasswordByOldPassword(
   db,
