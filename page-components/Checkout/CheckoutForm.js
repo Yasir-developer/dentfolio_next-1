@@ -3,13 +3,16 @@ import { ElementsConsumer, CardElement } from '@stripe/react-stripe-js';
 
 import CardSection from './CardSection';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { server } from 'config';
 import { toast } from 'react-hot-toast';
 import Router from 'next/router';
+import { fetchUser } from 'redux/actions/auth';
 
 const CheckoutForm = (props) => {
   console.log(props, 'props props');
+  const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.auth);
   const [loader, setLoader] = useState(false);
 
@@ -48,6 +51,8 @@ const CheckoutForm = (props) => {
           console.log(res, 'job post response..');
           // return;
           if (res.status == 200) {
+            dispatch(fetchUser(res?.data?.user));
+
             setLoader(false);
             console.log(res, 'subs res');
             //   setLoader(false);

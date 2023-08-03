@@ -129,7 +129,7 @@ handler.post(
       //   source,
     });
     console.log(customer, 'subscrption');
-    return res.json({ subscriptionId: charge.id });
+    return res.json({ user: user });
 
     const paymentStudent = await insertPayments(req.db, {
       subscrption_id: subscrption._id,
