@@ -5,13 +5,17 @@ import { server } from 'config';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { FaEye } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from 'redux/actions/auth';
 const SettingsPage = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log(user.email, 'user.email');
+  const dispatch = useDispatch();
+
+  console.log(user, 'user.email');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
   const [loader, setLoader] = useState(false);
+  const [statusLoader, setStatusLoader] = useState(false);
 
   const changePassword = (e) => {
     e.preventDefault();
@@ -50,6 +54,54 @@ const SettingsPage = () => {
         });
     }
   };
+
+  const handleSave = async (e) => {
+    // e.preventDefault();
+
+    await axios
+      .patch(`${server}/api/subscription`, {
+        id: user?._id,
+        paymentVerified: false,
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .then((res) => {
+        console.log(res, 'res after update');
+        // setLoader(false);
+        if (res.status == 200) {
+          dispatch(fetchUser(res.data.user));
+          setStatusLoader(false);
+          // toast.success('Subscription Removed');
+        }
+      })
+      .catch((error) => {
+        setLoader(false);
+        toast.error(error?.data?.message);
+      });
+  };
+  const removeSubscription = async (e) => {
+    e.preventDefault();
+    setStatusLoader(true);
+    // console.log(user.subscrption_id, 'user.subscrption_id');
+    // return;
+    await axios
+      .delete(`${server}/api/subscription`, {
+        subscriptionId: user.subscrption_id,
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .then((res) => {
+        if (res.status == 200) {
+          toast.success('Subscription Removed Successfully');
+        } else {
+          toast.success('Something went wrong');
+        }
+      })
+      .then(() => {
+        handleSave();
+      });
+
+    // setLoader(false);
+  };
   return (
     <div className="items-center justify-center ">
       <div className=" my-8 mx-auto w-[90%]">
@@ -84,6 +136,33 @@ const SettingsPage = () => {
             />
 
             <BlueButtons buttonText={'Save'} loading={loader} />
+          </form>
+        </div>
+      </div>
+
+      <div className="flex w-[90%] rounded-[7px] flex-col justify-start mx-auto mb-8">
+        <h2 className="font-medium text-[18px]">Subscription Status</h2>
+        <div className="mt-5 lg:w-[30%] w-[90%]">
+          <form onSubmit={(e) => removeSubscription(e)}>
+            {/* < */}
+            {user.paymentVerified ? (
+              <div className="flex items-center">
+                <div className="p-2 bg-green-400 rounded-[7px] mx-5">
+                  <p>Active</p>
+                </div>
+
+                <BlueButtons
+                  buttonText={'Cancel Subscription'}
+                  loading={loader}
+                />
+              </div>
+            ) : (
+              <div className="p-2 bg-red-400 rounded-[7px] mx-5">
+                <p>Not Active</p>
+
+                <BlueButtons buttonText={'Buy Subscription'} loading={loader} />
+              </div>
+            )}
           </form>
         </div>
       </div>

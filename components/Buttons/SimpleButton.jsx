@@ -1,8 +1,13 @@
-import {React,useState} from 'react'
-function SimpleButton({text,className = ''}) {
+import { React, useState } from 'react';
+function SimpleButton({ text, className = '', onClick }) {
   return (
-    <button className={`bg-transparent px-3 py-0 ${className}`}>{text}</button>
-  )
+    <button
+      className={`bg-transparent px-3 py-0 ${className}`}
+      onClick={onClick}
+    >
+      {text}
+    </button>
+  );
 }
 
-export default SimpleButton
+export default SimpleButton;

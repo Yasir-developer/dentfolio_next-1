@@ -88,6 +88,7 @@ export async function insertUser(
     emailVerified: false,
     profile_photo: '',
     email,
+    paymentVerified: false,
     // name,
     // username,
     customer: {},

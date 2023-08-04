@@ -1,7 +1,7 @@
 import { ValidateProps } from '@/api-lib/constants';
 import { findPosts, insertPost, updateUserById } from '@/api-lib/db';
 import { insertPayments } from '@/api-lib/db/payments';
-import { insertSubscriptions } from '@/api-lib/db/subscription';
+import { insertSubscriptions, updateUser } from '@/api-lib/db/subscription';
 import { auths, database, validateBody } from '@/api-lib/middlewares';
 // import { getMongoDb } from '@/api-lib/mongodb';
 import { ncOpts } from '@/api-lib/nc';
@@ -27,27 +27,13 @@ handler.post(
       source,
       token,
       firstName,
+      paymentVerified,
       email,
-      //   cardNumber,
-      //   cardExpMonth,
-      //   cardExpYear,
-      //   cvc,
-      //   transactionId,
     } = req.body;
     console.log(firstName, email, 'dentistId');
 
     let charge;
 
-    // if (paymentMethod == 'stripe') {
-    // const token = await stripe.tokens.create({
-    //   card: {
-    //     number: '4242424242424242',
-    //     exp_month: 1,
-    //     exp_year: 2033,
-    //     cvc: '314',
-    //   },
-    // });
-    // return res.json({ message: token.id });
     const paymentMethod = await stripe.paymentMethods.create({
       type: 'card',
       card: { token: token },
@@ -84,6 +70,7 @@ handler.post(
     const customerObj = await stripe.customers.create({
       description: 'Dentist Monthly Subscription',
       payment_method: paymentMethod.id,
+      invoice_settings: { default_payment_method: paymentMethod.id },
       firstName,
       email,
     });
@@ -97,13 +84,6 @@ handler.post(
       trial_period_days: 30,
       cancel_at: timestamps.unixTimestampAfterOneYear,
       items: [{ price: 'price_1NaGYqFH7jk2A82vAC2kyeyf' }],
-
-      //   default_payment_method: 'pm_card_visa',
-
-      //   currency: 'usd',
-      //   source: source,
-      //   source: token?.id,
-      //   description: 'Charges for Subscriptions',
     });
     let allPaymentIds = {
       payment_id: [{ id: paymentMethod.id, isDefault: true }],
@@ -118,7 +98,10 @@ handler.post(
     const user = await updateUserById(
       req.db,
       req.body.id ? req.body.id : req.user._id,
-      allPaymentIds
+      allPaymentIds,
+      {
+        ...(paymentVerified && { paymentVerified }),
+      }
     );
     const subscrption = await insertSubscriptions(req.db, {
       dentistId,
@@ -143,5 +126,30 @@ handler.post(
     return res.json({ subscrption });
   }
 );
+
+handler.patch(async (req, res) => {
+  const { paymentVerified } = req.body;
+  console.log(paymentVerified, 'paymentVerified');
+
+  const user = await updateUser(
+    // req.db,
+    req.db,
+    req.body.id,
+    {
+      paymentVerified,
+    }
+  );
+  console.log(user, 'subscription user');
+  res.json({ user });
+});
+
+handler.delete(async (req, res) => {
+  console.log(req.body, 'req.query ==');
+  // const { subscriptionId } = req.body.subscriptionId;
+  const deleted = await stripe.subscriptions.cancel(req.body.subscriptionId);
+
+  // console.log(dentist, 'teacher');
+  res.json({ deleted });
+});
 
 export default handler;

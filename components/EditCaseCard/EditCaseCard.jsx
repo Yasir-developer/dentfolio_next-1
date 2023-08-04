@@ -2,8 +2,6 @@ import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import BlueButtons from '../Buttons/BlueButtons';
 import { FaEllipsisV } from 'react-icons/fa';
-import axios from 'axios';
-import { server } from 'config';
 
 const EditCaseCard = ({
   img_url,
@@ -15,8 +13,8 @@ const EditCaseCard = ({
   onDeleteClick,
   caseData,
   fetchCases,
-  hideEdit=false,
-  hideDelete=false
+  hideEdit = false,
+  hideDelete = false,
 }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -79,8 +77,8 @@ const EditCaseCard = ({
             <h2 className="lg;text-center lg:text-left text-[21px] text-custom-blue font-semibold lg:w-full w-[90%]">
               {name}
             </h2>
-            {!hideDelete ? 
-              <div className='absolute right-0 top-0'>
+            {!hideDelete ? (
+              <div className="absolute right-0 top-0">
                 <div ref={dropdownRef}>
                   {/* <div className="flex items-center justify-center px-2 rounded-l-md cursor-pointer"> */}
                   <FaEllipsisV
@@ -130,8 +128,10 @@ const EditCaseCard = ({
                     </div>
                   </div>
                 )}
-              </div>:''
-            }
+              </div>
+            ) : (
+              ''
+            )}
             <p className="text-left text-[12px] lg:text-[16px] font-light w-full">
               {description}
             </p>
@@ -147,15 +147,17 @@ const EditCaseCard = ({
                 </div>
               ))}
             </div>
-            {!hideEdit ? 
+            {!hideEdit ? (
               <div className="justify-start w-full">
                 <BlueButtons
                   buttonText={'Edit'}
                   className={'mx-auto my-2 '}
                   onClick={() => showModalProp()}
                 />
-              </div>:''
-            }
+              </div>
+            ) : (
+              ''
+            )}
           </div>
           {/* <FaEllipsisV
             style={{

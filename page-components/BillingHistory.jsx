@@ -1,24 +1,34 @@
-import React, { useMemo, useState, useEffect } from "react";
-import Table from "@/components/Table/Table";
+import React, { useMemo, useState, useEffect } from 'react';
+import Table from '@/components/Table/Table';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { server } from 'config';
 
 const BillingHistory = () => {
+  const { user } = useSelector((state) => state.auth);
+
+  const [historyData, setHistoryData] = useState([]);
+  useEffect(() => {
+    handleHistory();
+  }, []);
+
   const columns = React.useMemo(
     () => [
       {
-        Header: "Payment Invoice",
-        accessor: "invoice",
+        Header: 'Payment Invoice',
+        accessor: 'number',
       },
       {
-        Header: "Amount",
-        accessor: "amount",
+        Header: 'Amount',
+        accessor: 'amount_paid',
       },
       {
-        Header: "Date",
-        accessor: "date",
+        Header: 'Date',
+        accessor: 'date',
       },
       {
-        Header: "Status",
-        accessor: "status",
+        Header: 'Status',
+        accessor: 'status',
       },
     ],
     []
@@ -27,61 +37,81 @@ const BillingHistory = () => {
   //   const [data, setData] = useState([]);
   const data = [
     {
-      invoice: "Invoice#0098 - sep 2020",
+      invoice: 'Invoice#0098 - sep 2020',
       amount: 100,
-      date: "2023-06-01",
-      status: "Paid",
+      date: '2023-06-01',
+      status: 'Paid',
     },
     {
-      invoice: "Invoice#0098 - sep 2020",
+      invoice: 'Invoice#0098 - sep 2020',
       amount: 200,
-      date: "2023-06-02",
-      status: "Pending",
+      date: '2023-06-02',
+      status: 'Pending',
     },
     {
-      invoice: "Invoice#0098 - sep 2020",
+      invoice: 'Invoice#0098 - sep 2020',
       amount: 150,
-      date: "2023-06-03",
-      status: "Paid",
+      date: '2023-06-03',
+      status: 'Paid',
     },
 
     {
-      invoice: "Invoice#0098 - sep 2020",
+      invoice: 'Invoice#0098 - sep 2020',
       amount: 100,
-      date: "2023-06-01",
-      status: "Paid",
+      date: '2023-06-01',
+      status: 'Paid',
     },
     {
-      invoice: "Invoice#0098 - sep 2020",
+      invoice: 'Invoice#0098 - sep 2020',
       amount: 200,
-      date: "2023-06-02",
-      status: "Pending",
+      date: '2023-06-02',
+      status: 'Pending',
     },
     {
-      invoice: "Invoice#0098 - sep 2020",
+      invoice: 'Invoice#0098 - sep 2020',
       amount: 150,
-      date: "2023-06-03",
-      status: "Paid",
+      date: '2023-06-03',
+      status: 'Paid',
     },
     {
-      invoice: "Invoice#0098 - sep 2020",
+      invoice: 'Invoice#0098 - sep 2020',
       amount: 100,
-      date: "2023-06-01",
-      status: "Paid",
+      date: '2023-06-01',
+      status: 'Paid',
     },
     {
-      invoice: "Invoice#0098 - sep 2020",
+      invoice: 'Invoice#0098 - sep 2020',
       amount: 200,
-      date: "2023-06-02",
-      status: "Pending",
+      date: '2023-06-02',
+      status: 'Pending',
     },
     {
-      invoice: "Invoice#0098 - sep 2020",
+      invoice: 'Invoice#0098 - sep 2020',
       amount: 150,
-      date: "2023-06-03",
-      status: "Paid",
+      date: '2023-06-03',
+      status: 'Paid',
     },
   ];
+
+  const handleHistory = () => {
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    axios
+      .get(`${server}/api/payments/${user?.customer_id}`, {
+        options,
+      })
+      .then((res) => {
+        console.log(res.data.invoicesData, 'res.data');
+        // setLoader(false);
+        if (res.status == 200) {
+          setHistoryData(res.data.invoicesData);
+        }
+      })
+      .catch((error) => {});
+  };
   //   useEffect(() => {
   //     (async () => {
   //       const result = await axios("https://api.tvmaze.com/search/shows?q=snow");
@@ -100,7 +130,7 @@ const BillingHistory = () => {
         </p>
       </div>
 
-      <Table columns={columns} data={data} />
+      <Table columns={columns} data={historyData} />
     </>
   );
 };

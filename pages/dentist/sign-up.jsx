@@ -66,7 +66,6 @@ const Signup = () => {
   const [longitude, setLongitude] = useState();
 
   const router = useRouter();
-  // const GOOGLE_MAPS_API_KEY = 'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo';
 
   const handleInputChange = async (e) => {
     const input = e.target.value;
@@ -351,7 +350,7 @@ const Signup = () => {
                 <div className="mt-5 flex flex-col items-center justify-center">
                   <BlueButtons
                     loading={loader}
-                    buttonText="Submit"
+                    buttonText="Continue to Payment"
                     className="px-[50px] cursor-pointer"
                   />
 

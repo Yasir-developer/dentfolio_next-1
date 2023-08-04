@@ -44,7 +44,9 @@ handler.post(
       city,
       postCode,
       latitude,
+
       longitude,
+      paymentVerified = false,
       // customer,
       bio,
       courtesyTitle,
@@ -91,6 +93,7 @@ handler.post(
       postCode,
       bio: '',
       customer: {},
+      paymentVerified,
       // username: '',
       courtesyTitle: '',
       profile_photo: '',

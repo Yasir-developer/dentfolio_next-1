@@ -3,17 +3,26 @@ import { ElementsConsumer, CardElement } from '@stripe/react-stripe-js';
 
 import CardSection from '../../page-components/Checkout/CardSection';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { server } from 'config';
 import { toast } from 'react-hot-toast';
 import Router from 'next/router';
+import {
+  PaymentMethodData,
+  PaymentMethods,
+  handleModal,
+} from 'redux/actions/payment';
 
-const BillingMethodForm = ({ handleClick, stripe, elements }) => {
+const BillingMethodForm = ({ stripe, elements }) => {
   //   console.log(props, 'props props');
+  const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.auth);
+  const { change } = useSelector((state) => state.payment);
+
   const [loader, setLoader] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-
+  console.log(change, 'changechang');
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoader(true);
@@ -29,6 +38,8 @@ const BillingMethodForm = ({ handleClick, stripe, elements }) => {
     const result = await stripe.createToken(card);
     if (result.error) {
       console.log(result.error.message);
+      toast.error(result.error.message);
+      setLoader(false);
     } else {
       console.log(result, 'result ----');
       const options = {
@@ -36,7 +47,9 @@ const BillingMethodForm = ({ handleClick, stripe, elements }) => {
           'Content-Type': 'application/json',
         },
       };
-
+      const data = {
+        id: user.customer_id,
+      };
       axios
         .post(`${server}/api/paymentMethods`, {
           dentistId: user._id,
@@ -52,10 +65,13 @@ const BillingMethodForm = ({ handleClick, stripe, elements }) => {
             setLoader(false);
             console.log(res, 'subs res');
             //   setLoader(false);
+            // dispatch(PaymentMethodData(res.data));
 
             toast.success('Billing Method Added Successfully');
-            handleClick(false);
+            dispatch(handleModal(false));
+            // handleClick(false);
             setShowPaymentModal(false);
+            dispatch(PaymentMethods(data));
 
             //   emptFields();
             // Router.replace('/dentist/view-profile');
@@ -107,13 +123,8 @@ export default function InjectedCheckoutForm(props) {
 
   return (
     <ElementsConsumer>
-      {({ stripe, elements, handleClick }) => (
-        <BillingMethodForm
-          stripe={stripe}
-          elements={elements}
-          handleClick={handleClick}
-          // onSubmit={props.onSubmit(e)}
-        />
+      {({ stripe, elements }) => (
+        <BillingMethodForm stripe={stripe} elements={elements} />
       )}
     </ElementsConsumer>
   );

@@ -1,4 +1,4 @@
-import { useTable } from "react-table";
+import { useTable } from 'react-table';
 
 const Table = ({ columns, data }) => {
   const {
@@ -11,7 +11,7 @@ const Table = ({ columns, data }) => {
     columns,
     data,
   });
-
+  console.log(data, 'data');
   return (
     <table
       {...getTableProps()}
@@ -30,7 +30,7 @@ const Table = ({ columns, data }) => {
                 key={column}
                 className="p-2 font-semibold text-left"
               >
-                {column.render("Header")}
+                {column.render('Header')}
               </th>
             ))}
           </tr>
@@ -42,6 +42,7 @@ const Table = ({ columns, data }) => {
           return (
             <tr {...row.getRowProps()} className="p-3" key={row}>
               {row.cells.map((cell) => {
+                console.log(cell, 'cell');
                 return (
                   <td
                     key={cell}
@@ -54,18 +55,18 @@ const Table = ({ columns, data }) => {
                     //   textAlign: "center",
                     // }}
                   >
-                    {cell.column.id === "status" ? (
+                    {cell.column.id === 'status' ? (
                       <span
                         style={{
                           backgroundColor: getStatusColor(cell.value),
-                          padding: "5px",
-                          borderRadius: "7px",
+                          padding: '5px',
+                          borderRadius: '7px',
                         }}
                       >
-                        {cell.render("Cell")}
+                        {cell.render('Cell')}
                       </span>
                     ) : (
-                      cell.render("Cell")
+                      cell.render('Cell')
                     )}
                   </td>
                 );
@@ -81,14 +82,14 @@ const Table = ({ columns, data }) => {
 
 const getStatusColor = (status) => {
   switch (status) {
-    case "Paid":
-      return "#bdeee8";
-    case "Pending":
-      return "#F7CB73";
-    case "Cancelled":
-      return "red";
+    case 'paid':
+      return '#bdeee8';
+    case 'Free Trial':
+      return '#F7CB73';
+    case 'cancelled':
+      return 'red';
     default:
-      return "black";
+      return 'black';
   }
 };
 export default Table;

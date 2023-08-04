@@ -30,6 +30,9 @@ const CheckoutForm = (props) => {
     console.log(card, 'card');
     const result = await stripe.createToken(card);
     if (result.error) {
+      toast.error(result.error.message);
+      setLoader(false);
+
       console.log(result.error.message);
     } else {
       console.log(result, 'result ----');
@@ -52,12 +55,12 @@ const CheckoutForm = (props) => {
           // return;
           if (res.status == 200) {
             dispatch(fetchUser(res?.data?.user));
-
-            setLoader(false);
-            console.log(res, 'subs res');
+            handleSave();
+            // console.log(res, 'subs res');
             //   setLoader(false);
 
-            toast.success('Subscription Created Successfully');
+            setLoader(false);
+
             //   emptFields();
             Router.replace('/dentist/view-profile');
           } else if (res.status == 400) {
@@ -70,6 +73,27 @@ const CheckoutForm = (props) => {
     }
   };
 
+  const handleSave = (e) => {
+    // e.preventDefault();
+
+    axios
+      .patch(`${server}/api/subscription`, {
+        id: user?._id,
+        paymentVerified: true,
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .then((res) => {
+        console.log(res, 'res after update');
+        // setLoader(false);
+        if (res.status == 200) {
+          toast.success('Subscription Created Successfully');
+        }
+      })
+      .catch((error) => {
+        setLoader(false);
+        toast.error(error?.data?.message);
+      });
+  };
   return (
     <div>
       <div class="product-info"></div>
@@ -95,7 +119,7 @@ const CheckoutForm = (props) => {
           </div>
         ) : (
           <button className="btn-pay" disabled={!props.stripe}>
-            Buy Dentist Subscription
+            Continue
           </button>
         )}
       </form>

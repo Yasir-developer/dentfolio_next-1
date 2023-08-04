@@ -42,7 +42,7 @@ handler.post(
 
     const dentist = await getDentistById(req.db, req.body.dentistId);
     // console.log(dentist, 'teacher');
-    res.json({ dentist });
+    // res.json({ dentist });
     // return;
     // let charge;
 
@@ -54,9 +54,24 @@ handler.post(
 
     const AttachPaymentMethod = await stripe.paymentMethods.attach(
       paymentMethod.id,
-      { customer: dentist.customer_id }
+      {
+        customer: dentist.customer_id,
+        // invoice_settings: invoice_settings.default_payment_method,
+      }
     );
 
+    const customerData = await stripe.customers.update(dentist.customer_id, {
+      invoice_settings: {
+        default_payment_method: paymentMethod.id,
+      },
+    });
+    const paymentMethods = await stripe.customers.listPaymentMethods(
+      dentist.customer_id
+    );
+    console.log(paymentMethods, 'return all paymentMethods');
+    return res.json({ paymentMethods });
+    console.log(customerData, 'customerData');
+    // res.js
     // Usage
 
     let allPaymentIds = {

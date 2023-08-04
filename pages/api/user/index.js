@@ -114,6 +114,8 @@ handler.patch(
         ...(firstName && { firstName }),
         ...(userName && { userName }),
         ...(displayName && { displayName }),
+        // ...(payment && { previous_case }),
+
         ...(gdcNo && { gdcNo }),
         ...(buildingName && { buildingName }),
         ...(streetName && { streetName }),

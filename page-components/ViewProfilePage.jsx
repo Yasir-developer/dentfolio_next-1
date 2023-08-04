@@ -4,10 +4,11 @@ import DoctorBasicDetail from '@/components/DoctorBasicDetail/DoctorBasicDetail'
 import PreviousCases from '@/components/PreviousCases/PreviousCases';
 import TreatmentProvide from '@/components/TreatmentProvide/TreatmentProvide';
 import axios from 'axios';
+import { server } from 'config';
 import React, { useEffect, useState } from 'react';
 // import { server } from "../../config";
 import { useDispatch, useSelector } from 'react-redux';
-import { resetUser } from 'redux/actions/auth';
+import { fetchUser, resetUser } from 'redux/actions/auth';
 
 const ViewProfilePage = () => {
   const [profile, setProfile] = useState({});
@@ -19,15 +20,9 @@ const ViewProfilePage = () => {
 
   const { user } = useSelector((state) => state.auth);
   console.log(user, 'useruseruser');
-  // useEffect(() => {
-  //   if (user) {
-  //     setLoader(false);
-  //   }
-
-  //   return () => {
-  //     // dispatch(resetUser());
-  //   };
-  // }, [user]);
+  useEffect(() => {
+    handleProfile();
+  }, []);
 
   const handleProfile = () => {
     const options = {
@@ -43,10 +38,7 @@ const ViewProfilePage = () => {
         console.log(res?.data?.user, 'res =======');
         // setLoader(false);
         if (res.status == 200) {
-          setProfile(res?.data?.user);
-          setTreatment(res?.data?.user?.treatment_type);
-          setCasesData(res?.data?.user?.previous_case);
-          setLoader(false);
+          dispatch(fetchUser(res?.data?.user));
         }
       })
       .catch((error) => {});
