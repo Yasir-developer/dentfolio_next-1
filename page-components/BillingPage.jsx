@@ -7,7 +7,12 @@ import StripeCard from '@/components/StripeCard/StripeCard';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
-import { FaCcMastercard, FaCcVisa, FaTimes } from 'react-icons/fa';
+import {
+  FaCcMastercard,
+  FaCcVisa,
+  FaTimes,
+  FaWindowClose,
+} from 'react-icons/fa';
 import BillingMethodForm from '../page-components/BillingMethodForm/BillingMethodForm';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -32,18 +37,18 @@ const BillingPage = (props) => {
   const { change, paymentMethods, paydata } = useSelector(
     (state) => state.payment
   );
-  console.log(paydata, 'paydata');
+  // console.log(paydata, 'paydata');
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
   // console.log(user.customer_id, '======');
   let idData = {
-    id: user.customer_id,
+    id: user?.customer_id,
   };
   useEffect(() => {
     setLoader(true);
     const data = {
-      id: user.customer_id,
+      id: user?.customer_id,
     };
     if (!change) {
       dispatch(PaymentMethods(data));
@@ -141,11 +146,15 @@ const BillingPage = (props) => {
       // </div>
       <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-gray-900 z-[999]">
         <div className="product">
-          <div>
-            {/* <InjectedCheckoutForm /> */}
-            <Elements stripe={stripePromise}>
-              {/* <PaymentElement /> */}
+          <FaWindowClose
+            className="text-right ml-auto w-5 h-5 cursor-pointer"
+            onClick={() => {
+              dispatch(handleModal(false));
+            }}
+          />
 
+          <div>
+            <Elements stripe={stripePromise}>
               <BillingMethodForm />
               {/* <AddressForm /> */}
             </Elements>
@@ -206,7 +215,7 @@ const BillingPage = (props) => {
           {/* sadadasdas sada dsdsa */}
           {!loader ? (
             data?.map((item, index) => {
-              console.log(item.card, 'iteette');
+              // console.log(item.card, 'iteette');
               return (
                 <StripeCard
                   // abc={''}
@@ -219,6 +228,7 @@ const BillingPage = (props) => {
                   onDeleteClick={() => handleDeleteClick(item.id, index)}
                   // cardIcon={item.cardIcon}
                   isPrimary={item.card.default_source}
+                  disabled={item.card.default_source ? 'Primary' : null}
                 />
               );
             })

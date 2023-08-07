@@ -92,6 +92,8 @@ handler.post(
       gdcNo,
       buildingName,
       streetName,
+      longitude,
+      latitude,
       location: [longitude, latitude],
 
       city,

@@ -45,9 +45,13 @@ const CheckoutForm = (props) => {
       axios
         .post(`${server}/api/subscription`, {
           dentistId: user._id,
-          name: user.name,
+          name: user.firstName,
           email: user.email,
           token: result.token.id,
+          subscrption_type: '',
+          customer_id: '',
+          payment_id: '',
+
           options,
         })
         .then((res) => {

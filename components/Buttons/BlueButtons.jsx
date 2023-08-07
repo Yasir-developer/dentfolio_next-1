@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const BlueButtons = ({
   buttonText,
@@ -8,6 +8,7 @@ const BlueButtons = ({
   type,
   onSubmit,
   loading,
+  disabled,
 }) => {
   return (
     <button
@@ -16,6 +17,7 @@ const BlueButtons = ({
       type={type}
       onSubmit={onSubmit}
       loading={loading}
+      disabled={disabled ? disabled : null}
     >
       {loading ? (
         <div aria-label="Loading..." role="status">

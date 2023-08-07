@@ -6,6 +6,7 @@ import { server } from 'config';
 import axios from 'axios';
 import { PaymentMethods } from 'redux/actions/payment';
 import toast from 'react-hot-toast';
+import Checkbox from '../Checkbox/Checkbox';
 const StripeCard = ({
   cardIcon,
   cardId,
@@ -14,6 +15,9 @@ const StripeCard = ({
   onDeleteClick,
   text,
   fetchData,
+  hideRemove,
+
+  disabled,
   isPrimary = false,
 }) => {
   const { user } = useSelector((state) => state.auth);
@@ -113,6 +117,7 @@ const StripeCard = ({
       )}
       <div className="flex gap-x-2 my-3 items-center lg:py-0 py-3">
         {/* <div className="cardIcon">{cardIcon}</div> */}
+
         <Image src={imgArr} width={50} height={50} />
         <div className="cardEndingNumber">
           {cardType} ending in {endingNumber}
@@ -120,10 +125,12 @@ const StripeCard = ({
       </div>
       <div className="flex gap-x-3 justify-end">
         {/* <SimpleButton text={'Edit'} className={'border-r'} /> */}
+
         {!primaryLoader ? (
           <SimpleButton
             text={text}
             className={'border-r'}
+            disabled={text == 'Primary' ? true : false}
             onClick={() => handlePrimary(cardId)}
           />
         ) : (
@@ -141,11 +148,15 @@ const StripeCard = ({
             {/* </div> */}
           </div>
         )}
-        <SimpleButton
-          text={'Remove'}
-          className={'text-red-300'}
-          onClick={showModal}
-        />
+        {!hideRemove ? (
+          <SimpleButton
+            text={'Remove'}
+            className={'text-red-300'}
+            onClick={showModal}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

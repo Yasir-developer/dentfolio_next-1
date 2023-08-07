@@ -34,7 +34,12 @@ export async function updateUser(db, id, { paymentVerified }) {
   console.log(paymentVerified, 'da');
   const updatedData = await db
     .collection('users')
-    .findOneAndUpdate({ _id: new ObjectId(id) }, { $set: { paymentVerified } })
+    .findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: { paymentVerified } },
+
+      { returnDocument: 'after' }
+    )
     .then(({ value }) => value);
   return updatedData;
 }

@@ -29,22 +29,28 @@ handler.post(
       firstName,
       paymentVerified,
       email,
+      // subscrption_type,
+      customer_id,
+      payment_id,
     } = req.body;
-    console.log(firstName, email, 'dentistId');
+    console.log(req.body, email, 'dentistId');
 
     let charge;
+    if (req.body.subscrption_type == '') {
+      console.log('payment creation here');
 
-    const paymentMethod = await stripe.paymentMethods.create({
-      type: 'card',
-      card: { token: token },
-      //   card: {
-      //     number: '4242424242424242',
-      //     exp_month: 1,
-      //     exp_year: 2033,
-      //     cvc: '314',
-      //   },
-    });
-    console.log(paymentMethod.id, 'paymentMethod.id');
+      var paymentMethod = await stripe.paymentMethods.create({
+        type: 'card',
+        card: { token: token },
+        //   card: {
+        //     number: '4242424242424242',
+        //     exp_month: 1,
+        //     exp_year: 2033,
+        //     cvc: '314',
+        //   },
+      });
+    }
+    // console.log(paymentMethod.id, 'paymentMethod.id');
 
     function getUnixTimestampsForTodayAndAfterOneYear() {
       const today = new Date();
@@ -61,40 +67,49 @@ handler.post(
 
     // Usage
     const timestamps = getUnixTimestampsForTodayAndAfterOneYear();
-    console.log('Unix timestamp for today:', timestamps.unixTimestampToday);
-    console.log(
-      'Unix timestamp for one year from today:',
-      timestamps.unixTimestampAfterOneYear
-    );
-
-    const customerObj = await stripe.customers.create({
-      description: 'Dentist Monthly Subscription',
-      payment_method: paymentMethod.id,
-      invoice_settings: { default_payment_method: paymentMethod.id },
-      firstName,
-      email,
-    });
+    // console.log('Unix timestamp for today:', timestamps.unixTimestampToday);
+    // console.log(
+    //   'Unix timestamp for one year from today:',
+    //   timestamps.unixTimestampAfterOneYear
+    // );
+    if (req.body.customer_id == '') {
+      console.log('customer creation here');
+      var customerObj = await stripe.customers.create({
+        description: 'Dentist Monthly Subscription',
+        payment_method: paymentMethod.id,
+        invoice_settings: { default_payment_method: paymentMethod.id },
+        firstName,
+        email,
+      });
+    }
     // return res.json({ message: customerObj.id });
 
+    // console.log(customerObj, 'customerObj');
+    // return;
     charge = await stripe.subscriptions.create({
       //   amount: total,
       //   customer: 'cus_ON0y1ecOEscoT6',
-      customer: customerObj.id,
-      default_payment_method: paymentMethod.id,
+      customer: customerObj?.id ? customerObj?.id : customer_id,
+      default_payment_method: paymentMethod?.id
+        ? paymentMethod?.id
+        : payment_id,
       trial_period_days: 30,
       cancel_at: timestamps.unixTimestampAfterOneYear,
       items: [{ price: 'price_1NaGYqFH7jk2A82vAC2kyeyf' }],
     });
+    console.log(charge, 'charge');
     let allPaymentIds = {
-      payment_id: [{ id: paymentMethod.id, isDefault: true }],
-      customer_id: customerObj.id,
+      payment_id: [
+        { id: payment_id ? payment_id : paymentMethod.id, isDefault: true },
+      ],
+      customer_id: customer_id ? customer_id : customerObj.id,
       subscrption_id: charge.id,
     };
     console.log(allPaymentIds, 'charge');
     if (!charge?.id) {
       return res.json({ message: 'Payment Unsuccessful!' });
     }
-    console.log(customer, 'customer===');
+    // console.log(customer, 'customer===');
     const user = await updateUserById(
       req.db,
       req.body.id ? req.body.id : req.user._id,
@@ -111,7 +126,7 @@ handler.post(
 
       //   source,
     });
-    console.log(customer, 'subscrption');
+    // console.log(customer, 'subscrption');
     return res.json({ user: user });
 
     const paymentStudent = await insertPayments(req.db, {
