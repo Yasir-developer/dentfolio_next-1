@@ -7,6 +7,7 @@ import {
   FaEdit,
   FaCog,
   FaFileInvoiceDollar,
+  FaTimesCircle,
 } from 'react-icons/fa';
 
 import DashboardHeader from '../DashboardHeader/DashboardHeader';
@@ -218,6 +219,18 @@ const DentistTabs = (props) => {
         </div>
         <div className=" lg:w-[85%] w-full flex flex-col justify-between">
           <div className="lg:contentContainer pb-[72px] lg:overflow-y-scroll lg:h-full">
+            <div className="px-20 w-full lg:!mt-0 mt-[50px] lg:w-[60%] justify-center items-center text-center py-5 mx-auto">
+              <div className="bg-white border-[1px] rounded-[7px] items-center justify-around flex">
+                <FaTimesCircle
+                  className="lg:w-4 lg:h-4 w-10 h-10  hidden lg:block"
+                  color="red"
+                />
+                <p className="text-left lg:mx-0 mx-5">
+                  Your Profile will not be shown to Patients untill you
+                  subscribe.
+                </p>
+              </div>
+            </div>
             {router?.pathname === '/dentist/edit-profile' && (
               <EditProfilePage />
             )}

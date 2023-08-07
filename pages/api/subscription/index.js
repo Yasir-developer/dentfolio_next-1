@@ -97,7 +97,7 @@ handler.post(
       cancel_at: timestamps.unixTimestampAfterOneYear,
       items: [{ price: 'price_1NaGYqFH7jk2A82vAC2kyeyf' }],
     });
-    console.log(charge, 'charge');
+    // console.log(charge, 'charge');
     let allPaymentIds = {
       payment_id: [
         { id: payment_id ? payment_id : paymentMethod.id, isDefault: true },

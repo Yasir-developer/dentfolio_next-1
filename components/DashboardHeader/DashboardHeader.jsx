@@ -3,7 +3,7 @@ import logoWhite from '../../public/images/logoWhite.png';
 import profile from '../../public/images/profileImg.png';
 
 import Image from 'next/image';
-import { FaAngleDown, FaRegBell, FaBars } from 'react-icons/fa';
+import { FaAngleDown, FaRegBell, FaBars, FaTimesCircle } from 'react-icons/fa';
 import { HiChevronDown } from 'react-icons/hi';
 import Router from 'next/router';
 import { logoutUser } from 'redux/actions/auth';
@@ -69,7 +69,7 @@ const DashboardHeader = ({ menuToggler }) => {
           </div> */}
 
           <div className="lg:border-l border-l-[#c8bfc3] flex">
-            <div className="flex flex-row items-center justify-center lg:pr-[80px] lg:pl-[30px] " >
+            <div className="flex flex-row items-center justify-center lg:pr-[80px] lg:pl-[30px] ">
               <Image
                 src={user?.profile_photo ? user?.profile_photo : profile}
                 alt="logo"
@@ -81,7 +81,11 @@ const DashboardHeader = ({ menuToggler }) => {
                 onClick={toggleDropdown}
               />
 
-              <h2 className="hidden lg:block text-custom-blue text-[16px] font-semibold px-2" ref={dropdownRef} onClick={toggleDropdown}>
+              <h2
+                className="hidden lg:block text-custom-blue text-[16px] font-semibold px-2"
+                ref={dropdownRef}
+                onClick={toggleDropdown}
+              >
                 {user?.displayName}
                 {/* Dylan Taylor */}
               </h2>
