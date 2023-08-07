@@ -17,10 +17,10 @@ export async function listDentistByLocation(db, { lat, lng, r }) {
         $near: {
           $geometry: {
             type: 'Point',
-            coordinates: [106.9060745, -6.195999599999999], // MongoDB requires longitude first, then latitude
+            coordinates: [-72.68603139999999, 41.9388735], // MongoDB requires longitude first, then latitude
           },
-          $maxDistance: parseInt(100000),
-          // $maxDistance: r,
+          // $minDistance: 1,
+          $maxDistance: 1000000000000,
         },
       },
     })

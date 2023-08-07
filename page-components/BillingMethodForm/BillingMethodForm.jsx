@@ -63,9 +63,9 @@ const BillingMethodForm = ({ stripe, elements }) => {
           // return;
           if (res.status == 200) {
             setLoader(false);
-            console.log(res, 'subs res');
+            console.log(res, 'subs res ---');
             //   setLoader(false);
-            // dispatch(PaymentMethodData(res.data));
+            dispatch(PaymentMethodData(res.data.paymentMethods.data));
 
             toast.success('Billing Method Added Successfully');
             dispatch(handleModal(false));

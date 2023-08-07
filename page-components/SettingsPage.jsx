@@ -2,13 +2,14 @@ import BlueButtons from '@/components/Buttons/BlueButtons';
 import AuthInput from '@/components/Inputs/AuthInput';
 import axios from 'axios';
 import { server } from 'config';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { FaEye } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser } from 'redux/actions/auth';
+import { fetchUpdatedUser, fetchUser } from 'redux/actions/auth';
 const SettingsPage = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, updatedUser } = useSelector((state) => state.auth);
+  console.log(updatedUser, 'updated');
   const dispatch = useDispatch();
 
   console.log(user, 'user.email');
@@ -16,6 +17,12 @@ const SettingsPage = () => {
   const [confirmpassword, setConfirmPassword] = useState('');
   const [loader, setLoader] = useState(false);
   const [statusLoader, setStatusLoader] = useState(false);
+
+  useEffect(() => {
+    if (updatedUser) {
+      console.log(updatedUser);
+    }
+  }, [updatedUser?.paymentVerified]);
 
   const changePassword = (e) => {
     e.preventDefault();
@@ -68,7 +75,7 @@ const SettingsPage = () => {
         console.log(res, 'res after update');
         // setLoader(false);
         if (res.status == 200) {
-          dispatch(fetchUser(res.data.user));
+          dispatch(fetchUpdatedUser(res.data.user));
           setStatusLoader(false);
           // toast.success('Subscription Removed');
         }
@@ -85,20 +92,21 @@ const SettingsPage = () => {
     // return;
     await axios
       .delete(`${server}/api/subscription`, {
-        subscriptionId: user.subscrption_id,
-        method: 'DELETE',
+        // method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
+        data: {
+          subscriptionId: user.subscrption_id,
+        },
       })
       .then((res) => {
         if (res.status == 200) {
           toast.success('Subscription Removed Successfully');
+          handleSave();
         } else {
           toast.success('Something went wrong');
         }
       })
-      .then(() => {
-        handleSave();
-      });
+      .catch((err) => {});
 
     // setLoader(false);
   };
@@ -145,7 +153,7 @@ const SettingsPage = () => {
         <div className="mt-5 lg:w-[30%] w-[90%]">
           <form onSubmit={(e) => removeSubscription(e)}>
             {/* < */}
-            {user.paymentVerified ? (
+            {user?.paymentVerified ? (
               <div className="flex items-center">
                 <div className="p-2 bg-green-400 rounded-[7px] mx-5">
                   <p>Active</p>

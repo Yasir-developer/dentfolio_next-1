@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { server } from 'config';
 import axios from 'axios';
 import { PaymentMethods } from 'redux/actions/payment';
+import toast from 'react-hot-toast';
 const StripeCard = ({
   cardIcon,
   cardId,
@@ -12,6 +13,7 @@ const StripeCard = ({
   endingNumber,
   onDeleteClick,
   text,
+  fetchData,
   isPrimary = false,
 }) => {
   const { user } = useSelector((state) => state.auth);
@@ -60,12 +62,14 @@ const StripeCard = ({
       .then((response) => {
         if (response.status == 200) {
           // dispatch(fetchUser(response?.data?.user));
-
+          console.log('here console');
           toast.success('Card is been Set as Primary');
-          const data = {
-            id: user.customer_id,
-          };
-          dispatch(PaymentMethods(data));
+          fetchData();
+
+          // const data = {
+          //   id: user.customer_id,
+          // };
+          // dispatch(PaymentMethods(data));
           setPrimaryLoader(false);
 
           // setPaymentModalShow(true); // router.replace('/dentist/view-profile');
@@ -89,7 +93,7 @@ const StripeCard = ({
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-opacity-75 z-[999]">
           <div className="bg-white p-8 rounded shadow-lg">
-            <p>Do you want to delete this case?</p>
+            <p>Do you want to delete this Payment Method?</p>
             <div className="mt-4 flex justify-end">
               <button
                 className="px-4 py-2 mr-2 bg-custom-blue text-white rounded hover:bg-sky-500"

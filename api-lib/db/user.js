@@ -74,8 +74,8 @@ export async function insertUser(
     streetName,
     city,
     postCode,
-    latitude,
-    longitude,
+    location: [longitude, latitude],
+
     // bio = '',
     // username ='',
     courtesyTitle = '',
@@ -101,8 +101,8 @@ export async function insertUser(
     gdcNo,
     buildingName,
     streetName,
-    latitude,
-    longitude,
+    location: [longitude, latitude],
+
     city,
     postCode,
     bio: '',

@@ -32,12 +32,14 @@ const BillingPage = (props) => {
   const { change, paymentMethods, paydata } = useSelector(
     (state) => state.payment
   );
-
+  console.log(paydata, 'paydata');
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
   // console.log(user.customer_id, '======');
-
+  let idData = {
+    id: user.customer_id,
+  };
   useEffect(() => {
     setLoader(true);
     const data = {
@@ -208,6 +210,7 @@ const BillingPage = (props) => {
               return (
                 <StripeCard
                   // abc={''}
+                  fetchData={() => dispatch(PaymentMethods(idData))}
                   text={item.card.default_source ? 'Primary' : 'Set as Primary'}
                   key={index}
                   cardId={item.id}
