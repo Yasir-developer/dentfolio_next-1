@@ -25,6 +25,8 @@ const SettingsPage = () => {
   const [statusLoader, setStatusLoader] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [deleteModalShow, setDeleteModalShow] = useState(false);
+
   const [paymentVerifiedStatus, setPaymentVerified] = useState(false);
 
   useEffect(() => {
@@ -118,6 +120,7 @@ const SettingsPage = () => {
           // fetchUser(res.data.user)
           setStatusLoader(false);
           toast.success('Subscription Removed Successfully');
+          setDeleteModalShow(false);
         }
       })
       .catch((err) => {
@@ -163,20 +166,7 @@ const SettingsPage = () => {
                       cardType={item.card.brand}
                       endingNumber={item.card.last4}
                       hideRemove={true}
-                      // onDeleteClick={() => handleDeleteClick(item.id, index)}
-                      // cardIcon={item.cardIcon}
-                      // isPrimary={item.card.default_source}
-                      // disabled={item.card.default_source ? 'Primary' : null}
                     />
-
-                    {/* <div key={index}> */}
-                    {/* <input
-                      type="checkbox"
-                      // checked={selectedItem === item}
-                      // onChange={() => handleCheckboxChange(item)}
-                    />
-                    <label>{item}</label> */}
-                    {/* </div> */}
                   </div>
                   // <div>asdassa</div>
                 ))}
@@ -283,8 +273,53 @@ const SettingsPage = () => {
       toast.error('Please Select Billing Method to Continue');
     }
   };
+
+  const deleteModal = () => {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-[999]">
+        <form onSubmit={(e) => removeSubscription(e)}>
+          <div className="bg-white p-8 rounded shadow-lg">
+            <p>Do you want to Cancel Subscription?</p>
+            <div className="mt-4 flex justify-center">
+              <button
+                className="px-4 py-2 mr-2 bg-custom-blue text-white rounded hover:bg-sky-500"
+                // onClick={confirmDelete} // Call confirmDelete when confirmed
+              >
+                {!statusLoader ? (
+                  <p>Confirm</p>
+                ) : (
+                  <div aria-label="Loading..." role="status">
+                    <svg class="h-5 w-5 animate-spin" viewBox="3 3 18 18">
+                      <path
+                        class="fill-indigo-200"
+                        d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
+                      ></path>
+                      <path
+                        class="fill-white"
+                        d="M16.9497 7.05015C14.2161 4.31648 9.78392 4.31648 7.05025 7.05015C6.65973 7.44067 6.02656 7.44067 5.63604 7.05015C5.24551 6.65962 5.24551 6.02646 5.63604 5.63593C9.15076 2.12121 14.8492 2.12121 18.364 5.63593C18.7545 6.02646 18.7545 6.65962 18.364 7.05015C17.9734 7.44067 17.3403 7.44067 16.9497 7.05015Z"
+                      ></path>
+                    </svg>
+                    {/* </div> */}
+                  </div>
+                )}
+              </button>
+
+              <button
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                onClick={() => setDeleteModalShow(false)}
+                // Call cancelDelete when canceled
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    );
+  };
   return (
     <div className="items-center justify-center ">
+      {deleteModalShow && deleteModal()}
       {showModal && showPaymentModal()}
       <div className=" my-8 mx-auto w-[90%]">
         <h1 className="lg:text-[32px] text-[28px] lg:font-semibold font-medium">
@@ -299,7 +334,6 @@ const SettingsPage = () => {
         {/* <p className="font-medium text-[16px] my-3">New Password </p> */}
         <div className="mt-5 lg:w-[30%] w-[90%]">
           <form onSubmit={(e) => changePassword(e)}>
-            {/* <div className="relative flex items-center bg-custom-dashboard-bg border border-custom-grey rounded-[7px] p-3 lg:w-[30%] w-[90%] placeholder-slate-400 text-[16px] font-light mb-5"> */}
             <AuthInput
               type={'password'}
               className={''}
@@ -308,7 +342,6 @@ const SettingsPage = () => {
               placeholder={'New Password'}
             />
 
-            {/* <div className="relative flex items-center bg-custom-dashboard-bg border border-custom-grey rounded-[7px] p-3 lg:w-[30%]  w-[90%] placeholder-slate-400 text-[16px] font-light mb-5"> */}
             <AuthInput
               type={'password'}
               className={''}
@@ -327,20 +360,21 @@ const SettingsPage = () => {
         <div className="mt-5 lg:w-[30%] w-[90%]">
           {/* < */}
           {user?.paymentVerified ? (
-            <form onSubmit={(e) => removeSubscription(e)}>
-              <div className="flex items-center">
-                <div className="p-2 bg-green-400 rounded-[7px] mr-5">
-                  <p>Active</p>
-                </div>
-
-                <BlueButtons
-                  buttonText={'Cancel Subscription'}
-                  loading={statusLoader}
-                  onClick={() => setPaymentVerified(false)}
-                />
+            <div className="flex items-center">
+              <div className="p-2 bg-green-400 rounded-[7px] mr-5">
+                <p>Active</p>
               </div>
-            </form>
+
+              <BlueButtons
+                buttonText={'Cancel Subscription'}
+                onClick={() => {
+                  setPaymentVerified(false);
+                  setDeleteModalShow(true);
+                }}
+              />
+            </div>
           ) : (
+            // </form>
             <div className="flex items-center">
               <div className="p-2 bg-red-400 rounded-[7px] mr-5">
                 <p>Not Active</p>
