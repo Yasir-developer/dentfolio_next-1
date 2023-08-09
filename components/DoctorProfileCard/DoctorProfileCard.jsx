@@ -7,10 +7,23 @@ import { FaTimes } from 'react-icons/fa';
 import profile from '../../public/images/profile1.png';
 import AuthInput from '../Inputs/AuthInput';
 import checkCircle from '../../public/images/check-circle2.svg';
+import { useDispatch } from 'react-redux';
+import { dentistProfile } from 'redux/actions/dentist';
+import Link from 'next/link';
 
-const DoctorProfileCard = () => {
+const DoctorProfileCard = ({ data }) => {
+  const dispatch = useDispatch();
+
+  console.log(data, 'datadatadata');
   const [showModal, setShowModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
+  const [modalData, setModalData] = useState({});
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [description, setDescription] = useState('');
+
+  const contactMe = () => {};
 
   const thankYouModal = () => {
     return (
@@ -41,6 +54,7 @@ const DoctorProfileCard = () => {
   };
 
   const conversationModal = () => {
+    console.log(modalData);
     return (
       <div className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50 bg-gray-900 ">
         <div className="bg-white p-6 rounded-[7px] shadow-lg lg:w-[60%] w-[90%] relative">
@@ -53,15 +67,15 @@ const DoctorProfileCard = () => {
             </button>
             <div className="py-5 flex flex-row items-center ">
               <div className="items-center pb-2">
-                <Image src={profile} width={67} height={66} />
+                <Image src={modalData.profile_photo} width={67} height={66} />
               </div>
               <div className="mx-5">
                 <h2 className="text-custom-blue font-semibold text-[21px]">
-                  Dylan Taylor
+                  {modalData.displayName}
                 </h2>
                 <div className="flex flex-col">
                   <h3 className="text-custom-black text-[15px]">
-                    Orthodontist
+                    {modalData.speciality}
                   </h3>
                 </div>
               </div>
@@ -78,6 +92,9 @@ const DoctorProfileCard = () => {
                   placeholder={'Full Name'}
                   className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-[100%] w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
                   containerClassName="w-full"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
                 />
 
                 <AuthInput
@@ -85,6 +102,9 @@ const DoctorProfileCard = () => {
                   className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-[100%] w-full py-3  text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
                   type={'tel'}
                   containerClassName="w-full"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
                 />
                 {/* <input
                   type="tel"
@@ -97,6 +117,9 @@ const DoctorProfileCard = () => {
                   className="border border-custom-grey rounded-[7px] lg:w-[100%] lg:mt-0 w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
                   type={'email'}
                   containerClassName="w-full"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
                 {/* <input
                   type="email"
@@ -111,6 +134,9 @@ const DoctorProfileCard = () => {
                 placeholder="Start a conversation"
                 className="inputStyles w-full mt-0"
                 rows="4"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
               ></textarea>
 
               <button
@@ -130,127 +156,101 @@ const DoctorProfileCard = () => {
       </div>
     );
   };
-  const doctorArray = [
-    {
-      id: 1,
-      name: 'Dr. Dylan Taylor',
-      country: 'Manchester',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se',
-      img_url: '/images/profile1.png',
-    },
 
-    {
-      id: 2,
-      name: 'Dr.Vincent Sullivan',
-      country: 'Manchester',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se',
-      img_url: '/images/profile2.png',
-    },
-
-    {
-      id: 3,
-      name: 'Dr.Joan Jackson ',
-      country: 'Manchester',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se',
-      img_url: '/images/profile3.png',
-    },
-    {
-      id: 4,
-      name: 'Dr. Dylan Taylor',
-      country: 'Manchester',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se',
-      img_url: '/images/profile4.png',
-    },
-    {
-      id: 5,
-      name: 'Dr. Dylan Taylor',
-      country: 'Manchester',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, se',
-      img_url: '/images/profile6.png',
-    },
-  ];
+  const handleViewProfile = (e, item) => {
+    e.preventDefault();
+    console.log(item, 'item');
+  };
   return (
     <div>
       {showModal && conversationModal()}
       {showThankYouModal && thankYouModal()}
-      {doctorArray.map((item, index) => {
-        return (
-          <div
-            className="flex flex-col py-8 border-b border-[#70707030] "
-            key={item.id}
-          >
-            <div className="mb-4 sm:mb-0 sm:mr-7 flex-shrink-0 flex flex-row items-center">
-              <Image
-                src={item.img_url}
-                // width={163}
-                // height={163}
-                width="0"
-                height="0"
-                sizes="100vw"
-                className=" w-[115px] h-[115px] lg:w-[173px] lg:h-[173px] lg:rounded-[86.5px] rounded-[57.5px] "
-                // className="rounded-[86.5px] sm:w-[115px] sm:h-[115px]"
-              />
+      {data?.length > 0 ? (
+        data?.map((item, index) => {
+          return (
+            <div
+              className="flex flex-col py-8 border-b border-[#70707030] "
+              key={index}
+            >
+              <div className="mb-4 sm:mb-0 sm:mr-7 flex-shrink-0 flex flex-row items-center">
+                <Image
+                  src={item?.profile_photo ? item?.profile_photo : profile}
+                  // width={163}
+                  // height={163}
+                  alt="dentist profile image"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className=" w-[115px] h-[115px] lg:w-[173px] lg:h-[173px] lg:rounded-[86.5px] rounded-[57.5px] "
+                  // className="rounded-[86.5px] sm:w-[115px] sm:h-[115px]"
+                />
 
-              <div className="sm:ml-7">
-                <div className="flex flex-col  items-start p-[20px]">
-                  <h2 className="text-custom-blue font-semibold text-[18px] lg:text-[21px]">
-                    {item.name}
-                  </h2>
-                  <div className="flex mt-3">
-                    <Image src={location} alt="logo" />
-                    <h2 className="px-1 text-xs sm:text-sm font-medium">
-                      {item.country}
+                <div className="sm:ml-7">
+                  <div className="flex flex-col  items-start p-[20px]">
+                    <h2 className="text-custom-blue font-semibold text-[18px] lg:text-[21px]">
+                      {item.displayName}
                     </h2>
+                    <div className="flex mt-3">
+                      <Image src={location} alt="logo" />
+                      <h2 className="px-1 text-xs sm:text-sm font-medium">
+                        {item.city}
+                      </h2>
+                    </div>
+                    <p className="px-1 text-base sm:text-lg font-normal hidden lg:block lg:my-5">
+                      {item.bio}
+                    </p>
                   </div>
-                  <p className="px-1 text-base sm:text-lg font-normal hidden lg:block lg:my-5">
-                    {item.description}
-                  </p>
                 </div>
               </div>
-            </div>
-            <p className="px-1 text-base sm:text-lg font-normal lg:hidden">
-              {item.description}
-            </p>
+              <p className="px-1 text-base sm:text-lg font-normal lg:hidden">
+                {item.bio}
+              </p>
 
-            {/* <div className="flex flex-col sm:flex-row sm:items-center flex-grow">
+              {/* <div className="flex flex-col sm:flex-row sm:items-center flex-grow">
               <div className="mt-4 sm:mt-0"> */}
 
-            <div className="flex mt-4 lg:w-[75%] w-[100%] justify-between lg:justify-center">
-              {/* <button className="bg-custom-blue lg:font-medium font-medium  sm:text-lg w-[50%] lg:w-auto text-[14px] py-2 px-[30px] sm:px-[60px] mt-2 sm:mt-0 mr-2 sm:mr-4 text-white rounded-[7px]">
+              <div className="flex mt-4 lg:w-[100%] w-[100%] lg:justify-center justify-between !ml-0 lg:ml-[20%] ">
+                {/* <button className="bg-custom-blue lg:font-medium font-medium  sm:text-lg w-[50%] lg:w-auto text-[14px] py-2 px-[30px] sm:px-[60px] mt-2 sm:mt-0 mr-2 sm:mr-4 text-white rounded-[7px]">
                 Contact Me
               </button> */}
-              <BlueButtons
-                className={
-                  'lg:font-medium font-medium sm:text-[16px] w-[50%] lg:w-[20%] text-[14px] py-[0] !px-[0px] sm:px-[60px] text-white rounded-[7px] mt-2 sm:mt-0 mr-2 sm:mr-4'
-                }
-                buttonText={'Contact Me'}
-                onClick={() => setShowModal(true)}
-              />
-
-              <BlueButtons
-                className={
-                  'lg:font-medium font-medium sm:text-[16px] w-[50%] lg:w-[20%] text-[14px] py-[2] !px-[0px] sm:px-[60px] !text-black rounded-[7px] mt-2 sm:mt-0 mr-2 sm:mr-4 bg-transparent border border-black '
-                }
-                buttonText={'View Profile'}
-                onClick={() => Router.push('/patient/profile-page')}
-              />
-              {/* <button
+                <BlueButtons
+                  className={
+                    'lg:font-medium font-medium sm:text-[16px] w-[50%] lg:w-[20%] text-[14px] py-[0] !px-[0px] sm:px-[60px] text-white rounded-[7px] mt-2 sm:mt-0 mr-2 sm:mr-4'
+                  }
+                  buttonText={'Contact Me'}
+                  onClick={() => {
+                    setModalData(item);
+                    setShowModal(true);
+                  }}
+                />
+                <Link
+                  href={`/patient/${item._id}`}
+                  passHref
+                  className="w-[85%]"
+                >
+                  <BlueButtons
+                    className={
+                      'lg:font-medium font-medium sm:text-[16px] w-[50%] lg:w-[20%] text-[14px] py-[2] !px-[0px] sm:px-[60px] !text-black rounded-[7px] mt-2 sm:mt-0 mr-2 sm:mr-4 bg-transparent border border-black '
+                    }
+                    buttonText={'View Profile'}
+                    // onClick={(e) => handleViewProfile(e, item)}
+                  />
+                </Link>
+                {/* <button
                 onClick={() => Router.push("/patient/profile-page")}
                 className="bg-transparent border border-[#252525] lg:font-medium font-medium text-base w-[50%] lg:w-auto sm:text-lg py-3 px-[30px] sm:px-[60px] mt-2 sm:mt-0 text-[#252525] rounded-[7px]"
               >
                 View Profile
               </button> */}
-            </div>
-            {/* </div>
+              </div>
+              {/* </div>
             </div> */}
-          </div>
-        );
-      })}
+            </div>
+          );
+        })
+      ) : (
+        <p>Sorry No Dentist found in this location</p>
+      )}
     </div>
   );
 };

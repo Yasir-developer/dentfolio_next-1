@@ -140,8 +140,9 @@ handler.get(
   ...auths,
 
   async (req, res) => {
+    console.log(req.body, 'req.body.id');
     const cases = await getCases(req.db, {
-      dentistId: req.user._id,
+      dentistId: req?.user?._id ? req?.user?._id : req?.body?.id,
     });
     return res.json({ cases });
   }

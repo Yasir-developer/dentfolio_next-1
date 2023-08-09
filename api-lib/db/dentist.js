@@ -8,8 +8,11 @@ export async function getDentistById(db, id) {
   // .toArray();
 }
 
-export async function listDentistByLocation(db, { lat, lng, r }) {
-  console.log(lat);
+export async function listDentistByLocation(
+  db,
+  { latitude, longitude, radius }
+) {
+  // console.log(lat, lng, r, '---------');
   return db
     .collection('users')
     .find({
@@ -17,12 +20,13 @@ export async function listDentistByLocation(db, { lat, lng, r }) {
         $near: {
           $geometry: {
             type: 'Point',
-            coordinates: [-72.68603139999999, 41.9388735], // MongoDB requires longitude first, then latitude
+            coordinates: [longitude, latitude], // MongoDB requires longitude first, then latitude
           },
           // $minDistance: 1,
-          $maxDistance: 1000000000000,
+          $maxDistance: radius,
         },
       },
+      paymentVerified: true,
     })
     .toArray();
 

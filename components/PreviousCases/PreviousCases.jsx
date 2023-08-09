@@ -4,8 +4,11 @@ import Image from 'next/image';
 import axios from 'axios';
 import { server } from 'config';
 import EditCaseCard from '@/components/EditCaseCard/EditCaseCard';
+import { useSelector } from 'react-redux';
 
 const PreviousCases = () => {
+  const { profile } = useSelector((state) => state.dentist);
+
   const [loader, setLoader] = useState(true);
 
   const [cases, setCases] = useState([]);
@@ -24,7 +27,8 @@ const PreviousCases = () => {
       },
     };
     axios
-      .get(`${server}/api/cases/`, {
+      .get(`${server}/api/cases`, {
+        id: profile?.id,
         options,
       })
       .then((res) => {
@@ -75,7 +79,11 @@ const PreviousCases = () => {
                   id={item._id}
                   name={item.case_title}
                   description={item.description}
-                  img_url={item?.cases_photo != null ? item?.cases_photo : '/images/case2.png'}
+                  img_url={
+                    item?.cases_photo != null
+                      ? item?.cases_photo
+                      : '/images/case2.png'
+                  }
                   types={item.caseType}
                   onDeleteClick={() => handleDeleteClick(item._id, index)}
                   // fetchCases={getCases}
@@ -89,7 +97,7 @@ const PreviousCases = () => {
                 // >
                 //   <div className="flex flex-col my-3 gap-y-[3px] w-[15%]">
                 //     {/* return ( */}
-                //     {item?.cases_photo != null ? 
+                //     {item?.cases_photo != null ?
                 //     <Image
                 //       src={item?.cases_photo}
                 //       alt="logo"
@@ -147,7 +155,10 @@ const PreviousCases = () => {
           <>
             {' '}
             <div aria-label="Loading..." role="status">
-              <svg class="h-[100px] w-[100px] animate-spin mx-auto" viewBox="3 3 18 18">
+              <svg
+                class="h-[100px] w-[100px] animate-spin mx-auto"
+                viewBox="3 3 18 18"
+              >
                 <path
                   className="fill-indigo-200"
                   d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"

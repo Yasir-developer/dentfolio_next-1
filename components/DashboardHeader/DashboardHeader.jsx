@@ -87,9 +87,7 @@ const DashboardHeader = ({ menuToggler }) => {
                 onClick={toggleDropdown}
               >
                 {user?.displayName}
-                {/* Dylan Taylor */}
               </h2>
-              {/* className="hidden md:block" */}
               <div className="flex" style={{ zIndex: 1 }} ref={dropdownRef}>
                 <div
                   className="flex items-center justify-center px-2 rounded-l-md cursor-pointer"
@@ -106,23 +104,14 @@ const DashboardHeader = ({ menuToggler }) => {
                       <p
                         class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
                         onClick={() => {
-                          // handleOptionSelect;
                           Router.push('/dentist/settings');
                         }}
                       >
                         Settings
                       </p>
-                      {/* <a
-                        href="#"
-                        class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
-                      >
-                        Support
-                      </a> */}
+
                       <a
-                        // href="#"
                         onClick={(e) => {
-                          // handleOptionSelect;
-                          // Router.push('/dentist/dentist-plan');
                           handleLogout(e);
                         }}
                         class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
@@ -133,23 +122,6 @@ const DashboardHeader = ({ menuToggler }) => {
                   )}
                 </div>
               </div>
-              {/* <Dropdown className="d-inline mx-2">
-                <Dropdown.Toggle>
-                  <FaAngleDown
-                    style={{
-                      color: "#919191",
-                      width: "20px",
-                      height: "20px",
-                    }}
-                    className="hidden lg:block"
-                  />
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-                  <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-                  <Dropdown.Item href="#">Menu Item</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown> */}
             </div>
           </div>
         </div>

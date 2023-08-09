@@ -9,12 +9,13 @@ import { logoutUser } from 'redux/actions/auth';
 
 const AppHeader = () => {
   const dispatch = useDispatch();
-
   const router = useRouter();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const { user } = useSelector((state) => state.auth);
+  console.log(user, 'user');
+
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
@@ -54,7 +55,9 @@ const AppHeader = () => {
                 </Link>
               </div>
               {router.pathname !== '/' &&
-              router.pathname !== '/dentist-search' ? (
+              router.pathname !== '/patient/dentist-search' &&
+              router.pathname !== '/patient/dentist-list' &&
+              router.pathname !== '/patient/[dentistId]' ? (
                 user ? (
                   <>
                     <div className="flex">

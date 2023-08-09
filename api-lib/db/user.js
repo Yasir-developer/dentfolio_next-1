@@ -21,7 +21,7 @@ export async function findUserForAuth(db, userId) {
 
 export async function findUserById(db, userId) {
   return db
-    .collection('users')
+    ?.collection('users')
     .findOne({ _id: new ObjectId(userId) }, { projection: dbProjectionUsers() })
     .then((user) => user || null);
 }
@@ -41,7 +41,15 @@ export async function findUserByEmail(db, email) {
     .findOne({ email }, { projection: dbProjectionUsers() })
     .then((user) => user || null);
 }
-
+export async function findEmailById(db, userId) {
+  return db
+    .collection('users')
+    .findOne(
+      { _id: new ObjectId(userId) },
+      { projection: { email: 1, _id: 0 } }
+    )
+    .then((user) => user || null);
+}
 export async function updateUserById(db, id, data) {
   console.log(data, 'subs data');
   return db

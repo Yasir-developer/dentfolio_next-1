@@ -1,10 +1,12 @@
-import React from "react";
-import DentistMemberBanner from "@/components/DentistMemberBanner/DentistMemberBanner";
-import PatientMonthlyPlan from "@/page-components/PatientMonthlyPlan";
+import React from 'react';
+import DentistMemberBanner from '@/components/DentistMemberBanner/DentistMemberBanner';
+import PatientMonthlyPlan from '@/page-components/PatientMonthlyPlan';
 // import { useSelector } from "react-redux";
 
 const dentistplan = () => {
   // const { user } = useSelector((state) => state.auth);
+  // console.log(user, 'user');
+
   // console.log(user, "user data logout");
   return (
     <div>

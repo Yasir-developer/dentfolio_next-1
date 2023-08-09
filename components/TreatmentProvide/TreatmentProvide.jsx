@@ -2,13 +2,16 @@ import React from 'react';
 import checkCircle from '../../public/images/check-circle.svg';
 import Image from 'next/image';
 import Slider from 'react-slick';
-
-const TreatmentProvide = () => {
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+const TreatmentProvide = (props) => {
+  console.log(props, '======');
   const settings = {
     className: 'customSlider',
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
+    infinite: false,
     autoplay: true,
     autoplaySpeed: 5000,
     responsive: [
@@ -69,24 +72,30 @@ const TreatmentProvide = () => {
       <h2 className="text-[25px] lg:text-[32px] text-black text-center font-medium">
         <span className=" text-custom-blue">TREATMENT</span> I PROVIDE
       </h2>
-      <div className="mt-7 gap-x-5">
-        <Slider {...settings}>
-          {treatmentArray.map((item, index) => {
-            return (
-              <div
-                className="min-h-[180px] lg:min-h-full !w-[90%] bg-custom-blue-light items-center justify-center py-7 text-center rounded-[7px]"
-                key={index}
-              >
-                <Image src={checkCircle} alt="logo" className="mx-auto" />
+      {props.treatment.length > 0 ? (
+        <div className="mt-7 gap-x-5">
+          <Slider {...settings}>
+            {props?.treatment?.map((item, index) => {
+              return (
+                <div>
+                  <div
+                    className="mi>n-h-[180px] lg:min-h-full !w-[90%] bg-custom-blue-light items-center justify-center py-7 text-center rounded-[7px]"
+                    key={index}
+                  >
+                    <Image src={checkCircle} alt="logo" className="mx-auto" />
 
-                <p className="text-custom-black text-[18px] font-semibold mt-3">
-                  {item.type}
-                </p>
-              </div>
-            );
-          })}
-        </Slider>
-      </div>
+                    <p className="text-custom-black text-[18px] font-semibold mt-3">
+                      {item.label}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </Slider>
+        </div>
+      ) : (
+        <p>No Treatment Found</p>
+      )}
     </div>
   );
 };

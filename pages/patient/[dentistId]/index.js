@@ -1,3 +1,5 @@
+import { findUserById } from '@/api-lib/db';
+
 import DoctorBasicDetail from '@/components/DoctorBasicDetail/DoctorBasicDetail';
 import PreviousCases from '@/components/PreviousCases/PreviousCases';
 import TreatmentProvide from '@/components/TreatmentProvide/TreatmentProvide';
@@ -5,9 +7,13 @@ import axios from 'axios';
 import { server } from 'config';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { ncOpts } from '@/api-lib/nc';
+import database from '@/api-lib/mongodb';
+import nextConnect from 'next-connect';
 
-const profilepage = () => {
-  const { profile } = useSelector((state) => state.dentist);
+const userPage = (profile) => {
+  console.log(profile.profile._id, 'postingg');
+  // const { profile } = useSelector((state) => state.dentist);
   const { user } = useSelector((state) => state.auth);
 
   console.log(profile, 'profile');
@@ -30,10 +36,11 @@ const profilepage = () => {
     };
     axios
       .get(`${server}/api/cases`, {
-        id: user?._id,
+        id: profile.profile?._id,
         options,
       })
       .then((res) => {
+        console.log(res.data, 'ressss');
         setLoader(false);
         // console.log(res.data.cases, 'res =======');
         // console.log(JSON.parse(res.data.cases[1].caseType), 'JSON.parse(');
@@ -48,17 +55,32 @@ const profilepage = () => {
   };
   return (
     <div>
-      <DoctorBasicDetail data={profile} />
-      <TreatmentProvide treatment={profile.treatment_type} />
+      <DoctorBasicDetail data={profile.profile} />
+      <TreatmentProvide treatment={profile.profile.treatment_type} />
       <PreviousCases case={cases} />
     </div>
   );
 };
 
 export async function getServerSideProps(context) {
+  await nextConnect().use(database).run(context.req, context.res);
+
   // const res = await fetch(`${server}/api/`);
-  console.log(context.params, 'context');
-  // const post = await findDentistById(db, context.params.postId);
+  console.log(context.query.dentistId, 'context context');
+  // const handler = nc(ncOpts);
+  // handler.use(database);
+  // return db;
+  const post = await findUserById(context.req.db, context.query.dentistId);
+  let profile;
+  const res = await axios(`${server}/api/dentists/${context.query.dentistId}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  }).then((res) => {
+    console.log(res.data, 'reas');
+    profile = res?.data?.user;
+  });
+  // const data = await res.json();
+  // console.log(res.json(), 'post post');
 
   // console.log(
   //   `${server}/api/teachers/popular`,
@@ -67,8 +89,10 @@ export async function getServerSideProps(context) {
   // const data = await res.json();
 
   return {
-    props: {},
+    props: {
+      profile: profile,
+    },
   };
 }
 
-export default profilepage;
+export default userPage;

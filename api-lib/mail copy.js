@@ -6,18 +6,18 @@ import nodemailer from 'nodemailer';
 console.log(process.env.NODEMAILER_CONFIG);
 
 const nodemailerConfig =
-  '{"service":"Gmail","auth":{"user":"alifr849@gmail.com","pass":"55678926"}}'
+  '{"service":"Gmail","auth":{"user":"ali.raza@esoultechnologies.com","pass":"55678926"}}'
     ? JSON.parse(
-        '{"service":"Gmail","auth":{"user":"alifr849@gmail.com","pass":"55678926"}}'
+        '{"service":"Gmail","auth":{"user":"ali.raza@esoultechnologies.com","pass":"55678926"}}'
       )
     : {};
 
 const transporter = nodemailer.createTransport({
   port: 465,
-  host: 'smtp.gmail.com',
+  host: 'smtp.esoultechnologies.com',
   auth: {
-    user: 'alifr849@gmail.com',
-    pass: 'wlaovsdvbmfhjhlv',
+    user: 'ali.raza@esoultechnologies.com',
+    pass: '55678926',
   },
   secure: true,
 });
@@ -25,10 +25,10 @@ const transporter = nodemailer.createTransport({
 export async function sendMail({ from, to, subject, html }) {
   try {
     await transporter.sendMail({
-      from: 'alifr849@gmail.com',
-      to,
-      subject,
-      html,
+      from: 'ali.raza@esoultechnologies.com',
+      to: 'alifr849@gmail.com',
+      subject: 'this is dummy emAIL',
+      html: 'SAKDMAKDMADKMDKMS',
     });
   } catch (e) {
     console.error(e);

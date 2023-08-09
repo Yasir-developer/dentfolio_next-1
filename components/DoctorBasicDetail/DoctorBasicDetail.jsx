@@ -91,11 +91,11 @@ const DoctorBasicDetail = (props) => {
               </div>
               <div className="mx-5">
                 <h2 className="text-custom-blue font-semibold text-[21px]">
-                  Dylan Taylor
+                  {props?.data?.displayName}
                 </h2>
                 <div className="flex flex-col">
                   <h3 className="text-custom-black text-[15px]">
-                    Orthodontist
+                    {props?.data?.speciality}
                   </h3>
                 </div>
               </div>
@@ -242,49 +242,6 @@ const DoctorBasicDetail = (props) => {
           {/* ))} */}
         </GoogleMap>
       </div>
-
-      {/* {servicelatitude != "" ? ( */}
-      {/* <div className="business_map_section">
-          <div className="map_frame_section"> */}
-      {/* <div className="h-[500px] w-[50%] rounded-[7px] py-10">
-        <GoogleMapReact
-          bootstrapURLKeys={{
-            key: GOOGLE_MAPS_API_KEY,
-          }}
-          className="rounded-[7px]"
-          defaultCenter={{
-            lat:
-              // servicelatitude == ""
-              //   ? 10.99835602
-              //   :
-              parseFloat(props?.data?.latitude),
-            lng:
-              // servicelongitude == ""
-              //   ?
-              //   77.01502627
-              //   :
-              parseFloat(props?.data?.longitude),
-          }}
-          defaultZoom={15}
-          // yesIWantToUseGoogleMapApiInternals
-          onGoogleApiLoaded={({ map, maps }) => apiHasLoaded(map, maps)}
-        >
-          <AnyReactComponent
-            lat={parseFloat(props?.data?.latitude)}
-            lng={parseFloat(props?.data?.longitude)}
-            text="My Marker"
-          />
-        </GoogleMapReact>
-      </div> */}
-      {/* </div>
-        </div> */}
-      {/* ) : (
-        <></>
-      )} */}
-
-      {/* <div className="py-10">
-        <Image src={map} alt="logo" />
-      </div> */}
     </div>
   );
 };

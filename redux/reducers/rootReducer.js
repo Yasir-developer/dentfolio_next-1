@@ -3,10 +3,12 @@ import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import storage from 'redux-persist/lib/storage';
 import paymentReducer from './paymentReducer';
+import dentistReducer from './dentistReducer';
 
 const appReducer = combineReducers({
   auth: authReducer,
   payment: paymentReducer,
+  dentist: dentistReducer,
 });
 
 const rootReducer = (state, action) => {
