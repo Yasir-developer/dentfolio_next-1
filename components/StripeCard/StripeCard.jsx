@@ -66,7 +66,7 @@ const StripeCard = ({
       .then((response) => {
         if (response.status == 200) {
           // dispatch(fetchUser(response?.data?.user));
-          console.log('here console');
+          // console.log('here console');
           toast.success('Card is been Set as Primary');
           fetchData();
 
@@ -118,7 +118,7 @@ const StripeCard = ({
       <div className="flex gap-x-2 my-3 items-center lg:py-0 py-3">
         {/* <div className="cardIcon">{cardIcon}</div> */}
 
-        <Image src={imgArr} width={50} height={50} />
+        <Image src={imgArr} width={50} height={50} alt="logo" />
         <div className="cardEndingNumber">
           {cardType} ending in {endingNumber}
         </div>

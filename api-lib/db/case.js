@@ -14,7 +14,7 @@ export async function insertCase(
     // createdAt: new Date(),
   };
   const newCase = await db.collection('cases').insertOne(cases);
-  console.log(cases, 'cases ======');
+  // console.log(cases, 'cases ======');
   return newCase;
 
   //   return db
@@ -44,7 +44,7 @@ export async function updateCaseById(
     caseType,
     visibility,
   };
-  console.log(cases_photo, 'cases_photo case.js');
+  // console.log(cases_photo, 'cases_photo case.js');
   if (cases_photo !== undefined) {
     updateData.cases_photo = cases_photo;
   }
@@ -66,7 +66,7 @@ export async function updateCaseById(
       { returnDocument: 'after', projection: { password: 0 } }
     )
     .then(({ value }) => {
-      console.log(value, 'db values');
+      // console.log(value, 'db values');
 
       value;
     });

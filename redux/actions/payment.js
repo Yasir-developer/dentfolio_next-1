@@ -23,10 +23,10 @@ export const PaymentMethods = (data) => {
 
       if (res.status == 200) {
         // console.log("kasdmaskjdsak");
-        console.log(
-          res.data.paymentMethods.data,
-          'res.data.paymentMethods.data'
-        );
+        // console.log(
+        //   res.data.paymentMethods.data,
+        //   'res.data.paymentMethods.data'
+        // );
         PaymentMethodSuccess(dispatch, res.data.paymentMethods.data);
       } else {
         // console.log(res.data.message, "res.data.messageres.data.message");

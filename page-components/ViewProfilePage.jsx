@@ -19,7 +19,7 @@ const ViewProfilePage = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  console.log(user, 'useruseruser');
+  // console.log(user, 'useruseruser');
   useEffect(() => {
     handleProfile();
   }, []);
@@ -35,7 +35,7 @@ const ViewProfilePage = () => {
         options,
       })
       .then((res) => {
-        console.log(res?.data?.user, 'res =======');
+        // console.log(res?.data?.user, 'res =======');
         // setLoader(false);
         if (res.status == 200) {
           dispatch(fetchUser(res?.data?.user));

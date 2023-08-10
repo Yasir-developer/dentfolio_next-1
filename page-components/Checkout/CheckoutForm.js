@@ -10,7 +10,7 @@ import Router from 'next/router';
 import { fetchUser } from 'redux/actions/auth';
 
 const CheckoutForm = (props) => {
-  console.log(props, 'props props');
+  // console.log(props, 'props props');
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
@@ -26,8 +26,8 @@ const CheckoutForm = (props) => {
     }
 
     const card = elements.getElement(CardElement);
-    console.log(CardElement, 'CardElement');
-    console.log(card, 'card');
+    // console.log(CardElement, 'CardElement');
+    // console.log(card, 'card');
     const result = await stripe.createToken(card);
     if (result.error) {
       toast.error(result.error.message);
@@ -35,7 +35,7 @@ const CheckoutForm = (props) => {
 
       console.log(result.error.message);
     } else {
-      console.log(result, 'result ----');
+      // console.log(result, 'result ----');
       const options = {
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const CheckoutForm = (props) => {
           options,
         })
         .then((res) => {
-          console.log(res, 'job post response..');
+          // console.log(res, 'job post response..');
           // return;
           if (res.status == 200) {
             dispatch(fetchUser(res?.data?.user));
@@ -89,7 +89,7 @@ const CheckoutForm = (props) => {
         headers: { 'Content-Type': 'application/json' },
       })
       .then((res) => {
-        console.log(res, 'res after update');
+        // console.log(res, 'res after update');
         // setLoader(false);
         if (res.status == 200) {
           toast.success('Subscription Created Successfully');
@@ -134,7 +134,7 @@ const CheckoutForm = (props) => {
 };
 
 export default function InjectedCheckoutForm(props) {
-  console.log(props, 'props');
+  // console.log(props, 'props');
   return (
     <ElementsConsumer>
       {({ stripe, elements }) => (

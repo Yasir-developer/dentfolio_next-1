@@ -5,7 +5,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 const TreatmentProvide = (props) => {
-  console.log(props, '======');
+  // console.log(props, '======');
   const settings = {
     className: 'customSlider',
     speed: 500,
@@ -94,7 +94,7 @@ const TreatmentProvide = (props) => {
           </Slider>
         </div>
       ) : (
-        <p>No Treatment Found</p>
+        <p className="text-center">No Treatment Found</p>
       )}
     </div>
   );

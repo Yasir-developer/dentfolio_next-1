@@ -70,9 +70,9 @@ const EditCasePage = () => {
         return toast.error('Please select valid image.');
       }
       // setImgObj(file);
-      console.log(file, 'my files');
+      // console.log(file, 'my files');
       setPickedImage(URL.createObjectURL(file));
-      console.log(pickedImage, 'pickedImage');
+      // console.log(pickedImage, 'pickedImage');
     }
   };
   const options = [
@@ -118,7 +118,7 @@ const EditCasePage = () => {
   };
 
   const updateHandler = () => {
-    console.log(imageFiles, pickedImage, '----------');
+    // console.log(imageFiles, pickedImage, '----------');
     if (!imageFiles && !pickedImage) {
       toast.error('select image pls');
       return;
@@ -151,7 +151,7 @@ const EditCasePage = () => {
     // }
     // formData.append('cases_photo', imageFiles);
     // : formData.append('cases_photo', pickedImage);
-    console.log(finalData);
+    // console.log(finalData);
     axios
       .patch(`${server}/api/cases`, formData, {
         headers: {
@@ -162,7 +162,7 @@ const EditCasePage = () => {
         // console.log(res.data.user, 'res after update');
         setLoader(false);
         if (res.status === 200) {
-          console.log(res);
+          // console.log(res);
           // dispatch(fetchUser(res?.data?.user));
           toast.success('Profile Updated');
           setShowModal(false);
@@ -183,7 +183,7 @@ const EditCasePage = () => {
 
   const handleDeleteClick = async (id, index) => {
     setLoader(true);
-    console.log(id, 'my id');
+    // console.log(id, 'my id');
     // return;
     try {
       // Optimistically remove the case immediately from the frontend
@@ -223,7 +223,7 @@ const EditCasePage = () => {
     axios
       .get(`${server}/api/cases`)
       .then(function (response) {
-        console.log(response, 'getCase');
+        // console.log(response, 'getCase');
         setCases(response.data.cases);
         setPageLoader(false);
       })
@@ -326,6 +326,7 @@ const EditCasePage = () => {
                     height={0}
                     sizes="100vw"
                     className="max-w-[130px] w-full h-full"
+                    alt="logo"
                   />
                 ) : (
                   <></>

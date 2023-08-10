@@ -81,6 +81,7 @@ const DentistMemberBanner = () => {
               height={0}
               sizes="100vw"
               className="h-[614px] w-auto ml-auto mr-0"
+              alt="logo"
             />
           </div>
         </div>

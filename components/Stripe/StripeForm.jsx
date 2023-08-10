@@ -55,8 +55,6 @@ const StripeForm = () => {
       type: 'card',
       card: elements.getElement(CardElement),
     });
-
-    console.log('[PaymentMethod]', payload);
   };
 
   return (
@@ -67,16 +65,16 @@ const StripeForm = () => {
       <Elements
         options={options}
         onReady={() => {
-          console.log('CardElement [ready]');
+          // console.log('CardElement [ready]');
         }}
         onChange={(event) => {
-          console.log('CardElement [change]', event);
+          // console.log('CardElement [change]', event);
         }}
         onBlur={() => {
-          console.log('CardElement [blur]');
+          // console.log('CardElement [blur]');
         }}
         onFocus={() => {
-          console.log('CardElement [focus]');
+          // console.log('CardElement [focus]');
         }}
       />
     </form>

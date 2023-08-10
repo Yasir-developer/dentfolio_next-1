@@ -31,7 +31,7 @@ const Dashboard = () => {
 
 export async function getServerSideProps({ req }) {
   const session = getSession(req);
-  console.log(session, 'sessionid');
+  // console.log(session, 'sessionid');
   // const user = (session && (await findUser(session))) ?? null
 
   // console.log(user)

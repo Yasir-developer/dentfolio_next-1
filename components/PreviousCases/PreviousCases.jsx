@@ -39,7 +39,6 @@ const PreviousCases = () => {
         if (res.status == 200) {
           setCases(res?.data?.cases);
           // setTypes(JSON.parse(res.data.cases.caseTypes));
-          console.log('first');
         }
       })
       .catch((error) => {});
@@ -71,7 +70,6 @@ const PreviousCases = () => {
         {!loader ? (
           cases?.length > 0 ? (
             cases.map((item, index) => {
-              console.log(item, 'item');
               return (
                 <EditCaseCard
                   key={index}

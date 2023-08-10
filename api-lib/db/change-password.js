@@ -11,7 +11,7 @@ export async function changePassword(db, { email, password, dentistId }, data) {
   //     { returnDocument: 'after', projection: { password: 0 } }
   //   )
   //   .then(({ value }) => value);
-  console.log(email, password, 'oooooooo');
+  // console.log(email, password, 'oooooooo');
   //   return;
   email = normalizeEmail(email);
   const hashedNewPassword = await bcrypt.hash(password, 10);

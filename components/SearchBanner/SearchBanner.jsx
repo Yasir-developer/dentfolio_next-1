@@ -37,7 +37,7 @@ const SearchBanner = () => {
   const radiusDropdown = () => {
     const handleSliderChange = (values) => {
       setSliderValue(values);
-      console.log(sliderValue, 'sliderValue');
+      // console.log(sliderValue, 'sliderValue');
       // You can perform any action based on the slider value here
     };
     return (
@@ -112,7 +112,7 @@ const SearchBanner = () => {
       };
       // console.log(first)
       dispatch(dentistLocation(address));
-      console.log(data);
+      // console.log(data);
       // return;
       dispatch(searchDentist(data));
       setLoader(false);
@@ -151,7 +151,7 @@ const SearchBanner = () => {
                     className="flex-grow py-2 px-4 focus:outline-none w-4/5"
                     // style={{ width: '100%', height: 50 }}
                     onPlaceSelected={(place) => {
-                      console.log(place, 'place selectedval');
+                      // console.log(place, 'place selectedval');
                       setLatitude(place?.geometry?.location?.lat());
                       setLongitude(place?.geometry?.location?.lng());
                       setAddress(place?.formatted_address);

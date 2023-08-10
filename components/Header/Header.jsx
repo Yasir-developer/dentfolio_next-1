@@ -14,7 +14,7 @@ const AppHeader = () => {
   const dropdownRef = useRef(null);
 
   const { user } = useSelector((state) => state.auth);
-  console.log(user, 'user');
+  // console.log(user, 'user');
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);

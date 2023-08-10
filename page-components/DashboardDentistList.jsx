@@ -1,39 +1,39 @@
-import Table from "@/components/Table/Table";
-import React from "react";
-import AdminDentistTable from "./AdminDentistTable";
-import { FaCrosshairs, FaFilter, FaSearch, FaTrashAlt } from "react-icons/fa";
+import Table from '@/components/Table/Table';
+import React from 'react';
+import AdminDentistTable from './AdminDentistTable';
+import { FaCrosshairs, FaFilter, FaSearch, FaTrashAlt } from 'react-icons/fa';
 
 const DashboardDentistList = ({
   selectedTime,
   selectedTabOpt,
   onSelectedTab,
 }) => {
-  console.log(selectedTabOpt, "selectedTabOpt");
+  // console.log(selectedTabOpt, "selectedTabOpt");
   const columns = React.useMemo(
     () => [
       {
-        Header: "Id",
-        accessor: "id",
+        Header: 'Id',
+        accessor: 'id',
       },
       {
-        Header: "Dentist Name",
-        accessor: "dentist",
+        Header: 'Dentist Name',
+        accessor: 'dentist',
       },
       {
-        Header: "Email Address",
-        accessor: "email",
+        Header: 'Email Address',
+        accessor: 'email',
       },
       {
-        Header: "No Of Cases",
-        accessor: "cases",
+        Header: 'No Of Cases',
+        accessor: 'cases',
       },
       {
-        Header: "Subscription Status",
-        accessor: "subscription",
+        Header: 'Subscription Status',
+        accessor: 'subscription',
       },
       {
-        Header: "Action",
-        accessor: "action",
+        Header: 'Action',
+        accessor: 'action',
       },
     ],
     []
@@ -42,28 +42,28 @@ const DashboardDentistList = ({
   const RevenueColumns = React.useMemo(
     () => [
       {
-        Header: "Id",
-        accessor: "id",
+        Header: 'Id',
+        accessor: 'id',
       },
       {
-        Header: "Dentist Name",
-        accessor: "dentist",
+        Header: 'Dentist Name',
+        accessor: 'dentist',
       },
       {
-        Header: "Email Address",
-        accessor: "email",
+        Header: 'Email Address',
+        accessor: 'email',
       },
       {
-        Header: "Amount",
-        accessor: "amount",
+        Header: 'Amount',
+        accessor: 'amount',
       },
       {
-        Header: "Next Due Date",
-        accessor: "due",
+        Header: 'Next Due Date',
+        accessor: 'due',
       },
       {
-        Header: "Status",
-        accessor: "status",
+        Header: 'Status',
+        accessor: 'status',
       },
     ],
     []
@@ -71,85 +71,85 @@ const DashboardDentistList = ({
 
   const data = [
     {
-      id: "645",
-      dentist: "Dr. Kathy",
-      email: "kathy.hill@mail.com",
+      id: '645',
+      dentist: 'Dr. Kathy',
+      email: 'kathy.hill@mail.com',
       cases: 5,
 
-      subscription: "Trial",
+      subscription: 'Trial',
       action: <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />,
     },
     {
-      id: "646",
-      dentist: "Dr. Kathy",
-      email: "kathy.hill@mail.com",
+      id: '646',
+      dentist: 'Dr. Kathy',
+      email: 'kathy.hill@mail.com',
       cases: 5,
 
-      subscription: "Premium",
+      subscription: 'Premium',
       action: <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />,
     },
     {
-      id: "647",
-      dentist: "Dr. Kathy",
-      email: "kathy.hill@mail.com",
+      id: '647',
+      dentist: 'Dr. Kathy',
+      email: 'kathy.hill@mail.com',
       cases: 5,
 
-      subscription: "Trial",
+      subscription: 'Trial',
       action: <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />,
     },
 
     {
-      id: "648",
-      dentist: "Dr. Kathy",
-      email: "kathy.hill@mail.com",
+      id: '648',
+      dentist: 'Dr. Kathy',
+      email: 'kathy.hill@mail.com',
       cases: 5,
 
-      subscription: "Trial",
+      subscription: 'Trial',
       action: <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />,
     },
     {
-      id: "649",
-      dentist: "Dr. Kathy",
-      email: "kathy.hill@mail.com",
+      id: '649',
+      dentist: 'Dr. Kathy',
+      email: 'kathy.hill@mail.com',
       cases: 5,
 
-      subscription: "Premium",
+      subscription: 'Premium',
       action: <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />,
     },
     {
-      id: "650",
-      dentist: "Dr. Kathy",
-      email: "kathy.hill@mail.com",
+      id: '650',
+      dentist: 'Dr. Kathy',
+      email: 'kathy.hill@mail.com',
       cases: 5,
 
-      subscription: "Premium",
+      subscription: 'Premium',
       action: <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />,
     },
     {
-      id: "651",
-      dentist: "Dr. Kathy",
-      email: "kathy.hill@mail.com",
+      id: '651',
+      dentist: 'Dr. Kathy',
+      email: 'kathy.hill@mail.com',
       cases: 5,
 
-      subscription: "Trial",
+      subscription: 'Trial',
       action: <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />,
     },
     {
-      id: "652",
-      dentist: "Dr. Kathy",
-      email: "kathy.hill@mail.com",
+      id: '652',
+      dentist: 'Dr. Kathy',
+      email: 'kathy.hill@mail.com',
       cases: 5,
 
-      subscription: "Premium",
+      subscription: 'Premium',
       action: <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />,
     },
     {
-      id: "653",
-      dentist: "Dr. Kathy",
-      email: "kathy.hill@mail.com",
+      id: '653',
+      dentist: 'Dr. Kathy',
+      email: 'kathy.hill@mail.com',
       cases: 5,
 
-      subscription: "Trial",
+      subscription: 'Trial',
       action: <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />,
     },
   ];
@@ -157,85 +157,85 @@ const DashboardDentistList = ({
   //   const [data, setData] = useState([]);
   const revenueData = [
     {
-      id: "645",
-      dentist: selectedTime == "last24" ? "Dr. Kathy" : "Dr. Jane",
-      email: "kathy.hill@mail.com",
-      amount: "£99",
+      id: '645',
+      dentist: selectedTime == 'last24' ? 'Dr. Kathy' : 'Dr. Jane',
+      email: 'kathy.hill@mail.com',
+      amount: '£99',
 
-      due: "6/16/2023",
-      status: "Non Active",
+      due: '6/16/2023',
+      status: 'Non Active',
     },
     {
-      id: "646",
-      dentist: selectedTime == "last24" ? "Dr. Kathy" : "Dr. Jane",
-      email: "kathy.hill@mail.com",
-      amount: "£99",
+      id: '646',
+      dentist: selectedTime == 'last24' ? 'Dr. Kathy' : 'Dr. Jane',
+      email: 'kathy.hill@mail.com',
+      amount: '£99',
 
-      due: "6/16/2023",
-      status: "Active",
+      due: '6/16/2023',
+      status: 'Active',
     },
     {
-      id: "647",
-      dentist: selectedTime == "last24" ? "Dr. Kathy" : "Dr. Jane",
-      email: "kathy.hill@mail.com",
-      amount: "£99",
+      id: '647',
+      dentist: selectedTime == 'last24' ? 'Dr. Kathy' : 'Dr. Jane',
+      email: 'kathy.hill@mail.com',
+      amount: '£99',
 
-      due: "6/16/2023",
-      status: "Active",
+      due: '6/16/2023',
+      status: 'Active',
     },
     {
-      id: "648",
-      dentist: selectedTime == "last24" ? "Dr. Kathy" : "Dr. Jane",
-      email: "kathy.hill@mail.com",
-      amount: "£99",
+      id: '648',
+      dentist: selectedTime == 'last24' ? 'Dr. Kathy' : 'Dr. Jane',
+      email: 'kathy.hill@mail.com',
+      amount: '£99',
 
-      due: "6/16/2023",
-      status: "Active",
+      due: '6/16/2023',
+      status: 'Active',
     },
     {
-      id: "649",
-      dentist: selectedTime == "last24" ? "Dr. Kathy" : "Dr. Jane",
-      email: "kathy.hill@mail.com",
-      amount: "£99",
+      id: '649',
+      dentist: selectedTime == 'last24' ? 'Dr. Kathy' : 'Dr. Jane',
+      email: 'kathy.hill@mail.com',
+      amount: '£99',
 
-      due: "6/16/2023",
-      status: "Active",
+      due: '6/16/2023',
+      status: 'Active',
     },
     {
-      id: "650",
-      dentist: selectedTime == "last24" ? "Dr. Kathy" : "Dr. Jane",
-      email: "kathy.hill@mail.com",
-      amount: "£99",
+      id: '650',
+      dentist: selectedTime == 'last24' ? 'Dr. Kathy' : 'Dr. Jane',
+      email: 'kathy.hill@mail.com',
+      amount: '£99',
 
-      due: "6/16/2023",
-      status: "Non Active",
+      due: '6/16/2023',
+      status: 'Non Active',
     },
     {
-      id: "651",
-      dentist: selectedTime == "last24" ? "Dr. Kathy" : "Dr. Jane",
-      email: "kathy.hill@mail.com",
-      amount: "£99",
+      id: '651',
+      dentist: selectedTime == 'last24' ? 'Dr. Kathy' : 'Dr. Jane',
+      email: 'kathy.hill@mail.com',
+      amount: '£99',
 
-      due: "6/16/2023",
-      status: "Active",
+      due: '6/16/2023',
+      status: 'Active',
     },
     {
-      id: "652",
-      dentist: selectedTime == "last24" ? "Dr. Kathy" : "Dr. Jane",
-      email: "kathy.hill@mail.com",
-      amount: "£99",
+      id: '652',
+      dentist: selectedTime == 'last24' ? 'Dr. Kathy' : 'Dr. Jane',
+      email: 'kathy.hill@mail.com',
+      amount: '£99',
 
-      due: "6/16/2023",
-      status: "Active",
+      due: '6/16/2023',
+      status: 'Active',
     },
     {
-      id: "653",
-      dentist: selectedTime == "last24" ? "Dr. Kathy" : "Dr. Jane",
-      email: "kathy.hill@mail.com",
-      amount: "£99",
+      id: '653',
+      dentist: selectedTime == 'last24' ? 'Dr. Kathy' : 'Dr. Jane',
+      email: 'kathy.hill@mail.com',
+      amount: '£99',
 
-      due: "6/16/2023",
-      status: "Non Active",
+      due: '6/16/2023',
+      status: 'Non Active',
     },
   ];
   return (
@@ -273,8 +273,8 @@ const DashboardDentistList = ({
       </div>
 
       <AdminDentistTable
-        columns={selectedTabOpt === "revenue" ? RevenueColumns : columns}
-        data={selectedTabOpt === "revenue" ? revenueData : data}
+        columns={selectedTabOpt === 'revenue' ? RevenueColumns : columns}
+        data={selectedTabOpt === 'revenue' ? revenueData : data}
       />
     </div>
   );

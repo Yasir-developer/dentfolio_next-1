@@ -10,7 +10,7 @@ const profilepage = () => {
   const { profile } = useSelector((state) => state.dentist);
   const { user } = useSelector((state) => state.auth);
 
-  console.log(profile, 'profile');
+  // console.log(profile, 'profile');
   const [loader, setLoader] = useState(true);
 
   const [cases, setCases] = useState([]);

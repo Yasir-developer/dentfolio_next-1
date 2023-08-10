@@ -9,7 +9,7 @@ handler.use(database);
 
 handler.post(async (req, res) => {
   const { latitude, longitude, radius } = req.body;
-  console.log(latitude, longitude, radius, 'radius');
+  // console.log(latitude, longitude, radius, 'radius');
   //   return;
   //   const userId = req.user?.userId;
   //   console.log(userId, 'userId request');

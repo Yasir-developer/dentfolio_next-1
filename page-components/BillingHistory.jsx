@@ -104,7 +104,7 @@ const BillingHistory = () => {
         options,
       })
       .then((res) => {
-        console.log(res.data.invoicesData, 'res.data');
+        // console.log(res.data.invoicesData, 'res.data');
         // setLoader(false);
         if (res.status == 200) {
           setHistoryData(res.data.invoicesData);

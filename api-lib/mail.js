@@ -3,7 +3,7 @@
 // like Mailgun, AWS SES, etc.
 import nodemailer from 'nodemailer';
 
-console.log(process.env.NODEMAILER_CONFIG);
+// console.log(process.env.NODEMAILER_CONFIG);
 
 const nodemailerConfig =
   '{"service":"Gmail","auth":{"user":"alifr849@gmail.com","pass":"55678926"}}'

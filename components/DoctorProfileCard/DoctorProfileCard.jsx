@@ -17,7 +17,6 @@ import { server } from 'config';
 const DoctorProfileCard = ({ data }) => {
   const dispatch = useDispatch();
 
-  console.log(data, 'datadatadata');
   const [showModal, setShowModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [modalData, setModalData] = useState({});
@@ -29,43 +28,47 @@ const DoctorProfileCard = ({ data }) => {
 
   const contactMe = (e) => {
     e.preventDefault();
-    if (name && phone && email && description) {
-      setContactLoader(true);
-      const options = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
+    // if (name && phone && email || description) {
+    setContactLoader(true);
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
 
-      axios
-        .post(`${server}/api/patient`, {
-          dentistId: modalData._id,
-          patient_name: name,
-          phone_no: phone,
-          patient_email: email,
-          description,
+    axios
+      .post(`${server}/api/patient`, {
+        dentistId: modalData._id,
+        patient_name: name,
+        phone_no: phone,
+        patient_email: email,
+        description,
 
-          options,
-        })
-        .then((res) => {
-          console.log(res, 'subscription post response');
-          // return;
-          if (res.status == 200) {
-            setContactLoader(false);
-            toast.success('Your Response has been sent to the Dentist');
-            setShowModal(false);
-            setShowThankYouModal(true);
-          } else if (res.status == 400) {
-          }
-        })
-        .catch((error) => {
-          toast.success(error.response.data);
+        options,
+      })
+      .then((res) => {
+        // return;
+        if (res.status == 200) {
           setContactLoader(false);
-          console.log(error, 'erroorrr');
-        });
-    } else {
-      toast.error('All fields are required to Continue');
-    }
+          toast.success('Your Response has been sent to the Dentist');
+          setModalData({});
+          setName('');
+          setPhone('');
+          setEmail('');
+          setDescription('');
+          setShowModal(false);
+          setShowThankYouModal(true);
+        } else if (res.status == 400) {
+        }
+      })
+      .catch((error) => {
+        toast.success(error?.response?.data?.message);
+        setContactLoader(false);
+        console.log(error, 'erroorrr');
+      });
+    // } else {
+    //   toast.error('All fields are required to Continue');
+    // }
   };
 
   const thankYouModal = () => {
@@ -97,7 +100,6 @@ const DoctorProfileCard = ({ data }) => {
   };
 
   const conversationModal = () => {
-    console.log(modalData);
     return (
       <div className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50 bg-gray-900 ">
         <div className="bg-white p-6 rounded-[7px] shadow-lg lg:w-[60%] w-[90%] relative">
@@ -106,7 +108,7 @@ const DoctorProfileCard = ({ data }) => {
               className="absolute right-[20px] top-[20px]  "
               onClick={() => setShowModal(false)}
             >
-              <FaTimes className="text-[#616161] w-[18px] h-[18px]" />
+              <FaTimes className="text-[#616161] w-[18px] h-[18px] cursor-pointer" />
             </button>
             <div className="py-5 flex flex-row items-center ">
               <div className="items-center pb-2">

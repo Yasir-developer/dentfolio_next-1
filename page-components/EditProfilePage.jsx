@@ -70,7 +70,7 @@ const EditProfilePage = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  console.log(user, 'user =======');
+  // console.log(user, s'user =======');
   useEffect(() => {
     // Add event listener to handle clicks outside the dropdown
     const handleOutsideClick = (event) => {
@@ -89,9 +89,9 @@ const EditProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(user, 'city');
+    // console.log(user, 'city');
     if (user) {
-      console.log(user.city, 'user,city');
+      // console.log(user.city, 'user,city');
       setFirstName(user?.firstName);
       setLastName(user?.lastName);
       setSelectedOption(user?.courtesyTitle);
@@ -112,7 +112,7 @@ const EditProfilePage = () => {
       setPickedImage(user?.profile_photo);
       // setI(user?.treatment_type);
     }
-    console.log(tags, 'use effect tags');
+    // console.log(tags, 'use effect tags');
   }, [user]);
 
   const options = [
@@ -170,7 +170,7 @@ const EditProfilePage = () => {
     setShowAddress(input);
     if (input) {
       const suggestions = await getAddressSuggestions(input);
-      console.log(suggestions, 'suggestion');
+      // console.log(suggestions, 'suggestion');
       setSuggestions(suggestions);
     } else {
       setSuggestions([]);
@@ -178,7 +178,7 @@ const EditProfilePage = () => {
   };
 
   const handleAddressSelect = async (selectedAddress, addressShow) => {
-    console.log(addressShow, 'addressShow');
+    // console.log(addressShow, 'addressShow');
     // setShowAddress
     setShowAddress(addressShow);
     setAddress(selectedAddress);
@@ -202,16 +202,15 @@ const EditProfilePage = () => {
 
   const handleSave = (e, secureUrl) => {
     e.preventDefault();
-    console.log(data?.location?.location?.lat, 'data?.location?.location?.lat');
+    // console.log(data?.location?.location?.lat, 'data?.location?.location?.lat');
     // return;
-    console.log(streetName, 'strret name');
-    console.log(showAddress, 'showAddress name');
+
     // return;
     const treatmentTypeJSON = JSON.stringify(tags);
 
     // return;
     setLoader(true);
-    console.log(imageFiles, 'imageFilesimageFilesimageFiles');
+    // console.log(imageFiles, 'imageFilesimageFilesimageFiles');
     const formData = new FormData();
     formData.append('id', user?._id);
 
@@ -247,7 +246,7 @@ const EditProfilePage = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.user, 'res after update');
+        // console.log(res.data.user, 'res after update');
         setLoader(false);
         if (res.status === 200) {
           dispatch(fetchUser(res?.data?.user));
@@ -268,7 +267,7 @@ const EditProfilePage = () => {
       });
   };
   const uploadFileHandler = () => {
-    console.log('hereeee');
+    // console.log('hereeee');
     uploadFileref.current.click();
   };
   const onImageChange = (e) => {
@@ -282,9 +281,9 @@ const EditProfilePage = () => {
         return toast.error('Please select valid image.');
       }
       // setImgObj(file);
-      console.log(file, 'my files');
+      // console.log(file, 'my files');
       setPickedImage(URL.createObjectURL(file));
-      console.log(pickedImage, 'pickedImage');
+      // console.log(psickedImage, 'pickedImage');
     }
   };
 
@@ -511,7 +510,7 @@ const EditProfilePage = () => {
                   className=" order-10 focus:outline-none border w-full border-custom-grey rounded-[7px] p-3 bg-custom-dashboard-bg placeholder-slate-400 lg:text-[16px] text-[14px] font-normal mb-5"
                   // style={{ width: '100%', height: 50 }}
                   onPlaceSelected={(place) => {
-                    console.log(place, 'place selectedval');
+                    // console.log(place, 'place selectedval');
                     setLatitude(place?.geometry?.location?.lat());
                     setLongitude(place?.geometry?.location?.lng());
                     setShowAddress(place?.formatted_address);
@@ -573,6 +572,7 @@ const EditProfilePage = () => {
                       width={105}
                       height={105}
                       className="rounded-[102.5px] max-w-[130px] lg:max-w-[205px]"
+                      alt="logo"
                     />
                   ) : (
                     <></>

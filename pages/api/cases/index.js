@@ -44,7 +44,7 @@ handler.post(
   ...auths,
 
   async (req, res) => {
-    console.log(req.files, 'req.files cases ');
+    // console.log(req.files, 'req.files cases ');
     //Multiple Work
     // try {
     //   if (req.files) {
@@ -66,7 +66,7 @@ handler.post(
     let path;
     // console.log(path, 'path========');
     if (req.file) {
-      console.log(req.file.path, 'req.file=======');
+      // console.log(req.file.path, 'req.file=======');
       const image = await cloudinary.uploader.upload(req.file.path);
       path = image.secure_url;
       // console.log(path, 'my path');

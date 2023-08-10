@@ -51,6 +51,7 @@ const DashboardHeader = ({ menuToggler }) => {
           src={logoWhite}
           className="mx-auto max-w-[173px] cursor-pointer"
           onClick={() => Router.push('/dentist/dentist-plan')}
+          alt="profile image"
         />
 
         {/* <h1 className="text-lg font-bold">Dashboard</h1> */}
@@ -61,7 +62,11 @@ const DashboardHeader = ({ menuToggler }) => {
           <FaBars onClick={menuToggler} className="text-white" />
         </div>
         <div className="lg:hidden mobileLogo flex items-center">
-          <Image src={logoWhite} className="mx-auto max-w-[173px]" />
+          <Image
+            src={logoWhite}
+            className="mx-auto max-w-[173px]"
+            alt="profile image"
+          />
         </div>
         <div className="flex">
           {/* <div className="flex items-center justify-center mr-3">

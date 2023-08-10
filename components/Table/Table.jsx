@@ -11,7 +11,7 @@ const Table = ({ columns, data }) => {
     columns,
     data,
   });
-  console.log(data, 'data');
+  // console.log(data, 'data');
   return (
     <table
       {...getTableProps()}
@@ -42,7 +42,7 @@ const Table = ({ columns, data }) => {
           return (
             <tr {...row.getRowProps()} className="p-3" key={row}>
               {row.cells.map((cell) => {
-                console.log(cell, 'cell');
+                // console.log(cell, 'cell');
                 return (
                   <td
                     key={cell}

@@ -15,7 +15,7 @@ const Forgotpassword = () => {
       <div className="lg:w-full lg:py-[0px] py-[30px] bg-gradient-radial from-[#0372E2] to-[#0B5FB4] justify-center flex items-center text-center">
         <Image src={logo} alt="logo" className="mx-auto hidden lg:block" />
 
-        <Image src={logoWhite} className="mx-auto lg:hidden" />
+        <Image src={logoWhite} alt="logo" className="mx-auto lg:hidden" />
       </div>
       <div className="lg:w-full md:w-3/5 flex flex-col justify-between h-[90%] my-[20px] lg:my-auto mx-[5%] md:mx-[100px] rounded-[7px]">
         <div className="flex flex-col items-center justify-center w-full">

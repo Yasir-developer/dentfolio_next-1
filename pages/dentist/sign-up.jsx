@@ -194,6 +194,7 @@ const Signup = () => {
               <Image
                 className="mx-auto hidden lg:block lg:mt-[20px]"
                 src={logotwo}
+                alt="logo"
               />
 
               <h2 className="my-8 text-center font-semibold text-[32px] md:text-4xl text-custom-black">
@@ -317,7 +318,7 @@ const Signup = () => {
                       className="focus:outline-none border w-full border-custom-grey rounded-[7px] p-3 bg-custom-dashboard-bg placeholder-slate-400 lg:text-[16px] text-[14px] font-normal mb-5"
                       // style={{ width: '100%', height: 50 }}
                       onPlaceSelected={(place) => {
-                        console.log(place, 'place selectedval');
+                        // console.log(place, 'place selectedval');
                         setLatitude(place?.geometry?.location?.lat());
                         setLongitude(place?.geometry?.location?.lng());
                         setShowAddress(place?.formatted_address);

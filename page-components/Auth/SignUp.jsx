@@ -286,7 +286,7 @@ const SignUp = () => {
       <div className="lg:w-[40%] lg:py-[0px] py-[30px]  bg-gradient-radial from-[#0372E2] to-[#0B5FB4] justify-center flex items-center text-center">
         <Image src={logo} alt="logo" className="mx-auto hidden lg:block" />
 
-        <Image src={logoWhite} className="mx-auto lg:hidden" />
+        <Image src={logoWhite} alt="logo" className="mx-auto lg:hidden" />
       </div>
       <div className="lg:w-[60%] flex flex-col justify-between rounded-[7px] overflow-y-scroll">
         <div className="flex flex-col items-center justify-center m-5 4xl:h-full">
@@ -294,10 +294,7 @@ const SignUp = () => {
             {/* <div className="w-[50%] h-[50%]"> */}
             <Image
               className="mx-auto hidden lg:block lg:mt-[20px]"
-              // layout="raw"
-              // layout="responsive"
-              // width={50}
-              // height={50}
+              alt="logo"
               width={150}
               height={150}
               src={'/images/logo.png'}

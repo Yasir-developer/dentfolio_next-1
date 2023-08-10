@@ -9,18 +9,24 @@ import AuthInput from '../Inputs/AuthInput';
 import GoogleMap from 'google-maps-react-markers';
 import Marker from '../marker';
 import { GOOGLE_MAPS_API_KEY } from 'config';
+import { toast } from 'react-hot-toast';
+import BlueButtons from '../Buttons/BlueButtons';
 const DoctorBasicDetail = (props) => {
-  console.log(props, 'DoctorBasicDetail');
+  console.log(props, '=====');
   const [showModal, setShowModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showContact, setShowContact] = useState(false);
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [description, setDescription] = useState('');
+  const [contactLoader, setContactLoader] = useState(false);
 
   const mapRef = useRef(null);
   const [mapReady, setMapReady] = useState(false);
   useEffect(() => {
     // console.log(window.location, "window");
     if (typeof window !== undefined) {
-      console.log(window?.location, ' window?.location?.pathname');
       if (window?.location?.pathname.includes('/patient/')) {
         setShowContact(true);
       } else {
@@ -40,12 +46,57 @@ const DoctorBasicDetail = (props) => {
   };
 
   const onMarkerClick = (e, { markerId, lat, lng }) => {
-    console.log('This is ->', markerId);
+    // console.log('This is ->', markerId);
 
     // inside the map instance you can call any google maps method
     mapRef.current.setCenter({ lat, lng });
     // rif. https://developers.google.com/maps/documentation/javascript/reference?hl=it
   };
+
+  const contactMe = (e) => {
+    e.preventDefault();
+    // if (name && phone && email || description) {
+    setContactLoader(true);
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    axios
+      .post(`${server}/api/patient`, {
+        dentistId: props?.data._id,
+        patient_name: name,
+        phone_no: phone,
+        patient_email: email,
+        description,
+
+        options,
+      })
+      .then((res) => {
+        // return;
+        if (res.status == 200) {
+          setContactLoader(false);
+          toast.success('Your Response has been sent to the Dentist');
+          setName('');
+          setPhone('');
+          setEmail('');
+          setDescription('');
+          setShowModal(false);
+          setShowThankYouModal(true);
+        } else if (res.status == 400) {
+        }
+      })
+      .catch((error) => {
+        toast.success(error?.response?.data?.message);
+        setContactLoader(false);
+        console.log(error, 'erroorrr');
+      });
+    // } else {
+    //   toast.error('All fields are required to Continue');
+    // }
+  };
+
   const thankYouModal = () => {
     return (
       <div className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-50 bg-gray-900 z-[999]">
@@ -87,7 +138,16 @@ const DoctorBasicDetail = (props) => {
             </button>
             <div className="py-5 flex flex-row items-center ">
               <div className="items-center pb-2">
-                <Image src={profile} width={67} height={66} />
+                <Image
+                  src={
+                    props?.data?.profile_photo
+                      ? props?.data?.profile_photo
+                      : profile
+                  }
+                  width={67}
+                  height={66}
+                  alt="profile"
+                />
               </div>
               <div className="mx-5">
                 <h2 className="text-custom-blue font-semibold text-[21px]">
@@ -100,18 +160,15 @@ const DoctorBasicDetail = (props) => {
                 </div>
               </div>
             </div>
-            <form>
+            <form onSubmit={(e) => contactMe(e)}>
               <div className="lg:mb-4 mb-0 gap-x-2 flex lg:flex-row flex-col justify-center lg:items-center">
-                {/* <input
-                  type="text"
-                  id="fullName"
-                  placeholder="Full Name"
-                  className="inputStyles"
-                /> */}
                 <AuthInput
                   placeholder={'Full Name'}
                   className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-full w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
                   containerClassName="w-full"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
                   // btnStyle={ma}
                 />
 
@@ -120,25 +177,20 @@ const DoctorBasicDetail = (props) => {
                   className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-full w-full py-3  text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
                   type={'tel'}
                   containerClassName="w-full"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
                 />
-                {/* <input
-                  type="tel"
-                  id="phone"
-                  className="inputStyles"
-                  placeholder="Phone Number"
-                /> */}
+
                 <AuthInput
                   placeholder={'Email Address'}
                   className="border border-custom-grey rounded-[7px]  lg:mt-0 w-full py-3 text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
                   type={'email'}
                   containerClassName="w-full"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
-                {/* <input
-                  type="email"
-                  id="email"
-                  className="inputStyles"
-                  placeholder="Email Address"
-                /> */}
               </div>
 
               <textarea
@@ -146,18 +198,15 @@ const DoctorBasicDetail = (props) => {
                 placeholder="Start a conversation"
                 className="inputStyles w-full mt-0"
                 rows="4"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
               ></textarea>
-
-              <button
-                type="submit"
+              <BlueButtons
+                loading={contactLoader}
                 className="bg-custom-blue hover:bg-blue-600 text-white font-poppins font-medium py-2 mt-5 mb-7 px-[45px] rounded lg:justify-end text-sm"
-                onClick={() => {
-                  setShowModal(false);
-                  setShowThankYouModal(true);
-                }}
-              >
-                Send
-              </button>
+                buttonText={'Send'}
+              />
             </form>
           </div>
           {/* Form fields and buttons */}
@@ -182,6 +231,7 @@ const DoctorBasicDetail = (props) => {
               width={205}
               height={205}
               className="rounded-[102.5px] max-w-[130px] lg:max-w-[205px] text-transparent object-cover	object-top"
+              alt="logo"
             />
           </div>
           <div>

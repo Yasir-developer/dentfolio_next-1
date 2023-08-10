@@ -22,7 +22,7 @@ const BillingMethodForm = ({ stripe, elements }) => {
 
   const [loader, setLoader] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-  console.log(change, 'changechang');
+  // console.log(change, 'changechang');
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoader(true);
@@ -33,15 +33,15 @@ const BillingMethodForm = ({ stripe, elements }) => {
     }
 
     const card = elements.getElement(CardElement);
-    console.log(CardElement, 'CardElement');
-    console.log(card, 'card');
+    // console.log(CardElement, 'CardElement');
+    // console.log(card, 'card');
     const result = await stripe.createToken(card);
     if (result.error) {
       console.log(result.error.message);
       toast.error(result.error.message);
       setLoader(false);
     } else {
-      console.log(result, 'result ----');
+      // console.log(result, 'result ----');
       const options = {
         headers: {
           'Content-Type': 'application/json',
@@ -59,11 +59,11 @@ const BillingMethodForm = ({ stripe, elements }) => {
           options,
         })
         .then((res) => {
-          console.log(res, 'Billing Method Form response..');
+          // console.log(res, 'Billing Method Form response..');
           // return;
           if (res.status == 200) {
             setLoader(false);
-            console.log(res, 'subs res ---');
+            // console.log(res, 'subs res ---');
             //   setLoader(false);
             dispatch(PaymentMethodData(res.data.paymentMethods.data));
 
@@ -120,7 +120,7 @@ const BillingMethodForm = ({ stripe, elements }) => {
 };
 
 export default function InjectedCheckoutForm(props) {
-  console.log(props, 'props');
+  // console.log(props, 'props');
 
   return (
     <ElementsConsumer>

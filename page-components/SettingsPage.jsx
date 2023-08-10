@@ -12,10 +12,10 @@ import { fetchUpdatedUser, fetchUser } from 'redux/actions/auth';
 const SettingsPage = () => {
   const { user, updatedUser } = useSelector((state) => state.auth);
   const { paymentMethods } = useSelector((state) => state.payment);
-  console.log(updatedUser, 'updated');
+  // console.log(updatedUser, 'updated');
   const dispatch = useDispatch();
 
-  console.log(user, 'user.email');
+  // console.log(user, 'user.email');
   const [password, setPassword] = useState('');
   const [confirmpassword, setConfirmPassword] = useState('');
   const [loader, setLoader] = useState(false);
@@ -31,12 +31,12 @@ const SettingsPage = () => {
 
   useEffect(() => {
     if (user) {
-      console.log(user);
+      // console.log(user);
     }
   }, [user]);
 
   useEffect(() => {
-    console.log(paymentMethods, 'paymentMethods');
+    // console.log(paymentMethods, 'paymentMethods');
   });
 
   const changePassword = (e) => {
@@ -59,7 +59,7 @@ const SettingsPage = () => {
       axios
         .post(`${server}/api/changePassword/${user._id}`, data, options)
         .then((res) => {
-          console.log(res, 'password response..');
+          // console.log(res, 'password response..');
           // return;
           if (res.status == 200) {
             setLoader(false);
@@ -90,7 +90,7 @@ const SettingsPage = () => {
         // console.log(res, 'res after update');
         // setLoader(false);
         if (res.status == 200) {
-          console.log(res.data.user, 'res.data.user');
+          // console.log(res.data.user, 'res.data.user');
           dispatch(fetchUser(res.data.user));
           setStatusLoader(false);
           // toast.success('Subscription Removed');
@@ -251,7 +251,7 @@ const SettingsPage = () => {
           options,
         })
         .then((res) => {
-          console.log(res, 'subscription post response');
+          // console.log(res, 'subscription post response');
           // return;
           if (res.status == 200) {
             // dispatch(fetchUser(res?.data?.user));

@@ -103,7 +103,7 @@ const dentistlist = () => {
 
   const onSubmitSearch = (e) => {
     e.preventDefault();
-    console.log(latitude, longitude, radius, 'l,dsaldmal');
+    // console.log(latitude, longitude, radius, 'l,dsaldmal');
     if (latitude && longitude && radius) {
       setLoader(true);
       const data = {
@@ -113,7 +113,7 @@ const dentistlist = () => {
       };
       // console.log(first)
       // dispatch(dentistLocation(address));
-      console.log(data);
+      // console.log(data);
       // return;
       dispatch(searchDentist(data));
       setLoader(false);
@@ -124,11 +124,6 @@ const dentistlist = () => {
   };
   return (
     <>
-      <style jsx>{`
-        main {
-          min-height: 63vh;
-        }
-      `}</style>
       <div className="bg-blue sizingStyles mt-8">
         {showModal && radiusDropdown()}
 
@@ -176,7 +171,7 @@ const dentistlist = () => {
                 // apiKey={process.env.GOOGLE_MAPS_API_KEY}
                 className="flex-grow py-3 px-4 focus:outline-none w-4/5 text-sm sm:text-base" // style={{ width: '100%', height: 50 }}
                 onPlaceSelected={(place) => {
-                  console.log(place, 'place selectedval');
+                  // console.log(place, 'place selectedval');
                   setLatitude(place?.geometry?.location?.lat());
                   setLongitude(place?.geometry?.location?.lng());
                   setAddress(place?.formatted_address);

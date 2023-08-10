@@ -25,7 +25,7 @@ const stripePromise = loadStripe(
 );
 
 const BillingPage = (props) => {
-  console.log(props, ';;;;;');
+  // console.log(props, ';;;;;');
   const [startDate, setStartDate] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -53,7 +53,7 @@ const BillingPage = (props) => {
 
   useEffect(() => {
     if (paymentMethods) {
-      console.log(paydata, 'paydata');
+      // console.log(paydata, 'paydata');
       setData(paymentMethods);
     }
   }, [data, change, paymentMethods]);

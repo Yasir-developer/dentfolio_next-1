@@ -55,13 +55,13 @@ const CreateCasePage = () => {
       // console.log(formatBytes(file.size), "formatBytes(file.size)");
       // if (parseFloat(formatBytes(file.size)) > 5) return toast.error('File can not be larger than 5 mb')
       if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
-        console.log('no file');
+        // console.log('no file');
         return toast.error('Please select valid image.');
       }
       // setImgObj(file);
-      console.log(file, 'my files');
+      // console.log(file, 'my files');
       setPickedImage(URL.createObjectURL(file));
-      console.log(pickedImage, 'pickedImage');
+      // console.log(pickedImage, 'pickedImage');
     }
   };
 
@@ -101,7 +101,7 @@ const CreateCasePage = () => {
         'Content-Type': 'multipart/form-data',
       },
     };
-    console.log(finalData, 'final data');
+    // console.log(finalData, 'final data');
     // console.log(`${server}/api/create-case/`);
     const formData = new FormData();
     formData.append('dentistId', user?._id);
@@ -116,7 +116,7 @@ const CreateCasePage = () => {
     axios
       .post(`${server}/api/cases`, formData, options)
       .then((res) => {
-        console.log(res, 'job post response..');
+        // console.log(res, 'job post response..');
         // return;
         if (res.status == 200) {
           setLoader(false);
@@ -228,6 +228,7 @@ const CreateCasePage = () => {
                   width={200}
                   height={200}
                   className="rounded-[7px]"
+                  alt="logo"
                 />
               ) : (
                 <></>
