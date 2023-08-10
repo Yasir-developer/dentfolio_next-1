@@ -20,8 +20,8 @@ const DoctorBasicDetail = (props) => {
   useEffect(() => {
     // console.log(window.location, "window");
     if (typeof window !== undefined) {
-      console.log(window?.location?.pathname, ' window?.location?.pathname');
-      if (window?.location?.pathname === '/patient/profile-page') {
+      console.log(window?.location, ' window?.location?.pathname');
+      if (window?.location?.pathname.includes('/patient/')) {
         setShowContact(true);
       } else {
         setShowContact(false);

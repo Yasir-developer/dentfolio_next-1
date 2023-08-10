@@ -3,9 +3,7 @@ import AuthInput from '@/components/Inputs/AuthInput';
 import Router from 'next/router';
 import { server } from '../config';
 import React, { useRef, useState, useEffect } from 'react';
-import { FaPlus, FaTrash } from 'react-icons/fa';
-// import { ToastContainer, toast } from 'react-toastify';
-// import TagsInput from 'react-tagsinput';
+
 import 'react-tagsinput/react-tagsinput.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -65,24 +63,6 @@ const CreateCasePage = () => {
       setPickedImage(URL.createObjectURL(file));
       console.log(pickedImage, 'pickedImage');
     }
-
-    // if (files) {
-    //   setImageFiles(files);
-    //   console.log(imageFiles, 'kdskskdsa');
-    //   // console.log(formatBytes(file.size), "formatBytes(file.size)");
-    //   // if (parseFloat(formatBytes(file.size)) > 5) return toast.error('File can not be larger than 5 mb')
-    //   // if (!files.name.match(/\.(jpg|jpeg|png|gif)$/)) {
-    //   //   console.log('no file');
-    //   //   return toast.error('Please select valid image.');
-    //   // }
-    //   // setImgObj(file);
-    //   console.log(files, 'my files');
-    //   const urls = files.map((file) => URL.createObjectURL(file));
-    //   console.log(urls, 'urls ---');
-    //   setPickedImage(urls);
-    //   // setPickedImage(URL.createObjectURL(files));
-    //   console.log(pickedImage, 'pickedImage');
-    // }
   };
 
   const emptFields = () => {
@@ -102,17 +82,6 @@ const CreateCasePage = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     const caseTypeJSON = JSON.stringify(tags);
-
-    console.log(title, 'Title');
-    console.log(description, 'description');
-    console.log(tags, 'tags');
-    console.log(selectedOption, 'selectedOption');
-    console.log(imageFiles, 'imageFiles imageFiles');
-    // const sweeterArray = imageFiles.forEach((sweetItem) => {
-    //   console.log(sweetItem, 'sweetItem');
-    //   return sweetItem;
-    // });
-
     if (tags.length <= 0) {
       toast.error('Please select Case Type');
       return;
@@ -144,20 +113,6 @@ const CreateCasePage = () => {
     formData.append('selectedOption', selectedOption);
     formData.append('cases_photo', imageFiles);
 
-    // formData.append(
-    //   'cases_photo',
-    //   // sweeterArray
-    //   imageFiles.forEach((sweetItem) => {
-    //     return sweetItem;
-    //   })
-    // );
-
-    // imageFiles.forEach((file, index) => {
-    //   console.log(file, 'file ==============');
-    //   formData.append('cases_photo', file);
-    // });
-
-    // console.log(imageFiles, 'formData');
     axios
       .post(`${server}/api/cases`, formData, options)
       .then((res) => {
@@ -170,15 +125,6 @@ const CreateCasePage = () => {
           // Router.replace('/dentist/view-profile');
         } else if (res.status == 400) {
           setLoader(false);
-          // toast.error(res.errors[0], {
-          //   position: 'top-center',
-          //   autoClose: 2000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   pauseOnHover: true,
-          //   draggable: true,
-          //   progress: undefined,
-          // });
         }
       })
       .catch((error) => {
@@ -187,15 +133,9 @@ const CreateCasePage = () => {
       });
   };
 
-  // const notify = () => toast('Wow so easy!');
-
   return (
     <div className="flex items-center justify-center bg-white">
       <div className="my-8 mx-auto w-[90%]">
-        {/* <div
-          className="flex flex-row justify-between"
-          //   style={{ margin: "10px" }}
-        > */}
         <div className="flex flex-col">
           <h1 className="lg:text-[32px] text-[28px] lg:font-semibold font-medium">
             Add Case
@@ -206,18 +146,12 @@ const CreateCasePage = () => {
             potential patients.
           </p>
         </div>
-        {/* <div>
-            <BlueButtons buttonText={"Add Case"} className={"px-[50px]"} />
-          </div> */}
-        {/* </div> */}
+
         <form
           enctype="multipart/form-data"
           onSubmit={(e) => {
-            // e.preventDefault();
             submitHandler(e);
-            // Router.push("/dentist/create-case");
           }}
-          // enctype="multipart/form-data"
         >
           <div className="py-5 flex w-[100%] rounded-[7px] flex-col items-start justify-start ">
             <div className="w-[90%] flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-1 items-center justify-start">
@@ -243,7 +177,6 @@ const CreateCasePage = () => {
                 Case Visibility:
               </p>
               <div className="flex flex-row">
-                {/* <div className="px-5"> */}
                 <label className="text-[16px] font-normal">
                   <input
                     type="radio"
@@ -256,7 +189,6 @@ const CreateCasePage = () => {
                   />
                   Public
                 </label>
-                {/* </div> */}
                 <div className="radio">
                   <label className="text-[16px] font-normal">
                     <input
@@ -279,38 +211,12 @@ const CreateCasePage = () => {
                   <Select
                     value={tags}
                     onChange={handleChange}
-                    // onChange={handleSelectChange}
                     options={options}
                     isClearable={false}
                     isSearchable
                     isMulti
-                    // unstyled
                   />
-                  {/* <TagsInput
-                    value={tags}
-                    onChange={handleChange}
-                    inputProps={{
-                      className: 'fonts-poppins',
-                    }}
-                  /> */}
                 </div>
-                {/* {treatmentType.map((data, dataIndex) => (
-                  <div
-                    className="bg-custom-blue-light flex items-center justify-center h-10 px-5 rounded-[7px] grid-cols-2"
-                    key={dataIndex}
-                  >
-                    <p className="text-center text-custom-black text-[14px] font-semibold">
-                      {data.type}
-                    </p>
-                    <FaTrash className="w-5 h-5 pl-[10px]" />
-                  </div>
-                ))} */}
-                {/* <div className="flex items-center justify-center h-10 px-3 py-3 rounded-[7px] bg-[#EBFAF8]">
-                  <p className="text-center text-custom-black text-[14px] font-semibold">
-                    Add More
-                  </p>
-                  <FaPlus className="w-5 h-5 pl-[10px] " />
-                </div> */}
               </div>
             </div>
 
@@ -348,7 +254,6 @@ const CreateCasePage = () => {
               loading={loader}
               buttonText={'Save'}
               className={'bg-[#D4D4D4] rounded-[7px] mt-10'}
-              // onClick={() => notify}
             />
           </div>
         </form>

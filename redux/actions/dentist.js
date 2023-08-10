@@ -22,6 +22,11 @@ const DentistSearchSuccess = (dispatch, res) => {
   console.log(res, 'post data res');
   dispatch({ type: 'DENTIST_SEARCH_SUCCESS', payload: res });
 };
+// export const DentistSearchSuccessReset = () => {
+//   return (dispatch) => {
+//     dispatch({ type: 'DENTIST_SEARCH_SUCCESS', payload: [] });
+//   };
+// };
 
 export const dentistLocation = (location) => {
   console.log(location, 'Location data res');

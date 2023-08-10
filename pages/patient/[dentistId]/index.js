@@ -15,8 +15,9 @@ const userPage = (profile) => {
   console.log(profile.profile._id, 'postingg');
   // const { profile } = useSelector((state) => state.dentist);
   const { user } = useSelector((state) => state.auth);
+  const { dentist } = useSelector((state) => state.dentist);
 
-  console.log(profile, 'profile');
+  console.log(dentist, 'profile');
   const [loader, setLoader] = useState(true);
 
   const [cases, setCases] = useState([]);

@@ -10,6 +10,7 @@ import Checkbox from '@/components/Checkbox/Checkbox';
 import { mutate } from 'swr';
 import { toast } from 'react-hot-toast';
 import { ElementsConsumer, CardElement } from '@stripe/react-stripe-js';
+import GoogleAutocomplete from 'react-google-autocomplete';
 
 import { fetchUser } from 'redux/actions/auth';
 
@@ -20,18 +21,12 @@ import { getAddressSuggestions, getAddressData } from '../../lib/googleMaps';
 import { Elements, PaymentElement } from '@stripe/react-stripe-js';
 import CheckoutForm from '@/page-components/Checkout/CheckoutForm';
 import { loadStripe } from '@stripe/stripe-js';
-import AddressForm from '@/components/AddressForm/AddressForm';
 
 const Signup = () => {
-  const GOOGLE_MAPS_API_KEY = 'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo';
   const stripePromise = loadStripe(
     'pk_test_51NU3nUFH7jk2A82vTjlYco1pIAuL6ErOcBHh5p5n79GPhVSoBaENlQMi8bKFjluK0c37DcNtkCpGIbW9vCW06gnv00Q5Xtq7BH'
   );
-  // const options = {
-  //   clientSecret:
-  //     'sk_test_51NU3nUFH7jk2A82vJcWfg8szMExCTGve2q8tjirfGyCsOUoDpuRivKUUPZ3Rg86E4UB0R84ZMKdfu4OLbFbS4GLc005TVgONQN',
-  //   // appearance,
-  // };
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const usernameRef = useRef();
@@ -126,11 +121,11 @@ const Signup = () => {
           displayName,
           gdcNo,
           buildingName,
-          streetName: streetName ? streetName : showAddress,
-          city: city ? city : data?.city,
-          postCode: postCode ? postCode : data?.postalCode,
-          latitude: data.location.location.lat,
-          longitude: data.location.location.lng,
+          streetName: showAddress,
+          city: city,
+          postCode: postCode,
+          latitude: latitude,
+          longitude: longitude,
         })
         .then((response) => {
           if (response.status == 201) {
@@ -282,7 +277,7 @@ const Signup = () => {
                     containerClassName={'w-[45%]'}
                   />
                   <div className="z-[999] w-[45%] relative">
-                    <AuthInput
+                    {/* <AuthInput
                       placeholder={'Practice Street Name'}
                       value={showAddress}
                       onChange={handleInputChange}
@@ -291,7 +286,6 @@ const Signup = () => {
                       className={'!w-full'}
                       containerClassName={'w-full'}
                     />
-                    {/* {paymentForm()} */}
 
                     <div class="absolute right-100 bg-white shadow-xl w-full top-[50px] mt-0 pt-0 rounded-[7px] pb-0">
                       {suggestions.length > 0 && (
@@ -315,19 +309,58 @@ const Signup = () => {
                           ))}
                         </ul>
                       )}
-                    </div>
+                    </div> */}
+
+                    <GoogleAutocomplete
+                      apiKey={'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo'}
+                      // className="flex-grow py-2 px-4 focus:outline-none w-4/5"
+                      className="focus:outline-none border w-full border-custom-grey rounded-[7px] p-3 bg-custom-dashboard-bg placeholder-slate-400 lg:text-[16px] text-[14px] font-normal mb-5"
+                      // style={{ width: '100%', height: 50 }}
+                      onPlaceSelected={(place) => {
+                        console.log(place, 'place selectedval');
+                        setLatitude(place?.geometry?.location?.lat());
+                        setLongitude(place?.geometry?.location?.lng());
+                        setShowAddress(place?.formatted_address);
+                        const addressComponents =
+                          place?.address_components || [];
+                        const postal_code = addressComponents?.find(
+                          (component) => component.types.includes('postal_code')
+                        );
+                        setPostCode(postal_code?.long_name);
+                        // console.log(postal_code, 'postal_code');
+
+                        // console.log(locality, 'locality');
+                        const localityTwo = addressComponents?.find(
+                          (component) => component.types.includes('locality')
+                        );
+                        setCity(localityTwo?.long_name);
+                        const locality = addressComponents?.find((component) =>
+                          component.types.includes('postal_town')
+                        );
+                        setCity(
+                          locality?.long_name
+                            ? locality?.long_name
+                            : localityTwo?.long_name
+                        );
+                      }}
+                      placeholder="Location"
+                      options={{
+                        types: ['geocode', 'establishment'],
+                      }}
+                      // defaultValue={address}
+                    />
                   </div>
 
                   <AuthInput
                     placeholder={'Practice City'}
-                    value={city ? city : data?.city}
+                    value={city}
                     onChange={(e) => setCity(e.target.value)}
                     containerClassName={'w-[45%]'}
                     required
                   />
                   <AuthInput
                     placeholder={'Practice Post Code'}
-                    value={postCode ? postCode : data?.postalCode}
+                    value={postCode}
                     onChange={(e) => setPostCode(e.target.value)}
                     containerClassName={'w-[45%]'}
                     required

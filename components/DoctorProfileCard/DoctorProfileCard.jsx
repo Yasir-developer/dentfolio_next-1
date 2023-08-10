@@ -10,6 +10,9 @@ import checkCircle from '../../public/images/check-circle2.svg';
 import { useDispatch } from 'react-redux';
 import { dentistProfile } from 'redux/actions/dentist';
 import Link from 'next/link';
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import { server } from 'config';
 
 const DoctorProfileCard = ({ data }) => {
   const dispatch = useDispatch();
@@ -22,8 +25,48 @@ const DoctorProfileCard = ({ data }) => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [description, setDescription] = useState('');
+  const [contactLoader, setContactLoader] = useState(false);
 
-  const contactMe = () => {};
+  const contactMe = (e) => {
+    e.preventDefault();
+    if (name && phone && email && description) {
+      setContactLoader(true);
+      const options = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      axios
+        .post(`${server}/api/patient`, {
+          dentistId: modalData._id,
+          patient_name: name,
+          phone_no: phone,
+          patient_email: email,
+          description,
+
+          options,
+        })
+        .then((res) => {
+          console.log(res, 'subscription post response');
+          // return;
+          if (res.status == 200) {
+            setContactLoader(false);
+            toast.success('Your Response has been sent to the Dentist');
+            setShowModal(false);
+            setShowThankYouModal(true);
+          } else if (res.status == 400) {
+          }
+        })
+        .catch((error) => {
+          toast.success(error.response.data);
+          setContactLoader(false);
+          console.log(error, 'erroorrr');
+        });
+    } else {
+      toast.error('All fields are required to Continue');
+    }
+  };
 
   const thankYouModal = () => {
     return (
@@ -67,7 +110,14 @@ const DoctorProfileCard = ({ data }) => {
             </button>
             <div className="py-5 flex flex-row items-center ">
               <div className="items-center pb-2">
-                <Image src={modalData.profile_photo} width={67} height={66} />
+                <Image
+                  src={
+                    modalData.profile_photo ? modalData.profile_photo : profile
+                  }
+                  alt="profile image"
+                  width={67}
+                  height={66}
+                />
               </div>
               <div className="mx-5">
                 <h2 className="text-custom-blue font-semibold text-[21px]">
@@ -80,7 +130,7 @@ const DoctorProfileCard = ({ data }) => {
                 </div>
               </div>
             </div>
-            <form>
+            <form onSubmit={(e) => contactMe(e)}>
               <div className="lg:mb-4 mb-0 gap-x-2 flex lg:flex-row flex-col justify-center lg:items-center">
                 {/* <input
                   type="text"
@@ -128,7 +178,6 @@ const DoctorProfileCard = ({ data }) => {
                   placeholder="Email Address"
                 /> */}
               </div>
-
               <textarea
                 id="conversation"
                 placeholder="Start a conversation"
@@ -138,17 +187,18 @@ const DoctorProfileCard = ({ data }) => {
                 onChange={(e) => setDescription(e.target.value)}
                 required
               ></textarea>
-
-              <button
-                type="submit"
+              <BlueButtons
+                loading={contactLoader}
+                // type="submit"
                 className="bg-custom-blue hover:bg-blue-600 text-white font-poppins font-medium py-2 mt-5 mb-7 px-[45px] rounded lg:justify-end text-sm"
-                onClick={() => {
-                  setShowModal(false);
-                  setShowThankYouModal(true);
-                }}
-              >
-                Send
-              </button>
+                // onClick={() => {
+                //   setShowModal(false);
+                //   setShowThankYouModal(true);
+                // }}
+                buttonText={'Send'}
+              />
+              {/* Send */}
+              {/* </button> */}
             </form>
           </div>
           {/* Form fields and buttons */}

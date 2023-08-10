@@ -79,6 +79,7 @@ const BillingMethodForm = ({ stripe, elements }) => {
           }
         })
         .catch((error) => {
+          toast.error(error?.response?.data?.message);
           setLoader(false);
           console.log(error, 'erroorrr');
         });

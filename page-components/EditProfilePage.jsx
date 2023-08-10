@@ -6,6 +6,7 @@ import axios from 'axios';
 import Router from 'next/router';
 import React, { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import GoogleAutocomplete from 'react-google-autocomplete';
 
 import Select from 'react-select';
 
@@ -221,21 +222,15 @@ const EditProfilePage = () => {
     formData.append('gdcNo', gdcNo);
     formData.append('buildingName', buildingName);
     formData.append('streetName', showAddress ? showAddress : streetName);
-    formData.append(
-      'latitude',
-      data?.location?.location?.lat
-        ? data?.location?.location?.lat
-        : user?.latitude
-    );
+    formData.append('latitude', latitude ? latitude : user?.latitude);
     formData.append(
       'longitude',
-      data?.location?.location?.lng
-        ? data?.location?.location?.lng
-        : user?.longitude
-    );
-    formData.append('city', city ? city : data?.city);
 
-    formData.append('postCode', postCode ? postCode : data?.postalCode);
+      longitude ? longitude : user?.longitude
+    );
+    formData.append('city', city);
+
+    formData.append('postCode', postCode);
     formData.append('speciality', speciality);
     formData.append('degree', degree);
 
@@ -479,7 +474,7 @@ const EditProfilePage = () => {
                 label="Building Name"
               />
               <div className="w-[45%] relative">
-                <AuthInput
+                {/* <AuthInput
                   placeholder={'Practice Street Name'}
                   className={'order-10'}
                   containerClassName={'w-full'}
@@ -508,7 +503,45 @@ const EditProfilePage = () => {
                       ))}
                     </ul>
                   )}
-                </div>
+                </div> */}
+                <p>Street Name</p>
+                <GoogleAutocomplete
+                  apiKey={'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo'}
+                  // className="flex-grow py-2 px-4 focus:outline-none w-4/5"
+                  className=" order-10 focus:outline-none border w-full border-custom-grey rounded-[7px] p-3 bg-custom-dashboard-bg placeholder-slate-400 lg:text-[16px] text-[14px] font-normal mb-5"
+                  // style={{ width: '100%', height: 50 }}
+                  onPlaceSelected={(place) => {
+                    console.log(place, 'place selectedval');
+                    setLatitude(place?.geometry?.location?.lat());
+                    setLongitude(place?.geometry?.location?.lng());
+                    setShowAddress(place?.formatted_address);
+                    const addressComponents = place?.address_components || [];
+                    const postal_code = addressComponents?.find((component) =>
+                      component.types.includes('postal_code')
+                    );
+                    setPostCode(postal_code?.long_name);
+                    // console.log(postal_code, 'postal_code');
+
+                    // console.log(locality, 'locality');
+                    const localityTwo = addressComponents?.find((component) =>
+                      component.types.includes('locality')
+                    );
+                    setCity(localityTwo?.long_name);
+                    const locality = addressComponents?.find((component) =>
+                      component.types.includes('postal_town')
+                    );
+                    setCity(
+                      locality?.long_name
+                        ? locality?.long_name
+                        : localityTwo?.long_name
+                    );
+                  }}
+                  placeholder="Location"
+                  options={{
+                    types: ['geocode', 'establishment'],
+                  }}
+                  defaultValue={streetName}
+                />
               </div>
               <AuthInput
                 placeholder={'Practice City'}

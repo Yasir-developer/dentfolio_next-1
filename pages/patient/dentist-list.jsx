@@ -4,7 +4,11 @@ import { FaFilter, FaCrosshairs } from 'react-icons/fa';
 import { Range, getTrackBackground } from 'react-range';
 import { useDispatch, useSelector } from 'react-redux';
 import GoogleAutocomplete from 'react-google-autocomplete';
-import { dentistSearchCity, searchDentist } from 'redux/actions/dentist';
+import {
+  DentistSearchSuccessReset,
+  dentistSearchCity,
+  searchDentist,
+} from 'redux/actions/dentist';
 import { toast } from 'react-hot-toast';
 
 const dentistlist = () => {
@@ -21,9 +25,9 @@ const dentistlist = () => {
 
   useEffect(() => {
     setLoader(true);
-    console.log(dentist);
-    console.log(location);
-    setLoader(false);
+    if (dentist) {
+      setLoader(false);
+    }
   }, [dentist, location]);
 
   // console.log(latitude, longitude, address);
@@ -149,6 +153,7 @@ const dentistlist = () => {
             <span>No Dentist available in {city}</span>
           )}
         </h3>
+
         <div className="w-full sm:w-[80%]">
           <p className="mt-8 text-base sm:text-lg">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
@@ -216,8 +221,23 @@ const dentistlist = () => {
             </div>
           </div>
         </div>
-
-        <DoctorProfileCard data={dentist?.data?.user} />
+        {!loader ? (
+          <DoctorProfileCard data={dentist?.data?.user} />
+        ) : (
+          <div aria-label="Loading..." role="status">
+            <svg class="h-[1px] w-[100px] animate-spin">
+              <path
+                className="fill-indigo-200"
+                d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
+              ></path>
+              <path
+                className="fill-[#0769cc]"
+                d="M16.9497 7.05015C14.2161 4.31648 9.78392 4.31648 7.05025 7.05015C6.65973 7.44067 6.02656 7.44067 5.63604 7.05015C5.24551 6.65962 5.24551 6.02646 5.63604 5.63593C9.15076 2.12121 14.8492 2.12121 18.364 5.63593C18.7545 6.02646 18.7545 6.65962 18.364 7.05015C17.9734 7.44067 17.3403 7.44067 16.9497 7.05015Z"
+              ></path>
+            </svg>
+            {/* </div> */}
+          </div>
+        )}
         {/* <div className="flex justify-center my-[80px]">
         <button className="bg-custom-blue lg:font-semibold font-medium text-[16px] py-2 px-[60px] lg:mt-5  w-139 text-sm text-white rounded-[7px] ">
           Load More{' '}

@@ -13,6 +13,9 @@ const dentistReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'DENTIST_SEARCH_SUCCESS':
       return { ...state, loading: false, dentist: action.payload };
+    case 'DENTIST_SEARCH_RESET':
+      return { ...state, loading: false, dentist: [] };
+
     case 'DENTIST_LOCATION':
       return { ...state, location: action.payload };
     case 'DENTIST_SEARCH_CITY':

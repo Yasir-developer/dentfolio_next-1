@@ -21,8 +21,6 @@ const SearchBanner = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const inputRef = useRef(null);
-  const antInputRef = useRef(null);
   const [loader, setLoader] = useState(false);
 
   const [latitude, setLatitude] = useState();
@@ -43,7 +41,7 @@ const SearchBanner = () => {
       // You can perform any action based on the slider value here
     };
     return (
-      <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-gray-900 z-50">
         {/* ... */}
         <div className="bg-white rounded-lg p-6 w-64">
           <div className="mb-4">
