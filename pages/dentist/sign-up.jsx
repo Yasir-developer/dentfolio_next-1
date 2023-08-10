@@ -21,6 +21,7 @@ import { getAddressSuggestions, getAddressData } from '../../lib/googleMaps';
 import { Elements, PaymentElement } from '@stripe/react-stripe-js';
 import CheckoutForm from '@/page-components/Checkout/CheckoutForm';
 import { loadStripe } from '@stripe/stripe-js';
+import Link from 'next/link';
 
 const Signup = () => {
   const stripePromise = loadStripe(
@@ -146,7 +147,7 @@ const Signup = () => {
         });
     } else {
       toast.error(
-        'Please Check all the Marks and Accept Terms & condition to continue'
+        'Please Check all the Marks and Accept Terms & Conditions to continue'
       );
     }
   };
@@ -369,11 +370,14 @@ const Signup = () => {
                 </div>
 
                 <div className="flex flex-col mx-[20px] my-[40px]">
-                  <Checkbox
-                    label=" I agree to the website terms & conditions"
-                    checked={termsAccepted}
-                    onChange={handleTermsChange}
-                  />
+                  <Link href={'#'} passHref>
+                    <Checkbox
+                      label=" I agree to the website terms & conditions"
+                      checked={termsAccepted}
+                      onChange={handleTermsChange}
+                      // onClick={()=> Router.push()}
+                    />
+                  </Link>
                   <Checkbox
                     label="I have valid consent from my patients to republish/use/share photographs uploaded to Dentfolio"
                     checked={privacyAccepted}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import profile from '../../public/images/profile1.png';
+import profile from '../../public/images/profile1.jpeg';
 import Image from 'next/image';
 import { FaMapMarkerAlt, FaTimes } from 'react-icons/fa';
 import checkCircle from '../../public/images/check-circle2.svg';

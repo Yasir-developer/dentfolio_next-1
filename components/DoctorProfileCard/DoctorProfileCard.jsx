@@ -4,7 +4,7 @@ import location from '../../public/images/location.svg';
 import Router from 'next/router';
 import BlueButtons from '../Buttons/BlueButtons';
 import { FaTimes } from 'react-icons/fa';
-import profile from '../../public/images/profile1.png';
+import profile from '../../public/images/profile1.jpeg';
 import AuthInput from '../Inputs/AuthInput';
 import checkCircle from '../../public/images/check-circle2.svg';
 import { useDispatch } from 'react-redux';
@@ -219,6 +219,7 @@ const DoctorProfileCard = ({ data }) => {
       {showThankYouModal && thankYouModal()}
       {data?.length > 0 ? (
         data?.map((item, index) => {
+          console.log(item, 'itemmm');
           return (
             <div
               className="flex flex-col py-8 border-b border-[#70707030] "
@@ -245,7 +246,7 @@ const DoctorProfileCard = ({ data }) => {
                     <div className="flex mt-3">
                       <Image src={location} alt="logo" />
                       <h2 className="px-1 text-xs sm:text-sm font-medium">
-                        {item.city}
+                        {item.city} {item.postCode}
                       </h2>
                     </div>
                     <p className="px-1 text-base sm:text-lg font-normal hidden lg:block lg:my-5">

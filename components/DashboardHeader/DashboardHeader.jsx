@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import logoWhite from '../../public/images/logoWhite.png';
-import profile from '../../public/images/profileImg.png';
+import profile from '../../public/images/profile1.jpeg';
 
 import Image from 'next/image';
 import { FaAngleDown, FaRegBell, FaBars, FaTimesCircle } from 'react-icons/fa';

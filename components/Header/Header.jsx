@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
 import { useDispatch, useSelector } from 'react-redux';
-import profile from '../../public/images/profileImg.png';
+import profile from '../../public/images/profile1.jpeg';
 import { logoutUser } from 'redux/actions/auth';
 
 const AppHeader = () => {
