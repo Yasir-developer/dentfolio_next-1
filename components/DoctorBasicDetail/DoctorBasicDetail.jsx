@@ -11,6 +11,8 @@ import Marker from '../marker';
 import { GOOGLE_MAPS_API_KEY } from 'config';
 import { toast } from 'react-hot-toast';
 import BlueButtons from '../Buttons/BlueButtons';
+import axios from 'axios';
+import { server } from 'config';
 const DoctorBasicDetail = (props) => {
   console.log(props, '=====');
   const [showModal, setShowModal] = useState(false);
