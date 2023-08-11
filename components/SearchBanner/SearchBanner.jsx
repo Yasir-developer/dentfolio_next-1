@@ -25,8 +25,8 @@ const SearchBanner = () => {
 
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
-  const [radius, setRadius] = useState(1);
-  const [sliderValue, setSliderValue] = useState([1]); // Initial value for the range slider
+  const [radius, setRadius] = useState();
+  const [sliderValue, setSliderValue] = useState([50]); // Initial value for the range slider
   const [city, setCity] = useState('');
 
   const [address, setAddress] = useState('');
@@ -103,13 +103,18 @@ const SearchBanner = () => {
 
   const onSubmitSearch = (e) => {
     e.preventDefault();
-    if (latitude && longitude && radius) {
+    if (latitude && longitude) {
       setLoader(true);
+
       const data = {
         latitude,
         longitude,
         radius: sliderValue * 1000,
       };
+      // console.log(data, 'radius');
+
+      // return;
+
       // console.log(first)
       dispatch(dentistLocation(address));
       // console.log(data);

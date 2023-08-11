@@ -152,10 +152,11 @@ const DoctorProfileCard = ({ data }) => {
                 <AuthInput
                   placeholder={'Phone Number'}
                   className="border border-custom-grey rounded-[7px] lg:mt-0 lg:w-[100%] w-full py-3  text-[16px] placeholder:text-slate-400 placeholder-[#9F9F9F] font-extralight"
-                  type={'tel'}
+                  type={'number'}
                   containerClassName="w-full"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  // pattern
                   required
                 />
                 {/* <input

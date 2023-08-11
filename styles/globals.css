@@ -124,6 +124,12 @@ h1{
 }
 /* Adjust the spacing and size as needed */
 
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .checkbox-round {
   width: 1.3em;
   height: 1.3em;

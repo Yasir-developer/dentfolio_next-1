@@ -37,6 +37,7 @@ const AuthInput = forwardRef(function AuthInput(
           {label ? <p>{label}</p> : <></>}
           <input
             type={showPassword ? 'text' : type}
+            // pattern={type == 'tel' ? '[0-9]{3}-[0-9]{2}-[0-9]{3}' : ''}
             id={id}
             placeholder={placeholder}
             value={value}

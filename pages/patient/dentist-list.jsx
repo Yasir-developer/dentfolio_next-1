@@ -17,9 +17,9 @@ const dentistlist = () => {
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
   const [loader, setLoader] = useState(true);
-  const [sliderValue, setSliderValue] = useState([1]); // Initial value for the range slider
+  const [sliderValue, setSliderValue] = useState([50]); // Initial value for the range slider
   const [showModal, setShowModal] = useState(false);
-  const [radius, setRadius] = useState(1);
+  const [radius, setRadius] = useState();
   const [address, setAddress] = useState('');
   const [cityData, setCityData] = useState('');
 
@@ -103,8 +103,9 @@ const dentistlist = () => {
 
   const onSubmitSearch = (e) => {
     e.preventDefault();
+    console.log(radius, 'radius');
     // console.log(latitude, longitude, radius, 'l,dsaldmal');
-    if (latitude && longitude && radius) {
+    if (latitude && longitude) {
       setLoader(true);
       const data = {
         latitude,
