@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { ObjectId } from 'mongodb';
+import { ObjectId, Timestamp } from 'mongodb';
 import normalizeEmail from 'validator/lib/normalizeEmail';
 
 export async function findUserWithEmailAndPassword(db, email, password) {
@@ -83,14 +83,7 @@ export async function insertUser(
     city,
     postCode,
     location: [longitude, latitude],
-    // longitude,
-    // latitude,
-    // bio = '',
-    // username ='',
-    courtesyTitle = '',
-    // profile_photo = '',
-    treatment_type = [],
-    previous_case = [],
+    role,
   }
 ) {
   const user = {
@@ -98,6 +91,7 @@ export async function insertUser(
     profile_photo: '',
     email,
     paymentVerified: false,
+    role,
     // name,
     // username,
     customer: {},
@@ -121,6 +115,7 @@ export async function insertUser(
     profile_photo: '',
     treatment_type: [],
     previous_case: [],
+    create_at: new Date(),
   };
   const password = await bcrypt.hash(originalPassword, 10);
   const { insertedId } = await db

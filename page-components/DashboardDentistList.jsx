@@ -1,31 +1,65 @@
 import Table from '@/components/Table/Table';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AdminDentistTable from './AdminDentistTable';
 import { FaCrosshairs, FaFilter, FaSearch, FaTrashAlt } from 'react-icons/fa';
+import { server } from 'config';
+import axios from 'axios';
 
 const DashboardDentistList = ({
   selectedTime,
   selectedTabOpt,
   onSelectedTab,
 }) => {
+  const [dentist, setDentist] = useState([]);
+  useEffect(() => {
+    handleOverview();
+  }, []);
+  const handleOverview = () => {
+    // setLoader(true);
+
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    axios
+      .get(`${server}/api/dentists`, {
+        options,
+      })
+      .then((res) => {
+        console.log(res, 'responsess');
+        // setLoader(false);
+
+        if (res.status == 200) {
+          setDentist(res?.data?.dentists);
+        }
+      })
+      .catch((error) => {
+        console.log(error, 'error');
+      });
+  };
   // console.log(selectedTabOpt, "selectedTabOpt");
   const columns = React.useMemo(
     () => [
       {
         Header: 'Id',
-        accessor: 'id',
+        id: 'index',
+        // accessor: i + 1,
+        Cell: ({ row, flatRows }) => {
+          return flatRows.indexOf(row) + 1;
+        },
       },
       {
         Header: 'Dentist Name',
-        accessor: 'dentist',
+        accessor: 'displayName',
       },
       {
         Header: 'Email Address',
         accessor: 'email',
       },
       {
-        Header: 'No Of Cases',
-        accessor: 'cases',
+        Header: 'Creation Date',
+        accessor: 'create_at',
       },
       {
         Header: 'Subscription Status',
@@ -238,6 +272,9 @@ const DashboardDentistList = ({
       status: 'Non Active',
     },
   ];
+
+  const myIndexedData = dentist.map((el, index) => ({ index, ...el })); //immutable
+
   return (
     <div className="bg-white p-3 rounded-[7px] my-3 ">
       <div className="my-3 flex lg:flex-row flex-col">
@@ -274,7 +311,7 @@ const DashboardDentistList = ({
 
       <AdminDentistTable
         columns={selectedTabOpt === 'revenue' ? RevenueColumns : columns}
-        data={selectedTabOpt === 'revenue' ? revenueData : data}
+        data={selectedTabOpt === 'revenue' ? revenueData : dentist}
       />
     </div>
   );

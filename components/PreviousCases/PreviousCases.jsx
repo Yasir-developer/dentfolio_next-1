@@ -33,12 +33,9 @@ const PreviousCases = () => {
       })
       .then((res) => {
         setLoader(false);
-        // console.log(res.data.cases, 'res =======');
-        // console.log(JSON.parse(res.data.cases[1].caseType), 'JSON.parse(');
-        // setLoader(false);
+
         if (res.status == 200) {
           setCases(res?.data?.cases);
-          // setTypes(JSON.parse(res.data.cases.caseTypes));
         }
       })
       .catch((error) => {});

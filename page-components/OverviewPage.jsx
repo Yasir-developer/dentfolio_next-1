@@ -1,42 +1,74 @@
-import TimeFilter from "@/components/TimeFilter/TimeFilter";
-import React, { useState } from "react";
-import DashboardCard from "./DashboardCard";
-import DashboardDentistList from "./DashboardDentistList";
-import { FaMobileAlt, FaMoneyBillWave, FaUserMd } from "react-icons/fa";
+import TimeFilter from '@/components/TimeFilter/TimeFilter';
+import React, { useEffect, useState } from 'react';
+import DashboardCard from './DashboardCard';
+import DashboardDentistList from './DashboardDentistList';
+import { FaMobileAlt, FaMoneyBillWave, FaUserMd } from 'react-icons/fa';
+import { server } from 'config';
+import axios from 'axios';
 
 const OverviewPage = () => {
-  const [selectedOption, setSelectedOption] = useState("last24");
-  const [selectedTab, setSelectedTab] = useState("overview");
+  const [selectedOption, setSelectedOption] = useState('last24');
+  const [selectedTab, setSelectedTab] = useState('overview');
+  const [dentistCount, setDentistCount] = useState();
+
+  const [loader, setLoader] = useState(true);
+
+  useEffect(() => {
+    handleCardsData();
+  }, []);
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
     // Perform any additional logic based on the selected option
   };
+  const handleCardsData = () => {
+    setLoader(true);
 
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    axios
+      .get(`${server}/api/dashboard/admin`, {
+        options,
+      })
+      .then((res) => {
+        console.log(res, 'res');
+        setLoader(false);
+
+        if (res.status == 200) {
+          setDentistCount(res?.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error, 'error');
+      });
+  };
   const cardData = [
     {
-      count: "1564",
+      count: dentistCount?.dentists,
       iconType: (
         <FaUserMd className="w-[28px] h-[33px] text-custom-blue text-center" />
       ),
-      topic: "Total Dentist Sign Up",
+      topic: 'Total Dentist Sign Up',
     },
-    {
-      count: "£212,189",
+    // {
+    //   count: "£212,189",
 
-      iconType: (
-        <FaMoneyBillWave className="w-[28px] h-[33px] text-custom-blue text-center" />
-      ),
+    //   iconType: (
+    //     <FaMoneyBillWave className="w-[28px] h-[33px] text-custom-blue text-center" />
+    //   ),
 
-      topic: "Total Revenue",
-    },
+    //   topic: "Total Revenue",
+    // },
     {
-      count: "56",
+      count: dentistCount?.subscribedDentists,
 
       iconType: (
         <FaMobileAlt className="w-[28px] h-[33px] text-custom-blue text-center" />
       ),
-      topic: "Dentist Subscribed",
+      topic: 'Dentist Subscribed',
     },
   ];
   return (

@@ -127,7 +127,7 @@ const AdminTabs = (props) => {
                 </li>
               </Link>
 
-              <Link
+              {/* <Link
                 href={{
                   pathname: '/admin/revenue',
                   // query: { tab: "revenue" },
@@ -154,7 +154,7 @@ const AdminTabs = (props) => {
                   <FaMoneyBillWaveAlt className="w-4 h-4 mx-2" />
                   Revenue
                 </li>
-              </Link>
+              </Link> */}
 
               <Link
                 href={{

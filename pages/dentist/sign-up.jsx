@@ -14,7 +14,7 @@ import GoogleAutocomplete from 'react-google-autocomplete';
 
 import { fetchUser } from 'redux/actions/auth';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { server } from 'config';
 import axios from 'axios';
 import { getAddressSuggestions, getAddressData } from '../../lib/googleMaps';
@@ -24,6 +24,13 @@ import { loadStripe } from '@stripe/stripe-js';
 import Link from 'next/link';
 
 const Signup = () => {
+  const { user } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (user) {
+      console.log(user, 'useruser');
+    }
+  }, [user]);
+
   const stripePromise = loadStripe(
     'pk_test_51NU3nUFH7jk2A82vTjlYco1pIAuL6ErOcBHh5p5n79GPhVSoBaENlQMi8bKFjluK0c37DcNtkCpGIbW9vCW06gnv00Q5Xtq7BH'
   );
@@ -63,46 +70,6 @@ const Signup = () => {
 
   const router = useRouter();
 
-  const handleInputChange = async (e) => {
-    const input = e.target.value;
-
-    setData({});
-    // data.city = '';
-    setAddress(input);
-    setShowAddress(input);
-    if (input) {
-      const suggestions = await getAddressSuggestions(input);
-      console.log(suggestions, 'suggestion');
-      setSuggestions(suggestions);
-    } else {
-      setSuggestions([]);
-    }
-  };
-
-  const handleAddressSelect = async (selectedAddress, addressShow) => {
-    console.log(selectedAddress, 'addressShow');
-
-    // setShowAddress
-    setShowAddress(addressShow);
-    setAddress(selectedAddress);
-    setSuggestions([]);
-
-    const response = await getAddressData(selectedAddress, addressShow);
-    // .then(
-    //   (response) => {
-    //     console.log(response, 'response');
-    //     setLatitude(response.location.location.lat);
-    //     setLongitude(response.location.location.long);
-    //   }
-    // );
-    setData(response);
-    console.log(data, 'daasdsadsd');
-    if (data) {
-      setPostCode(data.postalCode);
-      setCity(data.city);
-    }
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -127,20 +94,26 @@ const Signup = () => {
           postCode: postCode,
           latitude: latitude,
           longitude: longitude,
+          role: 0,
         })
         .then((response) => {
           if (response.status == 201) {
             dispatch(fetchUser(response?.data?.user));
-
-            toast.success(
-              'Your account has been created. To continue please complete payment process'
-            );
-            setPaymentModalShow(true); // router.replace('/dentist/view-profile');
+            console.log(user, 'user after signup');
+            if (response?.data?.user?.role == 0) {
+              toast.success(
+                'Your account has been created. To continue please complete payment process'
+              );
+              setPaymentModalShow(true); // router.replace('/dentist/view-profile');
+            } else {
+              Router.replace('/admin/overview');
+            }
           }
         })
         .catch((error) => {
-          if (error?.response?.data?.error) {
-            toast.error(error?.response?.data?.error.message);
+          console.log(error, 'error');
+          if (error?.response?.data) {
+            toast.error(error?.response?.data?.error?.message);
           }
           setLoader(false);
           // console.log(e, 'erororor');

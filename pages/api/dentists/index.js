@@ -1,4 +1,8 @@
-import { getDentistById, listDentistByLocation } from '@/api-lib/db';
+import {
+  getDentistById,
+  listDentistByLocation,
+  listDentists,
+} from '@/api-lib/db';
 import { auths, database, validateBody } from '@/api-lib/middlewares';
 import { ncOpts } from '@/api-lib/nc';
 import nc from 'next-connect';
@@ -24,6 +28,12 @@ handler.post(async (req, res) => {
   });
   // console.log(dentist, 'teacher');
   res.json({ user });
+});
+
+handler.get(async (req, res) => {
+  const dentists = await listDentists(req.db);
+
+  res.json({ dentists });
 });
 
 export default handler;

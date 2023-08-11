@@ -4,6 +4,7 @@ import { auths, database, validateBody } from '@/api-lib/middlewares';
 // import { getMongoDb } from '@/api-lib/mongodb';
 import { ncOpts } from '@/api-lib/nc';
 import { slugUsername } from '@/lib/user';
+import { Timestamp } from 'mongodb';
 import nc from 'next-connect';
 import isEmail from 'validator/lib/isEmail';
 import normalizeEmail from 'validator/lib/normalizeEmail';
@@ -35,13 +36,8 @@ handler.post(
       firstName,
       lastName,
       displayName,
-      username,
       speciality,
-      // location = {
-      //   latitude,
-      //   longitude,
-      // },
-      location,
+      role,
       degree,
       gdcNo,
       buildingName,
@@ -53,11 +49,6 @@ handler.post(
       longitude,
       paymentVerified = false,
       // customer,
-      bio,
-      courtesyTitle,
-      profile_photo,
-      treatment_type,
-      previous_case,
     } = req.body;
     // username = slugUsername(req.body.username);
     email = normalizeEmail(req.body.email);
@@ -79,6 +70,18 @@ handler.post(
     //     .json({ error: { message: 'The username has already been taken.' } });
     //   return;
     // }
+    const timestamp = new Date();
+    const date = new Date(timestamp);
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // Months are 0-indexed, so add 1
+    const day = date.getDate();
+
+    const formattedDate = `${year}-${month < 10 ? '0' : ''}${month}-${
+      day < 10 ? '0' : ''
+    }${day}`;
+    console.log(formattedDate);
+
     const user = await insertUser(req.db, {
       email,
       originalPassword: password,
@@ -95,6 +98,8 @@ handler.post(
       longitude,
       latitude,
       location: [longitude, latitude],
+      role,
+      create_at: formattedDate,
 
       city,
       postCode,

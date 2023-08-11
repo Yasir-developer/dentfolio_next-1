@@ -10,7 +10,7 @@ import Router from 'next/router';
 import AuthInput from '@/components/Inputs/AuthInput';
 import { server } from 'config';
 import { fetchUser } from 'redux/actions/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 // import { server } from '../../../config';
 // import { toast } from 'react-toastify';
@@ -18,6 +18,7 @@ import { toast } from 'react-hot-toast';
 // import { useDispatch } from 'react-redux';
 const Login = () => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -52,24 +53,19 @@ const Login = () => {
           dispatch(fetchUser(res?.data?.user));
           setLoader(false);
 
-          // toast.success('Login Successfully', {
-          //   position: 'top-center',
-          //   autoClose: 2000,
-          //   hideProgressBar: false,
-          //   closeOnClick: true,
-          //   pauseOnHover: true,
-          //   draggable: true,
-          //   progress: undefined,
-          // });
+          if (user.role == 1) {
+            Router.replace('/admin/overview');
+          }
+        } else {
           Router.replace('/dentist/view-profile');
         }
       })
       .catch((error) => {
         console.log(error, 'sign in error');
-        if (error.response.status == 401) {
-          toast.error('Email or Password is incorrect');
-          setLoader(false);
-        }
+        // if (error.response.status == 401) {
+        toast.error('Email or Password is incorrect');
+        setLoader(false);
+        // }
         // toast.error(error?.data?.message, {
         //   position: 'top-center',
         //   autoClose: 2000,

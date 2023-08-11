@@ -1,11 +1,14 @@
-import TimeFilter from "@/components/TimeFilter/TimeFilter";
-import React, { useState } from "react";
-import DashboardCard from "./DashboardCard";
-import DashboardDentistList from "./DashboardDentistList";
+import TimeFilter from '@/components/TimeFilter/TimeFilter';
+import React, { useEffect, useState } from 'react';
+import DashboardCard from './DashboardCard';
+import DashboardDentistList from './DashboardDentistList';
+import axios from 'axios';
+import { server } from 'config';
 
 const AdminDentistPage = () => {
-  const [selectedOption, setSelectedOption] = useState("last24");
-  const [selectedTab, setSelectedTab] = useState("dentist");
+  const [selectedOption, setSelectedOption] = useState('last24');
+  const [selectedTab, setSelectedTab] = useState('dentist');
+  const [loader, setLoader] = useState(true);
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
@@ -23,6 +26,7 @@ const AdminDentistPage = () => {
       <DashboardDentistList
         // onSelectedTab={handleSelectTab}
         selectedTabOpt={selectedTab}
+        // data={dentist}
       />
       {/* Rest of the page */}
     </div>

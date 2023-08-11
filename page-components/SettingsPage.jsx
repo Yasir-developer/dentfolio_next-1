@@ -9,7 +9,7 @@ import { toast } from 'react-hot-toast';
 import { FaEye, FaTimes } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUpdatedUser, fetchUser } from 'redux/actions/auth';
-const SettingsPage = () => {
+const SettingsPage = ({ type }) => {
   const { user, updatedUser } = useSelector((state) => state.auth);
   const { paymentMethods } = useSelector((state) => state.payment);
   // console.log(updatedUser, 'updated');
@@ -354,42 +354,44 @@ const SettingsPage = () => {
           </form>
         </div>
       </div>
+      {user?.role == 0 ? (
+        <div className="flex w-[90%] rounded-[7px] flex-col justify-start mx-auto mb-8">
+          <h2 className="font-medium text-[18px]">Subscription Status</h2>
+          <div className="mt-5 lg:w-[30%] w-[90%]">
+            {/* < */}
+            {user?.paymentVerified ? (
+              <div className="flex items-center">
+                <div className="p-2 bg-green-400 rounded-[7px] mr-5">
+                  <p>Active</p>
+                </div>
 
-      <div className="flex w-[90%] rounded-[7px] flex-col justify-start mx-auto mb-8">
-        <h2 className="font-medium text-[18px]">Subscription Status</h2>
-        <div className="mt-5 lg:w-[30%] w-[90%]">
-          {/* < */}
-          {user?.paymentVerified ? (
-            <div className="flex items-center">
-              <div className="p-2 bg-green-400 rounded-[7px] mr-5">
-                <p>Active</p>
+                <BlueButtons
+                  buttonText={'Cancel Subscription'}
+                  onClick={() => {
+                    setPaymentVerified(false);
+                    setDeleteModalShow(true);
+                  }}
+                />
               </div>
-
-              <BlueButtons
-                buttonText={'Cancel Subscription'}
-                onClick={() => {
-                  setPaymentVerified(false);
-                  setDeleteModalShow(true);
-                }}
-              />
-            </div>
-          ) : (
-            // </form>
-            <div className="flex items-center">
-              <div className="p-2 bg-red-400 rounded-[7px] mr-5">
-                <p>Not Active</p>
+            ) : (
+              <div className="flex items-center">
+                <div className="p-2 bg-red-400 rounded-[7px] mr-5">
+                  <p>Not Active</p>
+                </div>
+                <BlueButtons
+                  buttonText={'Buy Subscription'}
+                  onClick={() => {
+                    handleChange();
+                  }}
+                />
               </div>
-              <BlueButtons
-                buttonText={'Buy Subscription'}
-                // loading={loader}
-                onClick={() => {
-                  handleChange();
-                }}
-              />
-            </div>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <></>
+      )}
+
       {/* <DashboardFooter /> */}
     </div>
   );
