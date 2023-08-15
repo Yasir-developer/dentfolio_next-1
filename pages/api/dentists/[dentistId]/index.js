@@ -8,6 +8,7 @@ const handler = nc(ncOpts);
 handler.use(database);
 
 handler.get(async (req, res) => {
+  console.log('kmsdkasmdaksm');
   const userId = req.user?.userId;
 
   const user = await getDentistById(req.db, req.query.dentistId);

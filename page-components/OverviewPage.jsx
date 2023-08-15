@@ -7,18 +7,51 @@ import { server } from 'config';
 import axios from 'axios';
 
 const OverviewPage = () => {
-  const [selectedOption, setSelectedOption] = useState('last24');
+  const [selectedOption, setSelectedOption] = useState('Last 24 hours');
   const [selectedTab, setSelectedTab] = useState('overview');
   const [dentistCount, setDentistCount] = useState();
+  const [dentist, setDentist] = useState([]);
 
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     handleCardsData();
-  }, []);
+    contactMe();
+  }, [selectedOption]);
+
+  const contactMe = (e) => {
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    axios
+      .post(`${server}/api/dentists/time/${selectedOption}`, {
+        options,
+      })
+      .then((res) => {
+        // return;
+        if (res.status == 200) {
+          console.log(res, 'response data');
+          // setContactLoader(false);
+          setDentist(res?.data?.dentists);
+        } else if (res.status == 400) {
+        }
+      })
+      .catch((error) => {
+        // toast.success(error?.response?.data?.message);
+        // setContactLoader(false);
+        console.log(error, 'erroorrr lst mon');
+      });
+    // } else {
+    //   toast.error('All fields are required to Continue');
+    // }
+  };
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
+
     // Perform any additional logic based on the selected option
   };
   const handleCardsData = () => {
@@ -95,6 +128,7 @@ const OverviewPage = () => {
         selectedTime={selectedOption}
         // onSelectedTab={handleSelectTab}
         selectedTabOpt={selectedTab}
+        dentistdata={dentist}
       />
       {/* Rest of the page */}
     </div>

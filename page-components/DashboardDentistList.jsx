@@ -8,36 +8,38 @@ import axios from 'axios';
 const DashboardDentistList = ({
   selectedTime,
   selectedTabOpt,
+  dentistdata,
   onSelectedTab,
 }) => {
+  console.log(dentistdata, 'dadaasasas');
   const [dentist, setDentist] = useState([]);
-  useEffect(() => {
-    handleOverview();
-  }, []);
-  const handleOverview = () => {
-    // setLoader(true);
+  // useEffect(() => {
+  //   handleOverview();
+  // }, []);
+  // const handleOverview = () => {
+  //   // setLoader(true);
 
-    const options = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    axios
-      .get(`${server}/api/dentists`, {
-        options,
-      })
-      .then((res) => {
-        console.log(res, 'responsess');
-        // setLoader(false);
+  //   const options = {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   };
+  //   axios
+  //     .get(`${server}/api/dentists`, {
+  //       options,
+  //     })
+  //     .then((res) => {
+  //       console.log(res, 'responsess');
+  //       // setLoader(false);
 
-        if (res.status == 200) {
-          setDentist(res?.data?.dentists);
-        }
-      })
-      .catch((error) => {
-        console.log(error, 'error');
-      });
-  };
+  //       if (res.status == 200) {
+  //         setDentist(res?.data?.dentists);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error, 'error');
+  //     });
+  // };
   // console.log(selectedTabOpt, "selectedTabOpt");
   const columns = React.useMemo(
     () => [
@@ -63,7 +65,7 @@ const DashboardDentistList = ({
       },
       {
         Header: 'Subscription Status',
-        accessor: 'subscription',
+        accessor: 'paymentVerified',
       },
       {
         Header: 'Action',
@@ -277,18 +279,9 @@ const DashboardDentistList = ({
 
   return (
     <div className="bg-white p-3 rounded-[7px] my-3 ">
-      <div className="my-3 flex lg:flex-row flex-col">
-        <div className="flex flex-col lg:w-[50%]">
-          <p className="font-semibold text-[15px]">Dentist List</p>
-          <p className="font-light text-[13px] ">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
-        </div>
-        <div className="w-full flex justify-end items-end">
+      {/* <div className="w-full flex justify-end items-end">
           <div className="w-full lg:w-2/5 flex flex-row items-center rounded-[7px] my-10 lg:my-0 lg:ml-4 border border-[#858585]">
-            {/* <div className="flex items-center p-4 w-full"> */}
-            {/* <div className=" w-full flex items-center rounded-[5px]"> */}
-            {/* <FaCrosshairs size={20} color="#000" className="ml-2" /> */}
+
 
             <input
               type="text"
@@ -297,21 +290,13 @@ const DashboardDentistList = ({
             />
             <FaSearch color="#000" className="w-6 h-6 pr-2" />
 
-            {/* <button
-                className="bg-custom-blue text-white px-4 py-2 rounded ml-2 focus:outline-none"
-                onClick={() => Router.push("/patient/dentist-list")}
-              >
-                Search
-              </button> */}
-            {/* </div> */}
-            {/* </div> */}
           </div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
 
       <AdminDentistTable
         columns={selectedTabOpt === 'revenue' ? RevenueColumns : columns}
-        data={selectedTabOpt === 'revenue' ? revenueData : dentist}
+        data={selectedTabOpt === 'revenue' ? revenueData : dentistdata}
       />
     </div>
   );

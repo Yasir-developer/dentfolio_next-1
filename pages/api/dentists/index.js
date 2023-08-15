@@ -30,10 +30,4 @@ handler.post(async (req, res) => {
   res.json({ user });
 });
 
-handler.get(async (req, res) => {
-  const dentists = await listDentists(req.db);
-
-  res.json({ dentists });
-});
-
 export default handler;

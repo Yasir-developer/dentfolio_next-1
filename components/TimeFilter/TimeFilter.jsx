@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 const TimeFilter = ({ selectedOption, onSelectOption }) => {
   const options = [
-    { label: "Last 24 hours", value: "last24" },
-    { label: "Last week", value: "lastWeek" },
-    { label: "Last month", value: "lastMonth" },
-    { label: "Last year", value: "lastYear" },
+    { label: 'Last 24 hours', value: 'last24' },
+    { label: 'Last week', value: 'lastWeek' },
+    { label: 'Last month', value: 'lastMonth' },
+    { label: 'Last year', value: 'lastYear' },
   ];
 
   return (
@@ -14,11 +14,11 @@ const TimeFilter = ({ selectedOption, onSelectOption }) => {
         <button
           key={option.value}
           className={`py-2  lg:text-[14px] text-[12px] ${
-            selectedOption === option.value
-              ? "text-custom-blue font-medium underline decoration-solid decoration-2"
-              : "text-[#858585]"
+            selectedOption === option.label
+              ? 'text-custom-blue font-medium underline decoration-solid decoration-2'
+              : 'text-[#858585]'
           }`}
-          onClick={() => onSelectOption(option.value)}
+          onClick={() => onSelectOption(option.label)}
         >
           {option.label}
         </button>

@@ -22,11 +22,17 @@ export async function dentistsCountBySubscription(db) {
     .count();
 }
 
-export async function listDentists(db) {
+export async function listDentists(db, startDate) {
+  console.log(startDate, 'startDate');
   return db
     .collection('users')
-    .aggregate([
-      { $match: { role: 0 } },
+    .find(
+      {
+        role: 0,
+        create_at: {
+          $gte: startDate,
+        },
+      }
       // {
       //   $lookup: {
       //     from: "courses",
@@ -35,7 +41,7 @@ export async function listDentists(db) {
       //     as: "courses",
       //   },
       // },
-    ])
+    )
     .toArray();
 }
 
