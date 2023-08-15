@@ -83,6 +83,7 @@ handler.patch(
       speciality,
       degree,
       profile_photo,
+      location,
       treatment_type,
       previous_case,
       latitude,
@@ -121,6 +122,9 @@ handler.patch(
         ...(streetName && { streetName }),
         ...(latitude && { latitude }),
         ...(longitude && { longitude }),
+        ...(location && { location: JSON.parse(location) }),
+        // location: [longitude, latitude],
+
         ...(speciality && { speciality }),
         ...(degree && { degree }),
 

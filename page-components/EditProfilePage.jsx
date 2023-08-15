@@ -207,6 +207,7 @@ const EditProfilePage = () => {
 
     // return;
     const treatmentTypeJSON = JSON.stringify(tags);
+    // const loactionjson = JSON.stringify(tags);
 
     // return;
     setLoader(true);
@@ -221,6 +222,14 @@ const EditProfilePage = () => {
     formData.append('gdcNo', gdcNo);
     formData.append('buildingName', buildingName);
     formData.append('streetName', showAddress ? showAddress : streetName);
+    formData.append(
+      'location',
+      JSON.stringify([
+        longitude ? longitude : user?.longitude,
+        latitude ? latitude : user?.latitude,
+      ])
+    );
+
     formData.append('latitude', latitude ? latitude : user?.latitude);
     formData.append(
       'longitude',
@@ -255,15 +264,7 @@ const EditProfilePage = () => {
       })
       .catch((error) => {
         setLoader(false);
-        toast.error(error?.data?.message, {
-          position: 'top-center',
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error(error?.data?.message);
       });
   };
   const uploadFileHandler = () => {
@@ -546,7 +547,7 @@ const EditProfilePage = () => {
                 placeholder={'Practice City'}
                 className={'order-11'}
                 containerClassName={'w-[45%]'}
-                value={city ? city : data?.city}
+                value={city}
                 onChange={(e) => {
                   setCity(e.target.value);
                 }}
@@ -557,7 +558,7 @@ const EditProfilePage = () => {
                 placeholder={'Practice Post Code'}
                 className={'order-12'}
                 containerClassName={'w-[45%]'}
-                value={postCode ? postCode : data?.postalCode}
+                value={postCode}
                 onChange={(e) => setPostCode(e.target.value)}
                 label="Postal Code"
                 required
