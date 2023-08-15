@@ -2,8 +2,11 @@ import React from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import BlueButtons from '../Buttons/BlueButtons';
 import Router from 'next/router';
+import { useSelector } from 'react-redux';
 
 const MonthlyPlan = () => {
+  const { user } = useSelector((state) => state.auth);
+
   return (
     // <div className="flex">
     <div className="px-5 lg:px-0 lg:w-[45%] w-full">
@@ -15,7 +18,7 @@ const MonthlyPlan = () => {
           With 30-Day Free Trial
         </p>
       </div>
-      <div className="bg-[#F5F5F5] w-full rounded-[7px] px-8 py-5">
+      <div className="bg-[#F5F5F5] w-full rounded-[7px] lg:min-h-[300px] px-8 py-5">
         <div className="flex flex-row items-start my-2">
           <FaCheckCircle size={16} className="mt-1 lg:w-4 lg:h-4 w-3 h-3" />
           <p className="px-2 text-[12px] lg:text-[15px] font-normal">
@@ -29,15 +32,18 @@ const MonthlyPlan = () => {
             Cancel anytime. We'll remind you 7 days before your trial ends.
           </p>
         </div>
-
-        <BlueButtons
-          buttonText={'Start my Free Month'}
-          className={'my-5 text-[14px] lg:text-[18px] font-medium'}
-          onClick={(e) => {
-            e.preventDefault();
-            Router.push('/dentist/sign-up');
-          }}
-        />
+        {user ? (
+          <></>
+        ) : (
+          <BlueButtons
+            buttonText={'Start my Free Month'}
+            className={'my-5 text-[14px] lg:text-[18px] font-medium'}
+            onClick={(e) => {
+              e.preventDefault();
+              Router.push('/dentist/sign-up');
+            }}
+          />
+        )}
 
         <div className="flex flex-row justify-between items-center">
           <p className="text-[13px] font-light mt-5">sit amet, consectetur</p>
