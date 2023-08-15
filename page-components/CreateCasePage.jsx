@@ -204,7 +204,7 @@ const CreateCasePage = () => {
               </div>
             </div>
 
-            <div className="lg:w-[45%] flex flex-col pt-5">
+            <div className=" w-[75%] lg:!w-[45%] flex flex-col pt-5">
               <p className="text-[18px] font-semibold">Case Type:</p>
               <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 mt-3">
                 <div className="w-full">
