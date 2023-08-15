@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../../public/images/loginLogo.svg';
 import logoWhite from '../../public/images/logoWhite.png';
 import axios from 'axios';
@@ -23,7 +23,11 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loader, setLoader] = useState(false);
-
+  useEffect(() => {
+    if (user) {
+      console.log(user, 'user use effect');
+    }
+  }, [user]);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,12 +56,13 @@ const Login = () => {
         if (res.status == 200) {
           dispatch(fetchUser(res?.data?.user));
           setLoader(false);
+          // console.log(user, '------------------');
 
-          if (user.role == 1) {
+          if (res?.data?.user?.role == 1) {
             Router.replace('/admin/overview');
+          } else {
+            Router.replace('/dentist/view-profile');
           }
-        } else {
-          Router.replace('/dentist/view-profile');
         }
       })
       .catch((error) => {
@@ -65,16 +70,6 @@ const Login = () => {
         // if (error.response.status == 401) {
         toast.error('Email or Password is incorrect');
         setLoader(false);
-        // }
-        // toast.error(error?.data?.message, {
-        //   position: 'top-center',
-        //   autoClose: 2000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        // });
       });
   };
   return (

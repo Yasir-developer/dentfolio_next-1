@@ -617,7 +617,7 @@ const EditProfilePage = () => {
                   onChange={handleChange}
                   // onChange={handleSelectChange}
                   options={options}
-                  isClearable
+                  isClearable={false}
                   isSearchable
                   isMulti
                 />
