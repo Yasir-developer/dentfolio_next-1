@@ -127,6 +127,9 @@ const Signup = () => {
 
   const handleTermsChange = () => {
     setTermsAccepted(!termsAccepted);
+    // if(termsAccepted){
+
+    // }
   };
 
   const handlePrivacyChange = () => {
@@ -343,14 +346,14 @@ const Signup = () => {
                 </div>
 
                 <div className="flex flex-col mx-[20px] my-[40px]">
-                  <Link href={'#'} passHref>
-                    <Checkbox
-                      label=" I agree to the website terms & conditions"
-                      checked={termsAccepted}
-                      onChange={handleTermsChange}
-                      // onClick={()=> Router.push()}
-                    />
-                  </Link>
+                  {/* <Link href={'#'} passHref> */}
+                  <Checkbox
+                    label=" I agree to the website terms & conditions"
+                    checked={termsAccepted}
+                    onChange={handleTermsChange}
+                    // onClick={()=> Router.push()}
+                  />
+                  {/* </Link> */}
                   <Checkbox
                     label="I have valid consent from my patients to republish/use/share photographs uploaded to Dentfolio"
                     checked={privacyAccepted}
