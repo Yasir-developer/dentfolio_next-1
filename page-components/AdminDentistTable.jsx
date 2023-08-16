@@ -1,6 +1,6 @@
 import BlueButtons from '@/components/Buttons/BlueButtons';
 import { useState } from 'react';
-import { FaSearch, FaTimes } from 'react-icons/fa';
+import { FaSearch, FaTimes, FaTrashAlt } from 'react-icons/fa';
 import { useGlobalFilter, useTable } from 'react-table';
 
 const AdminDentistTable = ({ columns, data }) => {
@@ -163,9 +163,17 @@ const AdminDentistTable = ({ columns, data }) => {
                           <div
                             className="cursor-pointer"
                             onClick={() => {
-                              setShowThankYouModal(true);
+                              console.log(rows, 'rows');
+                              const dataCopy = [...rows];
+                              const dataAbc = rows.splice(i, 1);
+                              console.log(dataAbc, 'dataCopy');
+                              // setData(dataCopy);
+                              // setShowThankYouModal(true);
                             }}
                           >
+                            <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />
+
+                            {/* dasdsa */}
                             {cell.render('Cell')}
                           </div>
                         ) : cell.column.id === 'status' ? (

@@ -3,8 +3,54 @@ import Head from 'next/head';
 import styles from './Layout.module.css';
 import Nav from './Nav';
 import Footer from '../Footer/Footer';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
 
 const Layout = ({ children }) => {
+  const { user } = useSelector((state) => state.auth);
+  const router = useRouter();
+
+  useEffect(() => {
+    const path = router.pathname;
+    if (path) {
+      console.log(path, 'path');
+      if (user && user.role == 0) {
+        console.log(path.split('/')[1], 'splitted path');
+        switch (path.split('/')[1]) {
+          case 'admin':
+            // case "student":
+            toast.error('Unauthorized path');
+            router.back();
+            break;
+        }
+      }
+      if (user && user.role == 1) {
+        console.log(path.split('/')[1], 'splitted path');
+        switch (path.split('/')[1]) {
+          case 'dentist':
+            toast.error('Unauthorized path');
+            router.back();
+            break;
+        }
+      }
+
+      // if (user && user.type == "3") {
+      //   console.log(path.split("/")[1], "splitted path");
+      //   switch (path.split("/")[1]) {
+      //     case "admin":
+      //     case "teacher":
+      //       toast.error("Unauthorized path");
+      //       router.back();
+      //       break;
+      //   }
+      // }
+    }
+
+    return () => {};
+  }, [router, user]);
+
   return (
     <>
       <Head>

@@ -2,7 +2,15 @@ import { ObjectId } from 'mongodb';
 
 export async function insertCase(
   db,
-  { case_title, description, visibility, caseType, dentistId, cases_photo }
+  {
+    case_title,
+    description,
+    visibility,
+    caseType,
+    dentistId,
+    before_cases_photo,
+    after_cases_photo,
+  }
 ) {
   const cases = {
     case_title,
@@ -10,7 +18,8 @@ export async function insertCase(
     visibility,
     caseType: JSON.parse(caseType),
     dentistId,
-    cases_photo,
+    before_cases_photo,
+    after_cases_photo,
     // createdAt: new Date(),
   };
   const newCase = await db.collection('cases').insertOne(cases);

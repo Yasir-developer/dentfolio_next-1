@@ -213,7 +213,7 @@ const SearchBanner = () => {
         </div>
         <div className="hidden lg:block lg:w-1/2">
           <img
-            src="/images/doctor-2.png"
+            src="/images/doctor-2.jpg"
             alt="Image"
             className="w-full max-w-[500px] mx-auto"
           />

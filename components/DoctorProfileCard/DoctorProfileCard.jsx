@@ -125,11 +125,11 @@ const DoctorProfileCard = ({ data }) => {
                 <h2 className="text-custom-blue font-semibold text-[21px]">
                   {modalData.displayName}
                 </h2>
-                <div className="flex flex-col">
+                {/* <div className="flex flex-col">
                   <h3 className="text-custom-black text-[15px]">
                     {modalData.speciality}
                   </h3>
-                </div>
+                </div> */}
               </div>
             </div>
             <form onSubmit={(e) => contactMe(e)}>

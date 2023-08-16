@@ -7,7 +7,7 @@ import { server } from 'config';
 import axios from 'axios';
 
 const OverviewPage = () => {
-  const [selectedOption, setSelectedOption] = useState('Last 24 hours');
+  const [selectedOption, setSelectedOption] = useState('Last week');
   const [selectedTab, setSelectedTab] = useState('overview');
   const [dentistCount, setDentistCount] = useState();
   const [dentist, setDentist] = useState([]);

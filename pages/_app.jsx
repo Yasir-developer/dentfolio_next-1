@@ -10,17 +10,19 @@ import '../styles/nprogress.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import withReduxStore from '../lib/with-redux-store';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import NProgress from 'nprogress';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useCurrentUser } from '@/lib/user';
 
 // import '../assets/globals.css';
 
 const MyApp = ({ Component, pageProps, reduxStore }) => {
   const persistor = persistStore(reduxStore);
+
   const router = useRouter();
 
   NProgress.configure({
@@ -35,6 +37,7 @@ const MyApp = ({ Component, pageProps, reduxStore }) => {
     router.events.on('routeChangeComplete', () => NProgress.done());
     router.events.on('routeChangeError', () => NProgress.done());
   }, []);
+
   return (
     <Provider store={reduxStore}>
       <PersistGate loading={null} persistor={persistor}>

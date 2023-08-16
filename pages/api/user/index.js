@@ -80,8 +80,7 @@ handler.patch(
       bio,
       phone,
       courtesyTitle,
-      speciality,
-      degree,
+
       profile_photo,
       location,
       treatment_type,
@@ -124,9 +123,6 @@ handler.patch(
         ...(longitude && { longitude }),
         ...(location && { location: JSON.parse(location) }),
         // location: [longitude, latitude],
-
-        ...(speciality && { speciality }),
-        ...(degree && { degree }),
 
         ...(city && { city }),
         ...(postCode && { postCode }),

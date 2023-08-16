@@ -26,6 +26,9 @@ export async function findUserById(db, userId) {
     .then((user) => user || null);
 }
 
+export async function deleteUserById(db, userId) {
+  return db.collection('users').deleteOne({ _id: new ObjectId(userId) });
+}
 export async function findUserByUsername(db, username) {
   return db
     .collection('users')
@@ -75,8 +78,9 @@ export async function insertUser(
     firstName,
     lastName,
     displayName,
-    speciality,
-    degree,
+    courtesyTitle,
+    // speciality,
+    // degree,
     gdcNo,
     buildingName,
     streetName,
@@ -94,13 +98,14 @@ export async function insertUser(
     role,
     // name,
     // username,
-    customer: {},
+    // customer: {},
+
     bio,
     firstName,
     lastName,
     displayName,
-    speciality,
-    degree,
+    // speciality,
+    // degree,
     gdcNo,
     buildingName,
     streetName,
@@ -111,7 +116,7 @@ export async function insertUser(
     postCode,
     bio: '',
     userName: '',
-    courtesyTitle: '',
+    courtesyTitle,
     profile_photo: '',
     treatment_type: [],
     previous_case: [],

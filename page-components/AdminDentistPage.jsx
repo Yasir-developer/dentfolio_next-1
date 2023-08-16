@@ -4,26 +4,48 @@ import DashboardCard from './DashboardCard';
 import DashboardDentistList from './DashboardDentistList';
 import axios from 'axios';
 import { server } from 'config';
+import { FaMobileAlt, FaUserMd } from 'react-icons/fa';
 
 const AdminDentistPage = () => {
-  const [selectedOption, setSelectedOption] = useState('Last 24 hours');
+  const [selectedOption, setSelectedOption] = useState('Last week');
   const [selectedTab, setSelectedTab] = useState('dentist');
   const [loader, setLoader] = useState(true);
   const [dentist, setDentist] = useState([]);
+  const [dentistCount, setDentistCount] = useState();
 
   useEffect(() => {
     contactMe();
+    handleCardsData();
   }, [selectedOption]);
+  const cardData = [
+    {
+      count: dentistCount?.dentists,
+      iconType: (
+        <FaUserMd className="w-[28px] h-[33px] text-custom-blue text-center" />
+      ),
+      topic: 'Total Dentist Sign Up',
+    },
+    // {
+    //   count: "£212,189",
 
+    //   iconType: (
+    //     <FaMoneyBillWave className="w-[28px] h-[33px] text-custom-blue text-center" />
+    //   ),
+
+    //   topic: "Total Revenue",
+    // },
+    {
+      count: dentistCount?.subscribedDentists,
+
+      iconType: (
+        <FaMobileAlt className="w-[28px] h-[33px] text-custom-blue text-center" />
+      ),
+      topic: 'Dentist Subscribed',
+    },
+  ];
   const handleSelectOption = (option) => {
     console.log(option, 'option');
-    // e.preventefault();
     setSelectedOption(option);
-    // if(option){
-
-    // }
-    // contactMe(e);
-    // Perform any additional logic based on the selected option
   };
 
   const contactMe = (e) => {
@@ -58,6 +80,29 @@ const AdminDentistPage = () => {
     //   toast.error('All fields are required to Continue');
     // }
   };
+  const handleCardsData = () => {
+    setLoader(true);
+
+    const options = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    axios
+      .get(`${server}/api/dashboard/admin`, {
+        options,
+      })
+      .then((res) => {
+        setLoader(false);
+
+        if (res.status == 200) {
+          setDentistCount(res?.data);
+        }
+      })
+      .catch((error) => {
+        console.log(error, 'error');
+      });
+  };
   return (
     <div className="w-[90%] mx-auto my-9 justify-center items-center">
       {/* Other content */}
@@ -65,10 +110,19 @@ const AdminDentistPage = () => {
         selectedOption={selectedOption}
         onSelectOption={handleSelectOption}
       />
-
-      {/* <DashboardCard /> */}
+      <div className="flex lg:flex-row flex-col gap-x-20 py-6">
+        {cardData.map((item, index) => {
+          return (
+            <DashboardCard
+              icontype={item.iconType}
+              count={item.count}
+              topic={item.topic}
+              key={index}
+            />
+          );
+        })}
+      </div>
       <DashboardDentistList
-        // onSelectedTab={handleSelectTab}
         selectedTabOpt={selectedTab}
         dentistdata={dentist}
       />

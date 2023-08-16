@@ -4,6 +4,8 @@ import AdminDentistTable from './AdminDentistTable';
 import { FaCrosshairs, FaFilter, FaSearch, FaTrashAlt } from 'react-icons/fa';
 import { server } from 'config';
 import axios from 'axios';
+import moment from 'moment';
+import { toast } from 'react-hot-toast';
 
 const DashboardDentistList = ({
   selectedTime,
@@ -13,9 +15,17 @@ const DashboardDentistList = ({
 }) => {
   console.log(dentistdata, 'dadaasasas');
   const [dentist, setDentist] = useState([]);
-  // useEffect(() => {
-  //   handleOverview();
-  // }, []);
+  const [dataa, setDataa] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState('');
+  const [row, setRow] = useState('');
+
+  console.log(dataa, 'dadaasdsa');
+
+  useEffect(() => {
+    setDataa(dentistdata);
+    // handleOverview();
+  }, [dentistdata]);
   // const handleOverview = () => {
   //   // setLoader(true);
 
@@ -62,6 +72,19 @@ const DashboardDentistList = ({
       {
         Header: 'Creation Date',
         accessor: 'create_at',
+        Cell: ({ row }) => (
+          // console.log(row, 'all row'),
+          <p>{moment(row.original.create_at).format('MM/DD/YYYY')}</p>
+        ),
+        // <div
+        //   className="cursor-pointer"
+        //   onClick={() => {
+        //     const rowIndex = row.index;
+        //     handleDeleteRow(rowIndex);
+        //   }}
+        // >
+        //   <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />
+        // </div>
       },
       {
         Header: 'Subscription Status',
@@ -69,12 +92,36 @@ const DashboardDentistList = ({
       },
       {
         Header: 'Action',
-        accessor: 'action',
+        id: 'delete',
+        accessor: (str) => 'delete',
+
+        Cell: ({ row }) => (
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              setDeleteId(row.original._id);
+              console.log(row.original._id, 'row.original._id');
+              setIsModalOpen(true);
+              const rowIndex = row.index;
+              console.log(rowIndex, 'rowIndex');
+              setRow(rowIndex);
+
+              // handleDeleteRow(rowIndex);
+            }}
+          >
+            <FaTrashAlt className="w-4 h-4 text-[#F46A6A]" />
+          </div>
+        ),
       },
     ],
-    []
+    [dataa]
   );
 
+  const handleDeleteRow = (rowIndex) => {
+    const newData = [...dataa];
+    newData.splice(rowIndex, 1);
+    setDataa(newData);
+  };
   const RevenueColumns = React.useMemo(
     () => [
       {
@@ -275,8 +322,35 @@ const DashboardDentistList = ({
     },
   ];
 
-  const myIndexedData = dentist.map((el, index) => ({ index, ...el })); //immutable
+  const cancelDelete = () => {
+    setIsModalOpen(false); // Close the modal when canceled
+  };
 
+  const confirmDelete = async () => {
+    handleDeleteRow(row);
+    // setIsModalOpen(false); // Close the modal when confirmed
+    handleDeleteClick();
+    setIsModalOpen(false);
+  };
+
+  const handleDeleteClick = async () => {
+    // data.splice(index, 1);
+    await axios
+      .delete(`${server}/api/users/${deleteId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .then((res) => {
+        if (res.status == 200) {
+          toast.success('User Deleted Successfully');
+        }
+      });
+
+    // setData((prevCases) =>
+    //   prevCases.filter((methodItem) => methodItem.id !== paymentid)
+    // );
+    // setLoader(false);
+  };
   return (
     <div className="bg-white p-3 rounded-[7px] my-3 ">
       {/* <div className="w-full flex justify-end items-end">
@@ -293,10 +367,31 @@ const DashboardDentistList = ({
           </div>
         </div> */}
       {/* </div> */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center  bg-black bg-opacity-75 z-[999]">
+          <div className="bg-white p-8 rounded shadow-lg">
+            <p>Do you want to delete this user?</p>
+            <div className="mt-4 flex justify-end">
+              <button
+                className="px-4 py-2 mr-2 bg-custom-blue text-white rounded hover:bg-sky-500"
+                onClick={confirmDelete} // Call confirmDelete when confirmed
+              >
+                Confirm
+              </button>
+              <button
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                onClick={cancelDelete} // Call cancelDelete when canceled
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <AdminDentistTable
         columns={selectedTabOpt === 'revenue' ? RevenueColumns : columns}
-        data={selectedTabOpt === 'revenue' ? revenueData : dentistdata}
+        data={selectedTabOpt === 'revenue' ? revenueData : dataa}
       />
     </div>
   );

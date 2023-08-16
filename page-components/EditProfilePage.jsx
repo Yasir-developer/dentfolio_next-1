@@ -58,8 +58,8 @@ const EditProfilePage = () => {
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
   const [tags, setTags] = useState([]);
-  const [speciality, setSpeciality] = useState('');
-  const [degree, setDegree] = useState('');
+  // const [speciality, setSpeciality] = useState('');
+  // const [degree, setDegree] = useState('');
 
   // const { data: { user } = {}, mutate } = useCurrentUser();
 
@@ -99,8 +99,9 @@ const EditProfilePage = () => {
       setStreetName(user?.streetName);
       setLatitude(parseFloat(user?.latitude));
       setLongitude(parseFloat(user?.longitude));
-      setSpeciality(user?.speciality);
-      setDegree(user?.degree);
+      // setCourtesyTitle(user?.courtesyTitle)
+      // setSpeciality(user?.speciality);
+      // setDegree(user?.degree);
       setGdcNo(user?.gdcNo);
       setDisplayName(user?.displayName);
       setCity(user?.city);
@@ -117,41 +118,24 @@ const EditProfilePage = () => {
 
   const options = [
     { value: 'Aligners', label: 'Aligners' },
-    { value: 'Bridges', label: 'Bridges' },
+    // { value: 'Bridges', label: 'Bridges' },
     { value: 'Composite Bonding', label: 'Composite Bonding' },
-    { value: 'Crowns', label: 'Crowns ' },
-    { value: 'Dentures', label: 'Dentures ' },
+    // { value: 'Crowns', label: 'Crowns ' },
+    // { value: 'Dentures', label: 'Dentures ' },
     { value: 'Implants', label: 'Implants ' },
-    { value: 'Invisalign', label: 'Invisalign ' },
-    { value: 'Onlays', label: 'Onlays' },
-    { value: 'Orthodontics', label: 'Orthodontics' },
-    { value: 'Periodontal Treatment', label: 'Periodontal Treatment' },
-    { value: 'Restorations', label: 'Restorations' },
-    { value: ' Root canal treatment', label: ' Root canal treatment' },
-    { value: 'Smile Makeover', label: 'Smile Makeover' },
+    // { value: 'Invisalign', label: 'Invisalign ' },
+    // { value: 'Onlays', label: 'Onlays' },
+    // { value: 'Orthodontics', label: 'Orthodontics' },
+    // { value: 'Periodontal Treatment', label: 'Periodontal Treatment' },
+    // { value: 'Restorations', label: 'Restorations' },
+    // { value: ' Root canal treatment', label: ' Root canal treatment' },
+    // { value: 'Smile Makeover', label: 'Smile Makeover' },
     { value: 'Veneers', label: 'Veneers' },
     { value: 'Whitening', label: 'Whitening' },
+    { value: 'Sedation', label: 'Sedation' },
 
     // Add more options as needed
   ];
-  // const options = [
-  //   'Aligners',
-  //   'Bridges',
-  //   'Bonding',
-  //   'Composite Bonding',
-  //   'Crowns',
-  //   'Dentures',
-  //   'Implants',
-  //   'Invisalign',
-  //   'Onlays',
-  //   'Orthodontics',
-  //   'Periodontal Treatment',
-  //   'Restorations',
-  //   'Root canal treatment',
-  //   'Smile Makeover',
-  //   'Veneers',
-  //   'Whitening'
-  // ];
 
   const handleChange = (tags) => {
     setTags(tags);
@@ -159,45 +143,6 @@ const EditProfilePage = () => {
   const handleSelectChange = (event) => {
     // console.log(event.target.value, "event");
     setSelectedOption(event.target.value);
-  };
-
-  const handleInputChange = async (e) => {
-    setCity('');
-    setPostCode('');
-    const input = e.target.value;
-    setStreetName(input);
-    setAddress(input);
-    setShowAddress(input);
-    if (input) {
-      const suggestions = await getAddressSuggestions(input);
-      // console.log(suggestions, 'suggestion');
-      setSuggestions(suggestions);
-    } else {
-      setSuggestions([]);
-    }
-  };
-
-  const handleAddressSelect = async (selectedAddress, addressShow) => {
-    // console.log(addressShow, 'addressShow');
-    // setShowAddress
-    setShowAddress(addressShow);
-    setAddress(selectedAddress);
-    setSuggestions([]);
-
-    const response = await getAddressData(selectedAddress, addressShow);
-    // .then(
-    //   (res) => {
-    //     console.log(res, 'my response');
-    //     if (res) {
-    //       setPostCode(res.postalCode);
-    //       setCity(res.city);
-    //     }
-    //     // setCity(data?.city);
-    //   }
-    // );
-    setData(response);
-    console.log(data, 'all data -----');
-    console.log(response, 'handleAddressSelect response');
   };
 
   const handleSave = (e, secureUrl) => {
@@ -239,8 +184,8 @@ const EditProfilePage = () => {
     formData.append('city', city);
 
     formData.append('postCode', postCode);
-    formData.append('speciality', speciality);
-    formData.append('degree', degree);
+    // formData.append('speciality', speciality);
+    // formData.append('degree', degree);
 
     formData.append('bio', bio);
     formData.append('phone', phone);
@@ -340,7 +285,7 @@ const EditProfilePage = () => {
             <BlueButtons
               buttonText={'Add Case'}
               className={'lg:px-[50px]'}
-              onClick={() => Router.push('/dentist/create-case?tab=create')}
+              onClick={() => Router.push('/dentist/create-case')}
             />
           </div>
         </div>
@@ -355,6 +300,38 @@ const EditProfilePage = () => {
             }
           >
             <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-1">
+              <div className="lg:w-[45%] flex flex-col gap-y-5 mt-5 lg:mt-0 justify-start items-start">
+                <div>
+                  <p>Profile Photo</p>
+                  {pickedImage ? (
+                    <Image
+                      src={pickedImage}
+                      width={105}
+                      height={105}
+                      className="rounded-[102.5px] max-w-[130px] lg:max-w-[205px]"
+                      alt="logo"
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <input
+                  onChange={(e) => onImageChange(e)}
+                  ref={uploadFileref}
+                  type="file"
+                  className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] text-[14px] bg-custom-dashboard-bg"
+                  placeholder="Upload Profile Photo"
+                />
+                <button
+                  type="button"
+                  className="py-2 px-8 bg-[#D4D4D4] rounded-[7px] h-12 hidden"
+                  onClick={() => uploadFileHandler()}
+                >
+                  <p className="text-left text-[16px] font-semibold">
+                    Upload Profile Photo
+                  </p>
+                </button>
+              </div>
               <div className="w-[45%] text-[16px] font-light">
                 <p className="font-normal">Courtesy Title</p>
 
@@ -425,7 +402,7 @@ const EditProfilePage = () => {
                 // required
               />
 
-              <AuthInput
+              {/* <AuthInput
                 placeholder={'Speciality Title'}
                 className={'order-6'}
                 containerClassName={'w-[92.5%] lg:w-[45%]'}
@@ -434,9 +411,9 @@ const EditProfilePage = () => {
                 label="Speciality Title"
 
                 // required
-              />
+              /> */}
 
-              <AuthInput
+              {/* <AuthInput
                 placeholder={'Degree'}
                 className={'order-6'}
                 containerClassName={'w-[92.5%] lg:w-[45%]'}
@@ -445,7 +422,7 @@ const EditProfilePage = () => {
                 label="Degree"
 
                 // required
-              />
+              /> */}
               <AuthInput
                 placeholder={'Display Name'}
                 className={'order-7'}
@@ -504,7 +481,7 @@ const EditProfilePage = () => {
                     </ul>
                   )}
                 </div> */}
-                <p>Street Name</p>
+                <p>Practice City</p>
                 <GoogleAutocomplete
                   apiKey={'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo'}
                   // className="flex-grow py-2 px-4 focus:outline-none w-4/5"
@@ -536,14 +513,14 @@ const EditProfilePage = () => {
                         : localityTwo?.long_name
                     );
                   }}
-                  placeholder="Location"
+                  placeholder="Practice City"
                   options={{
                     types: ['geocode', 'establishment'],
                   }}
                   defaultValue={streetName}
                 />
               </div>
-              <AuthInput
+              {/* <AuthInput
                 placeholder={'Practice City'}
                 className={'order-11'}
                 containerClassName={'w-[45%]'}
@@ -553,7 +530,7 @@ const EditProfilePage = () => {
                 }}
                 label="City"
                 required
-              />
+              /> */}
               <AuthInput
                 placeholder={'Practice Post Code'}
                 className={'order-12'}
@@ -564,38 +541,6 @@ const EditProfilePage = () => {
                 required
               />
 
-              <div className="lg:w-[45%] flex flex-col gap-y-5 mt-5 lg:mt-0 mb-[72px]  justify-start items-start lg:order-[13] order-[14]">
-                <div>
-                  <p>Profile Photo</p>
-                  {pickedImage ? (
-                    <Image
-                      src={pickedImage}
-                      width={105}
-                      height={105}
-                      className="rounded-[102.5px] max-w-[130px] lg:max-w-[205px]"
-                      alt="logo"
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </div>
-                <input
-                  onChange={(e) => onImageChange(e)}
-                  ref={uploadFileref}
-                  type="file"
-                  className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] text-[14px] bg-custom-dashboard-bg"
-                  placeholder="Upload Profile Photo"
-                />
-                <button
-                  type="button"
-                  className="py-2 px-8 bg-[#D4D4D4] rounded-[7px] h-12 hidden"
-                  onClick={() => uploadFileHandler()}
-                >
-                  <p className="text-left text-[16px] font-semibold">
-                    Upload Profile Photo
-                  </p>
-                </button>
-              </div>
               {/* <div> */}
               <div className="order-[13] w-[92.5%] lg:w-[45%]">
                 <p>Bio</p>
@@ -608,22 +553,24 @@ const EditProfilePage = () => {
                 ></textarea>
               </div>
               {/* </div> */}
-            </div>
-            <div className="lg:w-[45%] flex flex-col mt-[-33px] justify-start items-start">
-              <p className="text-[18px] font-semibold">Treatment Type:</p>
 
-              <div className="w-full">
-                <Select
-                  value={tags}
-                  onChange={handleChange}
-                  // onChange={handleSelectChange}
-                  options={options}
-                  isClearable={false}
-                  isSearchable
-                  isMulti
-                />
+              <div className="lg:w-[45%] flex flex-col justify-start items-start">
+                <p>Type of treatments you offer</p>
+
+                <div className="w-full">
+                  <Select
+                    value={tags}
+                    onChange={handleChange}
+                    // onChange={handleSelectChange}
+                    options={options}
+                    isClearable={false}
+                    isSearchable
+                    isMulti
+                  />
+                </div>
               </div>
             </div>
+
             <div>
               <BlueButtons
                 buttonText={'Save'}

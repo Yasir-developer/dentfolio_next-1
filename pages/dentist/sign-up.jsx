@@ -61,15 +61,47 @@ const Signup = () => {
   const [streetName, setStreetName] = useState('');
   const [city, setCity] = useState('');
   const [postCode, setPostCode] = useState('');
-  const [speciality, setSpeciality] = useState('');
-  const [degree, setDegree] = useState('');
+  const [selectedOption, setSelectedOption] = useState('');
+
+  // const [speciality, setSpeciality] = useState('');
+  // const [degree, setDegree] = useState('');
 
   const [showAddress, setShowAddress] = useState('');
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
+  const courtesyData = [
+    {
+      id: 1,
+      type: 'Dr',
+      value: 'Dr',
+    },
+    {
+      id: 2,
+      type: 'Mr',
+      value: 'Mr',
+    },
+    {
+      id: 3,
+      type: 'Mrs',
+      value: 'Mrs',
+    },
 
+    {
+      id: 4,
+      type: 'Miss',
+      value: 'Miss',
+    },
+    {
+      id: 5,
+      type: 'Ms',
+      value: 'Ms',
+    },
+  ];
   const router = useRouter();
-
+  const handleSelectChange = (event) => {
+    // console.log(event.target.value, "event");
+    setSelectedOption(event.target.value);
+  };
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -84,8 +116,10 @@ const Signup = () => {
           password: password,
           firstName,
           lastName,
-          speciality,
-          degree,
+          courtesyTitle: selectedOption,
+
+          // speciality,
+          // degree,
           displayName,
           gdcNo,
           buildingName,
@@ -179,7 +213,28 @@ const Signup = () => {
               </h2>
 
               <form onSubmit={(e) => onSubmit(e)}>
-                <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-2 items-center justify-center">
+                <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-2 justify-center">
+                  <div className="w-[45%] text-[16px] font-light">
+                    <select
+                      className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] p-3  rounded-[7px] text-[14px] bg-custom-dashboard-bg border border-custom-grey"
+                      value={selectedOption}
+                      onChange={handleSelectChange}
+                    >
+                      {courtesyData?.map((item, index) => {
+                        return (
+                          <>
+                            <option
+                              value={item.value}
+                              key={index}
+                              // onChange={(item) => setCourtesyTitle(item.type)}
+                            >
+                              {item.type}
+                            </option>
+                          </>
+                        );
+                      })}
+                    </select>
+                  </div>
                   <AuthInput
                     ref={emailRef}
                     containerClassName={'w-[45%]'}
@@ -221,7 +276,7 @@ const Signup = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <AuthInput
+                  {/* <AuthInput
                     placeholder={'Speciality Title'}
                     // type={"password"}
                     // className={"!w-[45%]"}
@@ -229,8 +284,8 @@ const Signup = () => {
                     value={speciality}
                     onChange={(e) => setSpeciality(e.target.value)}
                     required
-                  />
-                  <AuthInput
+                  /> */}
+                  {/* <AuthInput
                     placeholder={'Degree'}
                     // type={"password"}
                     // className={"!w-[45%]"}
@@ -238,7 +293,7 @@ const Signup = () => {
                     value={degree}
                     onChange={(e) => setDegree(e.target.value)}
                     required
-                  />
+                  /> */}
 
                   <AuthInput
                     placeholder={'GDC Number'}
@@ -255,40 +310,6 @@ const Signup = () => {
                     containerClassName={'w-[45%]'}
                   />
                   <div className="z-[999] w-[45%] relative">
-                    {/* <AuthInput
-                      placeholder={'Practice Street Name'}
-                      value={showAddress}
-                      onChange={handleInputChange}
-                      // onChange={(e) => setStreetName(e.target.value)}
-                      required
-                      className={'!w-full'}
-                      containerClassName={'w-full'}
-                    />
-
-                    <div class="absolute right-100 bg-white shadow-xl w-full top-[50px] mt-0 pt-0 rounded-[7px] pb-0">
-                      {suggestions.length > 0 && (
-                        <ul className="mt-0 rounded-[7px] p-[10px] space-y-2 bg-white border border-gray-300 w-full rounded-b-md shadow-md">
-                          {suggestions.map((suggestion, index) => (
-                            <>
-                              {console.log(suggestion, 'dsassdsadsdsa')}
-                              <li
-                                className="hover:bg-gray-100 p-1"
-                                key={index}
-                                onClick={() => {
-                                  handleAddressSelect(
-                                    suggestion[1],
-                                    suggestion[0]
-                                  );
-                                }}
-                              >
-                                {suggestion[0]}
-                              </li>
-                            </>
-                          ))}
-                        </ul>
-                      )}
-                    </div> */}
-
                     <GoogleAutocomplete
                       apiKey={'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo'}
                       // className="flex-grow py-2 px-4 focus:outline-none w-4/5"
@@ -321,7 +342,7 @@ const Signup = () => {
                             : localityTwo?.long_name
                         );
                       }}
-                      placeholder="Location"
+                      placeholder="Practice City"
                       options={{
                         types: ['geocode', 'establishment'],
                       }}
@@ -329,13 +350,13 @@ const Signup = () => {
                     />
                   </div>
 
-                  <AuthInput
+                  {/* <AuthInput
                     placeholder={'Practice City'}
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     containerClassName={'w-[45%]'}
                     required
-                  />
+                  /> */}
                   <AuthInput
                     placeholder={'Practice Post Code'}
                     value={postCode}

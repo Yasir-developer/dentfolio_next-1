@@ -12,7 +12,7 @@ import database from '@/api-lib/mongodb';
 import nextConnect from 'next-connect';
 
 const userPage = (profile) => {
-  // console.log(dentist, 'profile');
+  console.log(profile.profile, 'profile');
   const [loader, setLoader] = useState(true);
 
   const [cases, setCases] = useState([]);
@@ -36,7 +36,7 @@ const userPage = (profile) => {
         options,
       })
       .then((res) => {
-        // console.log(res.data, 'ressss');
+        console.log(res, 'ressss');
         setLoader(false);
 
         if (res.status == 200) {
