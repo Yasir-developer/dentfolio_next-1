@@ -5,6 +5,7 @@ import { FaEllipsisV } from 'react-icons/fa';
 
 const EditCaseCard = ({
   img_url,
+  img_url_two,
   name,
   description,
   id,
@@ -16,6 +17,8 @@ const EditCaseCard = ({
   hideEdit = false,
   hideDelete = false,
 }) => {
+  console.log(img_url, 'img_url');
+  console.log(img_url_two, 'img_url_two');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,25 +58,44 @@ const EditCaseCard = ({
   };
 
   return (
-    <div className="w-full">
-      <div className="mb-10">
+    <div className="lg:w-[45%] w-full mt-5 mx-2 border rounded-[7px] border-[#F6EBEB]">
+      <div className="">
         {/* <div> */}
-        <div
-          className="border rounded-[7px] border-[#F6EBEB] relative flex lg:flex-row flex-col px-3 mt-7"
-          key={id}
-        >
-          <div className="flex flex-col my-3 gap-y-[3px] lg:w-[15%] w-full justify-center">
-            <Image
-              src={img_url ? img_url : '/images/case2.png'}
-              alt="logo"
-              width={0}
-              height={0}
-              sizes="100vw"
-              className="w-full my-3"
-            />
-          </div>
+        <div className=" relative flex flex-col px-3" key={id}>
+          {/* <div className="flex flex-col my-3 gap-y-[3px] lg:w-[15%] w-full justify-center"> */}
 
-          <div className="flex flex-wrap lg:px-5 mt-5 pb-5 items-start justify-center lg:w-[85%] w-full flex-col gap-y-3 relative">
+          {/* </div> */}
+
+          <div className="flex flex-wrap lg:px-5 mt-5 pb-5 items-center justify-center lg:w-[85%] w-full flex-row gap-y-3">
+            <div className="flex flex-row w-full justify-center items-center">
+              <div className="flex flex-col items-center">
+                <p className="font-medium text-center">Before Treatment</p>
+                {img_url && (
+                  <Image
+                    src={img_url ? img_url : '/images/case2.png'}
+                    alt="logo"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="w-[80%] h-[200px] my-3"
+                  />
+                )}
+              </div>
+              <div className="flex flex-col items-center">
+                <p className="font-medium text-center">After Treatment</p>
+
+                {img_url_two && (
+                  <Image
+                    src={img_url_two ? img_url_two : '/images/case2.png'}
+                    alt="logo"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="w-[80%] h-[200px] my-3"
+                  />
+                )}
+              </div>
+            </div>
             <h2 className="lg;text-center lg:text-left text-[21px] text-custom-blue font-semibold lg:w-full w-[90%]">
               {name}
             </h2>
@@ -135,7 +157,7 @@ const EditCaseCard = ({
             <p className="text-left text-[12px] lg:text-[16px] font-light w-full">
               {description}
             </p>
-            <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5">
+            <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 w-full">
               {types?.map((data, dataIndex) => (
                 <div
                   className="bg-custom-blue-light flex items-center justify-center h-8 px-3 rounded-[7px]"

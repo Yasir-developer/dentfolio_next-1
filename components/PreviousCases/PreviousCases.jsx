@@ -62,7 +62,7 @@ const PreviousCases = () => {
       <h2 className="text-[25px] lg:text-[32px] text-black text-center font-medium mt-[70px]">
         MY PREVIOUS <span className=" text-custom-blue">CASES</span>
       </h2>
-      <div className="mb-10">
+      <div className="flex flex-col lg:flex-row  lg:flex-wrap mb-10 justify-center items-center gap-x-5">
         {/* <div> */}
         {!loader ? (
           cases?.length > 0 ? (
@@ -74,11 +74,13 @@ const PreviousCases = () => {
                   id={item._id}
                   name={item.case_title}
                   description={item.description}
-                  img_url={
-                    item?.cases_photo != null
-                      ? item?.cases_photo
-                      : '/images/case2.png'
-                  }
+                  // img_url={
+                  //   item?.cases_photo != null
+                  //     ? item?.cases_photo
+                  //     : '/images/case2.png'
+                  // }
+                  img_url={item.before_cases_photo}
+                  img_url_two={item.after_cases_photo}
                   types={item.caseType}
                   onDeleteClick={() => handleDeleteClick(item._id, index)}
                   // fetchCases={getCases}

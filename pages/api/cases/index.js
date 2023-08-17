@@ -30,47 +30,62 @@ if (process.env.CLOUDINARY_URL) {
 }
 
 handler.use(database);
-const fileFilter = (req, file, cb) => {
-  if (!file.mimetype.startsWith('image/')) {
-    // Reject a file if it is not an image
-    cb(new Error('Only images are allowed!'), false);
-  } else {
-    cb(null, true);
-  }
-};
+
 handler.post(
-  upload.single('cases_photo'),
+  // upload.single('before_cases_photo'),
+  // upload.single('after_cases_photo'),
+  upload.fields([
+    { name: 'before_cases_photo', maxCount: 1 },
+    { name: 'after_cases_photo', maxCount: 1 },
+  ]),
 
   ...auths,
 
   async (req, res) => {
-    // console.log(req.files, 'req.files cases ');
+    console.log(req.files.before_cases_photo, 'req.files cases ');
+    console.log(req.files.after_cases_photo, 'req.files cases ');
     //Multiple Work
-    // try {
-    //   if (req.files) {
-    //     const uploadPromises = req?.files?.cases_photo?.map((element) => {
-    //       return cloudinary.uploader.upload(element.path, {
-    //         width: 512,
-    //         height: 512,
-    //         crop: 'fill',
-    //       });
-    //     });
+    //     try {
+    //       if (req.files) {
+    //         const uploadPromises = req?.files?.cases_photo?.map((element) => {
+    //           return cloudinary.uploader.upload(element.path, {
+    //             width: 512,
+    //             height: 512,
+    //             crop: 'fill',
+    //           });
+    //         });
 
-    //     const results = await Promise.all(uploadPromises);
-    //     results.map((res) => {
-    //       savePath.push(res.secure_url);
-    //     });
+    //         const results = await Promise.all(uploadPromises);
+    //         results.map((res) => {
+    //           savePath.push(res.secure_url);
+    //         });
 
-    //   }
-
+    //       }
+    //     }catch(err){
+    // console.log(err)
+    //     };
+    console.log('hereeeee');
     let path;
+    let afterPath;
     // console.log(path, 'path========');
-    if (req.file) {
+    console.log(req.files, 'req.files');
+    // return;
+    if (req.files) {
       // console.log(req.file.path, 'req.file=======');
-      const image = await cloudinary.uploader.upload(req.file.path);
+      const image = await cloudinary.uploader.upload(
+        req.files.before_cases_photo[0].path
+      );
+      const imageTwo = await cloudinary.uploader.upload(
+        req.files.after_cases_photo[0].path
+      );
       path = image.secure_url;
+      afterPath = imageTwo.secure_url;
+      console.log(path, 'path');
+      console.log(afterPath, 'afterPath');
+
       // console.log(path, 'my path');
     }
+    // retsurn;
     // return;
     const cases = await insertCase(req.db, {
       case_title: req.body.title,
@@ -78,7 +93,8 @@ handler.post(
       caseType: req.body.tags,
       visibility: req.body.selectedOption == 'public' ? 1 : 0,
       dentistId: req.user._id,
-      cases_photo: path,
+      before_cases_photo: path,
+      after_cases_photo: afterPath,
     });
     // console.log(cases, 'after const =======');
     // savePath = [];
@@ -88,20 +104,40 @@ handler.post(
 );
 
 handler.patch(
-  upload.single('cases_photo'),
-
+  upload.fields([
+    { name: 'before_cases_photo', maxCount: 1 },
+    { name: 'after_cases_photo', maxCount: 1 },
+  ]),
   async (req, res) => {
     if (!req.body.id) {
       return res.status(400).json({ error: 'Case ID not found' });
     }
     let path;
-    console.log(req.file, 'path========');
-    if (req.file) {
-      console.log(req.file.path, 'req.file=======');
-      const image = await cloudinary.uploader.upload(req.file.path);
+    let afterPath;
+
+    // console.log(req.file, 'path========');
+    // if (req.file) {
+    //   console.log(req.file.path, 'req.file=======');
+    //   const image = await cloudinary.uploader.upload(req.file.path);
+    //   path = image.secure_url;
+    //   // console.log(path, 'my path');
+    //   // return;
+    // }
+
+    if (req.files) {
+      // console.log(req.file.path, 'req.file=======');
+      const image = await cloudinary.uploader.upload(
+        req.files.before_cases_photo[0].path
+      );
+      const imageTwo = await cloudinary.uploader.upload(
+        req.files.after_cases_photo[0].path
+      );
       path = image.secure_url;
+      afterPath = imageTwo.secure_url;
+      console.log(path, 'path');
+      console.log(afterPath, 'afterPath');
+
       // console.log(path, 'my path');
-      // return;
     }
     // else{
     //   return res.status(400).json({error:'Please Select an Image'})
@@ -121,13 +157,15 @@ handler.patch(
         ...(description && { description }),
         ...(tags && { caseType: tags }),
         ...(selectedOption && { visibility: selectedOption == 'public' }),
-        ...(req?.file?.path && { cases_photo: path }),
+        ...(req?.files.before_cases_photo[0].path && {
+          before_cases_photo: path,
+        }),
+        ...(req?.files?.after_cases_photo[0].path && {
+          after_cases_photo: afterPath,
+        }),
       }
-      // if(req?.file?.path){
-      //   cases_photo = req
-      // }
     );
-    // console.log(caseUpdate, 'caseUpdate');
+
     res.json({ caseUpdate });
   }
 );

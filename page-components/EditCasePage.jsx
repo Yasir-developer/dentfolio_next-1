@@ -13,22 +13,6 @@ import BlueButtons from '@/components/Buttons/BlueButtons';
 import { saveFiles } from 'redux/actions/cases';
 
 const EditCasePage = () => {
-  const caseTypes = [
-    {
-      cases_photo: ['/images/case2.png'],
-      case_title: 'Composite Bonding',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet consectetur adipiscing elit Curabitur congue sapien non efficitur sollicitudin.',
-      caseType: ['Aligners', 'Bridges', 'Implants', 'Root Canal Treatment'],
-    },
-    {
-      cases_photo: ['/images/case1.png'],
-      case_title: 'Bonding',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur congue, sapien non efficitur sollicitudin, ex risus semper diam, sed ornare libero urna ac leo sit amet consectetur adipiscing elit Curabitur congue sapien non efficitur sollicitudin.',
-      caseType: ['Aligners', 'Root Canal Treatment', 'Bridges', 'Implants'],
-    },
-  ];
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
@@ -41,10 +25,16 @@ const EditCasePage = () => {
   const [selectedOption, setSelectedOption] = useState();
   const [imageFiles, setImageFiles] = useState(null);
   const [pickedImage, setPickedImage] = useState(null);
+  const [afterPickedImage, setAfterPickedImage] = useState(null);
+  const [afterImageFiles, setAfterImageFiles] = useState(null);
+
   const [loader, setLoader] = useState(false);
   const [pageLoader, setPageLoader] = useState(false);
+
   const [id, setId] = useState(null);
   const uploadFileref = useRef(null);
+  const afteruploadFileref = useRef(null);
+
   useEffect(() => {
     getCases();
   }, []);
@@ -60,6 +50,10 @@ const EditCasePage = () => {
     uploadFileref.current.click();
   };
 
+  const afteruploadFileHandler = () => {
+    afteruploadFileref.current.click();
+  };
+
   const onImageChange = (e) => {
     const [file] = e.target.files;
     if (file) {
@@ -72,6 +66,22 @@ const EditCasePage = () => {
       // setImgObj(file);
       // console.log(file, 'my files');
       setPickedImage(URL.createObjectURL(file));
+      // console.log(pickedImage, 'pickedImage');
+    }
+  };
+
+  const onAfterImageChange = (e) => {
+    const [file] = e.target.files;
+    if (file) {
+      setAfterImageFiles(file);
+      // dispatch(saveFiles(file));
+      if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+        console.log('no file');
+        return toast.error('Please select valid image.');
+      }
+      // setImgObj(file);
+      // console.log(file, 'my files');
+      setAfterPickedImage(URL.createObjectURL(file));
       // console.log(pickedImage, 'pickedImage');
     }
   };
@@ -96,13 +106,15 @@ const EditCasePage = () => {
   ];
 
   const showModalHandler = (itemObj) => {
+    console.log(itemObj, 'itemObj =======');
     setShowModal(true);
     setCaseObj(itemObj);
     setTags(itemObj.caseType);
     setDescription(itemObj.description);
     setTitle(itemObj.case_title);
     setSelectedOption(itemObj.visibility ? 'public' : 'private');
-    setPickedImage(itemObj.cases_photo);
+    setPickedImage(itemObj.before_cases_photo);
+    setAfterPickedImage(itemObj.after_cases_photo);
     setId(itemObj._id);
   };
 
@@ -119,24 +131,12 @@ const EditCasePage = () => {
 
   const updateHandler = () => {
     // console.log(imageFiles, pickedImage, '----------');
-    if (!imageFiles && !pickedImage) {
-      toast.error('select image pls');
+    if (!imageFiles && !pickedImage && !afterImageFiles && !afterPickedImage) {
+      toast.error('select image please');
       return;
     }
     setLoader(true);
-    const finalData = {
-      id,
-      title,
-      description,
-      tags,
-      selectedOption,
-      imageFiles,
-    };
-    const options = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
+
     const formData = new FormData();
     formData.append('id', id);
     formData.append('dentistId', user?._id);
@@ -147,11 +147,12 @@ const EditCasePage = () => {
     formData.append('tags', JSON.stringify(tags));
     formData.append('selectedOption', selectedOption);
     // if (imageFiles && imageFiles.length > 0) {
-    formData.append('cases_photo', imageFiles ? imageFiles : '');
-    // }
-    // formData.append('cases_photo', imageFiles);
-    // : formData.append('cases_photo', pickedImage);
-    // console.log(finalData);
+    formData.append('before_cases_photo', imageFiles ? imageFiles : '');
+    formData.append(
+      'after_cases_photo',
+      afterImageFiles ? afterImageFiles : ''
+    );
+
     axios
       .patch(`${server}/api/cases`, formData, {
         headers: {
@@ -223,8 +224,9 @@ const EditCasePage = () => {
     axios
       .get(`${server}/api/cases`)
       .then(function (response) {
-        // console.log(response, 'getCase');
+        console.log(response, 'getCase');
         setCases(response.data.cases);
+
         setPageLoader(false);
       })
       .catch(function (error) {
@@ -317,38 +319,86 @@ const EditCasePage = () => {
                   isMulti
                 />
               </div>
-              <div className="mt-10">
-                <p className="text-[18px] font-semibold">Upload Photo:</p>
-                {pickedImage ? (
-                  <Image
-                    src={pickedImage}
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="max-w-[130px] w-full h-full"
-                    alt="logo"
-                  />
-                ) : (
-                  <></>
-                )}
-                <input
-                  ref={uploadFileref}
-                  onChange={(e) => onImageChange(e)}
-                  type="file"
-                  className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] text-[14px] bg-custom-dashboard-bg hidden"
-                  placeholder="Upload Photos"
-                />
-                <button
-                  type="button"
-                  className="py-2 px-8 bg-[#D4D4D4] rounded-[7px] h-12 my-5"
-                  onClick={() => uploadFileHandler()}
-                >
-                  <p className="text-left text-[16px] font-semibold">
-                    Select Image
+              <div className="flex w-full justify-start">
+                <div className="mt-5 my-3">
+                  <p className="text-[18px] font-semibold">
+                    {pickedImage == '' ? 'Upload Photo:' : 'Before'}
                   </p>
-                </button>
+                  {pickedImage ? (
+                    <div className="h-[200px] flex justify-center items-center">
+                      <Image
+                        src={pickedImage}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="max-w-[130px] w-full"
+                        alt="logo"
+                      />
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  <input
+                    ref={uploadFileref}
+                    onChange={(e) => onImageChange(e)}
+                    type="file"
+                    className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] text-[14px] bg-custom-dashboard-bg hidden"
+                    placeholder="Upload Photos"
+                  />
+                  <button
+                    type="button"
+                    className="py-2 px-8 bg-[#D4D4D4] rounded-[7px] h-12 my-5"
+                    onClick={() => uploadFileHandler()}
+                  >
+                    <p className="text-left lg:text-[16px] text-[14px] lg:font-semibold font-medium">
+                      {' '}
+                      Select Image
+                    </p>
+                  </button>
+                </div>
+
+                <div className="mt-5 mx-5">
+                  <p className="text-[18px] font-semibold">
+                    {afterPickedImage == '' ? 'Upload Photo:' : 'After'}
+                  </p>
+                  {afterPickedImage ? (
+                    <div className="h-[200px] flex justify-center items-center">
+                      <Image
+                        src={afterPickedImage}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className="max-w-[130px] w-full"
+                        alt="logo"
+                      />
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  <input
+                    ref={afteruploadFileref}
+                    onChange={(e) => onAfterImageChange(e)}
+                    type="file"
+                    className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] text-[14px] bg-custom-dashboard-bg hidden"
+                    placeholder="Upload Photos"
+                  />
+                  <button
+                    type="button"
+                    className="py-2 px-8 bg-[#D4D4D4] rounded-[7px] h-12 my-5"
+                    onClick={() => afteruploadFileHandler()}
+                  >
+                    <p className="text-left lg:text-[16px] text-[14px] lg:font-semibold font-medium">
+                      Select Image
+                    </p>
+                  </button>
+                </div>
               </div>
-              <BlueButtons buttonText={'Save'} loading={loader} />
+              <BlueButtons
+                buttonText={'Save'}
+                loading={loader}
+                className={'mb-5'}
+              />
+
               {/* <button
                 type="submit"
                 className="bg-custom-blue hover:bg-blue-600 text-white font-poppins font-medium py-2 mt-5 mb-7 px-[45px] rounded lg:justify-end text-sm"
@@ -360,6 +410,7 @@ const EditCasePage = () => {
               </button> */}
             </form>
           </div>
+
           {/* Form fields and buttons */}
         </div>
       </div>
@@ -369,7 +420,7 @@ const EditCasePage = () => {
   return (
     <>
       {showModal && conversationModal(caseObj)}
-      <div className="items-center justify-center h-full">
+      <div className="items-center justify-center w-full h-full">
         <div className="lg:my-8 my-5 mx-auto w-[90%]">
           <h1 className="lg:text-[32px] text-[28px] lg:font-semibold font-medium">
             Edit Case
@@ -378,7 +429,7 @@ const EditCasePage = () => {
           <p className="mt-2 text-[16px] font-light mb-5">Update Information</p>
         </div>
         <div
-          className={`lg:py-5 py-2 flex w-[90%] border-custom-grey rounded-[7px] flex-col items-center mx-auto mb-8 ${
+          className={`lg:py-5 py-2 flex flex-row flex-wrap w-[90%] border-custom-grey rounded-[7px] gap-y-10 mx-auto mb-8 ${
             pageLoader ? 'justify-center h-full' : 'justify-start'
           }`}
         >
@@ -398,18 +449,22 @@ const EditCasePage = () => {
             </div>
           ) : (
             cases.map((item, index) => (
-              <EditCaseCard
-                key={index}
-                casesData={item}
-                id={item._id}
-                name={item.case_title}
-                description={item.description}
-                img_url={item.cases_photo}
-                types={item.caseType}
-                onDeleteClick={() => handleDeleteClick(item._id, index)}
-                // fetchCases={getCases}
-                showModalProp={() => showModalHandler(item)}
-              />
+              <>
+                {console.log(item, 'tettet')}
+                <EditCaseCard
+                  key={index}
+                  casesData={item}
+                  id={item._id}
+                  name={item.case_title}
+                  description={item.description}
+                  img_url={item.before_cases_photo}
+                  img_url_two={item.after_cases_photo}
+                  types={item.caseType}
+                  onDeleteClick={() => handleDeleteClick(item._id, index)}
+                  // fetchCases={getCases}
+                  showModalProp={() => showModalHandler(item)}
+                />
+              </>
             ))
           )}
         </div>

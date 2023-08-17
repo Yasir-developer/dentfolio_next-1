@@ -39,7 +39,14 @@ export async function getCases(db, { dentistId }) {
 export async function updateCaseById(
   db,
   id,
-  { case_title, description, visibility, caseType, cases_photo }
+  {
+    case_title,
+    description,
+    visibility,
+    caseType,
+    before_cases_photo,
+    after_cases_photo,
+  }
 ) {
   // console.log(cases_photo,'cases_photo')
 
@@ -54,8 +61,11 @@ export async function updateCaseById(
     visibility,
   };
   // console.log(cases_photo, 'cases_photo case.js');
-  if (cases_photo !== undefined) {
-    updateData.cases_photo = cases_photo;
+  if (before_cases_photo !== undefined) {
+    updateData.before_cases_photo = before_cases_photo;
+  }
+  if (after_cases_photo !== undefined) {
+    updateData.after_cases_photo = after_cases_photo;
   }
   if (caseType) {
     updateData.caseType = JSON.parse(caseType);

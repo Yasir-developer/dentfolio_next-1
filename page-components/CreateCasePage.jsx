@@ -1,5 +1,7 @@
 import BlueButtons from '@/components/Buttons/BlueButtons';
 import AuthInput from '@/components/Inputs/AuthInput';
+import { formatBytes } from '@/lib/user';
+
 import Router from 'next/router';
 import { server } from '../config';
 import React, { useRef, useState, useEffect } from 'react';
@@ -19,30 +21,39 @@ const CreateCasePage = () => {
   const [description, setDescription] = useState('');
   const [loader, setLoader] = useState(false);
   const [imageFiles, setImageFiles] = useState(null);
+  const [afterImageFiles, setAfterImageFiles] = useState(null);
+
   const [pickedImage, setPickedImage] = useState('');
 
+  const [afterPickedImage, setAfterPickedImage] = useState('');
   const [tags, setTags] = useState([]);
   const uploadFileref = useRef(null);
+  const afteruploadFileref = useRef(null);
 
   const options = [
     { value: 'Aligners', label: 'Aligners' },
-    { value: 'Bridges', label: 'Bridges' },
+    // { value: 'Bridges', label: 'Bridges' },
     { value: 'Composite Bonding', label: 'Composite Bonding' },
     { value: 'Crowns', label: 'Crowns ' },
     { value: 'Dentures', label: 'Dentures ' },
     { value: 'Implants', label: 'Implants ' },
-    { value: 'Invisalign', label: 'Invisalign ' },
-    { value: 'Onlays', label: 'Onlays' },
-    { value: 'Orthodontics', label: 'Orthodontics' },
-    { value: 'Periodontal Treatment', label: 'Periodontal Treatment' },
-    { value: 'Restorations', label: 'Restorations' },
-    { value: ' Root canal treatment', label: ' Root canal treatment' },
-    { value: 'Smile Makeover', label: 'Smile Makeover' },
+    // { value: 'Invisalign', label: 'Invisalign ' },
+    // { value: 'Onlays', label: 'Onlays' },
+    // { value: 'Orthodontics', label: 'Orthodontics' },
+    // { value: 'Periodontal Treatment', label: 'Periodontal Treatment' },
+    // { value: 'Restorations', label: 'Restorations' },
+    // { value: ' Root canal treatment', label: ' Root canal treatment' },
+    // { value: 'Smile Makeover', label: 'Smile Makeover' },
     { value: 'Veneers', label: 'Veneers' },
     { value: 'Whitening', label: 'Whitening' },
 
     // Add more options as needed
   ];
+
+  // useEffect(() => {
+  //   console.log(pickedImage, 'picked use');
+  //   console.log(afterPickedImage, 'after picked use');
+  // }, [pickedImage, afterPickedImage]);
 
   const handleChange = (tags) => {
     setTags(tags);
@@ -53,7 +64,9 @@ const CreateCasePage = () => {
     if (file) {
       setImageFiles(file);
       // console.log(formatBytes(file.size), "formatBytes(file.size)");
-      // if (parseFloat(formatBytes(file.size)) > 5) return toast.error('File can not be larger than 5 mb')
+      if (parseFloat(formatBytes(file.size)) > 5000) {
+        return toast.error('File can not be larger than 5 mb');
+      }
       if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
         // console.log('no file');
         return toast.error('Please select valid image.');
@@ -64,16 +77,40 @@ const CreateCasePage = () => {
       // console.log(pickedImage, 'pickedImage');
     }
   };
+  const onAfterImageChange = (e) => {
+    // const files = Array.from(e.target.files);
+    const [file] = e.target.files;
+    if (file) {
+      setAfterImageFiles(file);
+      // console.log(formatBytes(file.size), "formatBytes(file.size)");
+      if (parseFloat(formatBytes(file.size)) > 5000) {
+        return toast.error('File can not be larger than 5 mb');
+      }
+      if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+        // console.log('no file');
+        return toast.error('Please select valid image.');
+      }
+      // setImgObj(file);
+      // console.log(file, 'my files');
+      setAfterPickedImage(URL.createObjectURL(file));
+      // console.log(pickedImage, 'pickedImage');
+    }
+  };
 
   const emptFields = () => {
     setTitle('');
     setDescription('');
     setTags([]);
     setPickedImage('');
+    setAfterPickedImage('');
+    setAfterImageFiles(null);
     setImageFiles(null);
   };
   const uploadFileHandler = () => {
     uploadFileref.current.click();
+  };
+  const afteruploadFileHandler = () => {
+    afteruploadFileref.current.click();
   };
 
   const handleRadioBtn = (option) => {
@@ -87,6 +124,9 @@ const CreateCasePage = () => {
       return;
     } else if (pickedImage == '') {
       toast.error('Please select an Image');
+      return;
+    } else if (afterPickedImage == '') {
+      toast.error('Please select an After treatment Image');
       return;
     }
     setLoader(true);
@@ -111,7 +151,9 @@ const CreateCasePage = () => {
 
     formData.append('tags', caseTypeJSON);
     formData.append('selectedOption', selectedOption);
-    formData.append('cases_photo', imageFiles);
+
+    formData.append('before_cases_photo', imageFiles);
+    formData.append('after_cases_photo', afterImageFiles);
 
     axios
       .post(`${server}/api/cases`, formData, options)
@@ -219,38 +261,77 @@ const CreateCasePage = () => {
                 </div>
               </div>
             </div>
-
-            <div className="mt-10">
-              <p className="text-[18px] font-semibold">Upload Photo:</p>
-              {pickedImage ? (
-                <Image
-                  src={pickedImage}
-                  width={200}
-                  height={200}
-                  className="rounded-[7px]"
-                  alt="logo"
-                />
-              ) : (
-                <></>
-              )}
-              <input
-                ref={uploadFileref}
-                onChange={(e) => onImageChange(e)}
-                type="file"
-                className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] text-[14px] bg-custom-dashboard-bg hidden"
-                placeholder="Upload Photos"
-              />
-              <button
-                type="button"
-                className="py-2 px-8 bg-[#D4D4D4] rounded-[7px] h-12 mt-5"
-                onClick={() => uploadFileHandler()}
-              >
-                <p className="text-left text-[16px] font-semibold">
-                  Select Image
+            <div className="flex gap-x-10">
+              <div className="mt-10">
+                <p className="text-[18px] font-semibold">
+                  Before Upload Photo:
                 </p>
-              </button>
-            </div>
+                {pickedImage ? (
+                  <div className="h-[300px] flex justify-center items-center">
+                    <Image
+                      src={pickedImage}
+                      width={200}
+                      height={200}
+                      className="rounded-[7px]"
+                      alt="logo"
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
+                <input
+                  ref={uploadFileref}
+                  onChange={(e) => onImageChange(e)}
+                  type="file"
+                  name="before_cases_photo"
+                  className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] text-[14px] bg-custom-dashboard-bg hidden"
+                  placeholder="Upload Photos"
+                />
+                <button
+                  type="button"
+                  className="py-2 px-8 bg-[#D4D4D4] rounded-[7px] h-12 mt-5"
+                  onClick={() => uploadFileHandler()}
+                >
+                  <p className="text-left text-[16px] font-semibold">
+                    Select Image
+                  </p>
+                </button>
+              </div>
 
+              <div className="mt-10">
+                <p className="text-[18px] font-semibold">After Upload Photo:</p>
+                {afterPickedImage ? (
+                  <div className="h-[300px] flex justify-center items-center">
+                    <Image
+                      src={afterPickedImage}
+                      width={200}
+                      height={200}
+                      className="rounded-[7px]"
+                      alt="logo"
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
+                <input
+                  ref={afteruploadFileref}
+                  onChange={(e) => onAfterImageChange(e)}
+                  type="file"
+                  name="after_cases_photo"
+                  className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] text-[14px] bg-custom-dashboard-bg hidden"
+                  placeholder="Upload Photos"
+                />
+                <button
+                  type="button"
+                  className="py-2 px-8 bg-[#D4D4D4] rounded-[7px] h-12 mt-5"
+                  onClick={() => afteruploadFileHandler()}
+                >
+                  <p className="text-left text-[16px] font-semibold">
+                    Select Image
+                  </p>
+                </button>
+              </div>
+            </div>
             <BlueButtons
               loading={loader}
               buttonText={'Save'}
