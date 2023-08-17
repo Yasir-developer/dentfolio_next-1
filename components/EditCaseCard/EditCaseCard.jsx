@@ -58,7 +58,7 @@ const EditCaseCard = ({
   };
 
   return (
-    <div className="lg:w-[45%] w-full mt-5 mx-2 border rounded-[7px] border-[#F6EBEB]">
+    <div className="lg:w-[45%] w-full mx-2 border rounded-[7px] border-[#F6EBEB]">
       <div className="">
         {/* <div> */}
         <div className=" relative flex flex-col px-3" key={id}>
