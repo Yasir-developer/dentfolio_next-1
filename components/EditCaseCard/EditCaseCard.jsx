@@ -60,7 +60,7 @@ const EditCaseCard = ({
 
   return (
     <div
-      className={`lg:w-[50%] w-full mx-2 my-5 border rounded-[7px] border-[#F6EBEB] ${className}`}
+      className={`lg:w-[50%] w-full lg:mx-2 my-5 border rounded-[7px] border-[#F6EBEB] ${className}`}
     >
       <div className="">
         {/* <div> */}
