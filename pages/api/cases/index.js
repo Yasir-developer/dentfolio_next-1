@@ -73,10 +73,20 @@ handler.post(
     if (req.files) {
       // console.log(req.file.path, 'req.file=======');
       const image = await cloudinary.uploader.upload(
-        req.files.before_cases_photo[0].path
+        req.files.before_cases_photo[0].path,
+        {
+          width: 512,
+          height: 512,
+          crop: 'fill',
+        }
       );
       const imageTwo = await cloudinary.uploader.upload(
-        req.files.after_cases_photo[0].path
+        req.files.after_cases_photo[0].path,
+        {
+          width: 512,
+          height: 512,
+          crop: 'fill',
+        }
       );
       path = image.secure_url;
       afterPath = imageTwo.secure_url;
@@ -127,10 +137,20 @@ handler.patch(
     if (req.files) {
       // console.log(req.file.path, 'req.file=======');
       const image = await cloudinary.uploader.upload(
-        req.files.before_cases_photo[0].path
+        req.files.before_cases_photo[0].path,
+        {
+          width: 512,
+          height: 512,
+          crop: 'fill',
+        }
       );
       const imageTwo = await cloudinary.uploader.upload(
-        req.files.after_cases_photo[0].path
+        req.files.after_cases_photo[0].path,
+        {
+          width: 512,
+          height: 512,
+          crop: 'fill',
+        }
       );
       path = image.secure_url;
       afterPath = imageTwo.secure_url;

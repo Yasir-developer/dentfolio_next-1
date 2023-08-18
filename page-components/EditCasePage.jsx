@@ -429,9 +429,12 @@ const EditCasePage = () => {
           <p className="mt-2 text-[16px] font-light mb-5">Update Information</p>
         </div>
         <div
-          className={`lg:py-5 py-2 flex flex-row flex-wrap w-[90%] border-custom-grey rounded-[7px] mx-auto mb-8 ${
+          className={`lg:py-5 py-2 flex flex-col max-w-[1140px] min-h-[500px] flex-wrap w-[90%] border-custom-grey rounded-[7px] mx-auto mb-8  ${
             pageLoader ? 'justify-center h-full' : 'justify-start'
           }`}
+          style={{
+            maxHeight: (cases?.length * 550) / 2,
+          }}
         >
           {pageLoader ? (
             <div aria-label="Loading..." role="status">
@@ -463,6 +466,9 @@ const EditCasePage = () => {
                   onDeleteClick={() => handleDeleteClick(item._id, index)}
                   // fetchCases={getCases}
                   showModalProp={() => showModalHandler(item)}
+                  className={`flex-child flex-masonry-child flex-masonry-child-${
+                    index + 1
+                  }`}
                 />
               </>
             ))

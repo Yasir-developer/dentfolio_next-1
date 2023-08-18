@@ -12,6 +12,7 @@ const EditCaseCard = ({
   types,
   showModalProp,
   onDeleteClick,
+  className,
   caseData,
   fetchCases,
   hideEdit = false,
@@ -58,7 +59,9 @@ const EditCaseCard = ({
   };
 
   return (
-    <div className="lg:w-[45%] w-full mx-2 my-5 border rounded-[7px] border-[#F6EBEB]">
+    <div
+      className={`lg:w-[50%] w-full mx-2 my-5 border rounded-[7px] border-[#F6EBEB] ${className}`}
+    >
       <div className="">
         {/* <div> */}
         <div className=" relative flex flex-col px-3" key={id}>

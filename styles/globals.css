@@ -310,6 +310,30 @@ a.react-tagsinput-remove {
   display: block;
   background-size: cover;
 }
+
+/*  */
+
+.flex-masonry-child:nth-child(3n+1) {
+  order: 1;
+}
+.flex-masonry-child:nth-child(3n+2) {
+  order: 2;
+}
+.flex-masonry-child:nth-child(3n) {
+  order: 3;
+}
+/* .flex-masonry-child-1 { height: 300px; }
+.flex-masonry-child-2 { height: 400px; }
+.flex-masonry-child-3 { height: 450px; }
+.flex-masonry-child-4 { height: 350px; }
+.flex-masonry-child-5 { height: 320px; }
+.flex-masonry-child-6 { height: 310px; }
+.flex-masonry-child-7 { height: 380px; }
+.flex-masonry-child-8 { height: 390px; }
+.flex-masonry-child-9 { height: 290px; }
+.flex-masonry-child-10 { height: 305px; }
+.flex-masonry-child-11 { height: 300px; }
+.flex-masonry-child-12 { height: 270px; } */
 @media screen and (max-width:767px){
   .slick-slider.customSlider .slick-slide>div {
       text-align: center;

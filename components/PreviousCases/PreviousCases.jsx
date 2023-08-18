@@ -62,7 +62,12 @@ const PreviousCases = () => {
       <h2 className="text-[25px] lg:text-[32px] text-black text-center font-medium mt-[70px]">
         MY PREVIOUS <span className=" text-custom-blue">CASES</span>
       </h2>
-      <div className="flex flex-col lg:flex-row lg:flex-wrap mb-10 w-full gap-x-[6%]">
+      <div
+        className={`flex flex-col lg:flex-wrap mb-10 max-w-[1140px] mx-auto min-h-[500px]`}
+        style={{
+          maxHeight: (cases?.length * 500) / 2,
+        }}
+      >
         {/* <div> */}
         {!loader ? (
           cases?.length > 0 ? (
@@ -74,6 +79,9 @@ const PreviousCases = () => {
                   id={item._id}
                   name={item.case_title}
                   description={item.description}
+                  className={`flex-child flex-masonry-child flex-masonry-child-${
+                    index + 1
+                  }`}
                   // img_url={
                   //   item?.cases_photo != null
                   //     ? item?.cases_photo
