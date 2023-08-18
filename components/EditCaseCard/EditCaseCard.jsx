@@ -69,7 +69,9 @@ const EditCaseCard = ({
           <div className="flex flex-wrap lg:px-5 mt-5 pb-5 items-center justify-center w-full flex-row gap-y-3">
             <div className="flex flex-row w-full">
               <div className="flex flex-col justify-between items-center w-[50%]">
-                <p className="font-medium text-center">Before Treatment</p>
+                <p className="lg:font-medium font-normal lg:text-[14px] text-[12px] text-center">
+                  Before Treatment
+                </p>
                 <div className="flex justify-center items-center">
                   {img_url && (
                     <Image
@@ -84,7 +86,9 @@ const EditCaseCard = ({
                 </div>
               </div>
               <div className="flex flex-col justify-between items-center w-[50%]">
-                <p className="font-medium text-center">After Treatment</p>
+                <p className="lg:font-medium font-normal lg:text-[14px] text-[12px] text-center">
+                  After Treatment
+                </p>
                 <div className=" flex justify-center items-center">
                   {img_url_two && (
                     <Image
