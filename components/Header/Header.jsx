@@ -23,13 +23,13 @@ const AppHeader = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     dispatch(logoutUser());
-    router.replace('/dentist/dentist-plan');
+    router.replace('/dentist-plan');
   };
   // console.log(router, "router");
   return (
     <>
-      {router.pathname !== '/dentist/login' &&
-      router.pathname !== '/dentist/sign-up' &&
+      {router.pathname !== '/login' &&
+      router.pathname !== '/sign-up' &&
       router.pathname !== '/dentist/edit-case' &&
       router.pathname !== '/dentist/view-profile' &&
       router.pathname !== '/dentist/create-case' &&
@@ -50,7 +50,7 @@ const AppHeader = () => {
               aria-label="Global"
             >
               <div className="flex lg:flex-1">
-                <Link href="/" className="-m-1.5 p-1.5" passHref>
+                <Link href={user ? '#' : '/'} className="-m-1.5 p-1.5" passHref>
                   <img className="h-8 w-auto" src={'/images/logo.png'} alt="" />
                 </Link>
               </div>
@@ -76,7 +76,11 @@ const AppHeader = () => {
 
                         <h2
                           className="hidden lg:block text-custom-blue text-[16px] font-semibold px-2 cursor-pointer"
-                          onClick={() => router.push('/dentist/view-profile')}
+                          onClick={() => {
+                            user.role == 0
+                              ? router.push('/dentist/view-profile')
+                              : router.push('/admin/overview');
+                          }}
                         >
                           {user?.displayName}
                           {/* Dylan Taylor */}
@@ -132,7 +136,7 @@ const AppHeader = () => {
                   <div className="lg:flex lg:gap-x-2">
                     <button
                       className="bg-custom-blue hover:bg-blue-600 text-white font-poppins font-medium py-2 px-[25px] rounded lg:justify-end text-sm"
-                      onClick={() => router.push('/dentist/login')}
+                      onClick={() => router.push('/login')}
                     >
                       LOGIN
                     </button>
@@ -141,9 +145,7 @@ const AppHeader = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         router.push(
-                          router.pathname == '/'
-                            ? '/dentist/dentist-plan'
-                            : '/dentist/sign-up'
+                          router.pathname == '/' ? '/dentist-plan' : '/sign-up'
                         );
                       }}
                       className="bg-white border border-custom-blue text-blue-500 font-poppins font-medium py-2 px-4 rounded w-139 text-sm hidden lg:block"

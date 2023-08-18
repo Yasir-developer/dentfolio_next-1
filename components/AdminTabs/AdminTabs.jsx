@@ -27,9 +27,13 @@ import BillingHistory from '@/page-components/BillingHistory';
 import OverviewPage from '@/page-components/OverviewPage';
 import AdminDentistPage from '@/page-components/AdminDentistPage';
 import RevenuePage from '@/page-components/RevenuePage';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from 'redux/actions/auth';
 
 const AdminTabs = (props) => {
   // console.log(props, "props");
+  const dispatch = useDispatch();
+
   const router = useRouter();
   // console.log(router, "routrer.quey");
   const [activeTab, setActiveTab] = useState('editProfile');
@@ -43,6 +47,12 @@ const AdminTabs = (props) => {
     } else {
       document.querySelector('body').classList.remove('bodyStyle');
     }
+  };
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    dispatch(logoutUser());
+    router.replace('/dentist-plan');
   };
 
   return (
@@ -188,7 +198,7 @@ const AdminTabs = (props) => {
               'bg-white fixed my-[40px] mx-[20px] !text-custom-blue px-[50px] text-[16px] font-medium'
             }
             buttonText={'Sign Out'}
-            onClick={() => router.push('/dentist/dentist-plan')}
+            onClick={(e) => handleLogout(e)}
           />
         </div>
         <div className="bg-gray-100 lg:w-[85%] w-full flex flex-col justify-between">

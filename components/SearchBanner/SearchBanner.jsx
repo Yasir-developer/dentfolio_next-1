@@ -129,7 +129,7 @@ const SearchBanner = () => {
 
   return (
     <div
-      className="lg:bg-banner-image bg-banner-image-mobile bg-cover h-[440px] lg:h-[600px] flex justify-center items-center"
+      className="lg:bg-banner-image bg-banner-image-mobile bg-cover h-[440px] min-[1500px]:h-[600px] flex justify-center items-center"
       style={{
         // backgroundImage: `url(/images/Dentfoilo-BG.jpg)`,
         backgroundRepeat: 'no-repeat',

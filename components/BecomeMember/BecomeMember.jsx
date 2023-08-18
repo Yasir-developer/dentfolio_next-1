@@ -70,7 +70,7 @@ const BecomeMember = () => {
               sed ornare.
             </h3>
             <button
-              onClick={() => Router.push('/dentist/dentist-plan')}
+              onClick={() => Router.push('/dentist-plan')}
               className="bg-transparent border font-medium  flex items-center justify-center lg:text-left text-center border-white text-white mx-auto lg:ml-0 py-2 px-8 md:px-12 lg:px-16 lg:mt-10 mt-5 rounded text-sm"
             >
               Find Out More

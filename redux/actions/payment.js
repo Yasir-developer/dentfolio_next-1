@@ -10,7 +10,7 @@ export const PaymentMethods = (data) => {
   // const area = localStorage.getItem("area");
   // console.log(data, "area area");
   var config = {
-    url: `${server}/api/paymentMethods/${data.id}`,
+    url: `${server}/api/paymentMethods/${data?.id}`,
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -18,22 +18,23 @@ export const PaymentMethods = (data) => {
   };
 
   return (dispatch) => {
-    axios(config).then((res) => {
-      // console.log(res, "Category response");
+    axios(config)
+      .then((res) => {
+        // console.log(res, "Category response");
 
-      if (res.status == 200) {
-        // console.log("kasdmaskjdsak");
-        // console.log(
-        //   res.data.paymentMethods.data,
-        //   'res.data.paymentMethods.data'
-        // );
-        PaymentMethodSuccess(dispatch, res.data.paymentMethods.data);
-      } else {
-        // console.log(res.data.message, "res.data.messageres.data.message");
-        // CategoryFail(dispatch, res.data.message);
-      }
-    });
-    // .catch((e) => CategoryFail(dispatch, e.message));
+        if (res.status == 200) {
+          // console.log("kasdmaskjdsak");
+          // console.log(
+          //   res.data.paymentMethods.data,
+          //   'res.data.paymentMethods.data'
+          // );
+          PaymentMethodSuccess(dispatch, res.data.paymentMethods.data);
+        } else {
+          // console.log(res.data.message, "res.data.messageres.data.message");
+          // CategoryFail(dispatch, res.data.message);
+        }
+      })
+      .catch((e) => CategoryFail(dispatch, e.message));
   };
 };
 

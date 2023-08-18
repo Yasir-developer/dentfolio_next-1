@@ -146,10 +146,12 @@ const PreviousCases = () => {
               );
             })
           ) : (
-            <p className="text-center">No Cases found</p>
+            <div className="w-full">
+              <p className="text-center my-5">No Cases found</p>
+            </div>
           )
         ) : (
-          <>
+          <div className="w-full">
             {' '}
             <div aria-label="Loading..." role="status">
               <svg
@@ -167,7 +169,7 @@ const PreviousCases = () => {
               </svg>
               {/* </div> */}
             </div>
-          </>
+          </div>
         )}
       </div>
       {/* </div> */}

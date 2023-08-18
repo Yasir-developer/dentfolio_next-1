@@ -72,8 +72,8 @@ const Footer = () => {
     //   {/* <div className='order bw-[200px] justify-center'></div> */}
     // </footer>
     <>
-      {router.pathname !== '/dentist/login' &&
-      router.pathname !== '/dentist/sign-up' &&
+      {router.pathname !== '/login' &&
+      router.pathname !== '/sign-up' &&
       router.pathname !== '/dentist/edit-case' &&
       router.pathname !== '/dentist/view-profile' &&
       router.pathname !== '/dentist/create-case' &&

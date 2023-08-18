@@ -48,7 +48,7 @@ const DentistTabs = (props) => {
   const handleLogout = async (e) => {
     e.preventDefault();
     dispatch(logoutUser());
-    router.replace('/dentist/dentist-plan');
+    router.replace('/dentist-plan');
   };
   return (
     <div className="flex flex-wrap h-full">

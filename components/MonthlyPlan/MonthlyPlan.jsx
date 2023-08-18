@@ -40,7 +40,7 @@ const MonthlyPlan = () => {
             className={'my-5 text-[14px] lg:text-[18px] font-medium'}
             onClick={(e) => {
               e.preventDefault();
-              Router.push('/dentist/sign-up');
+              Router.push('/sign-up');
             }}
           />
         )}

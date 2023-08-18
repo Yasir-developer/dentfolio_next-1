@@ -67,7 +67,7 @@ const DentistMemberBanner = () => {
                 onClick={(e) => {
                   e.preventDefault();
 
-                  Router.push('/dentist/sign-up');
+                  Router.push('/sign-up');
                 }}
                 // className="lg:!px-8  mx-auto"
                 // btnStyle={ margin: "20px" }

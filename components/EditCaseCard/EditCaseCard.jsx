@@ -17,8 +17,8 @@ const EditCaseCard = ({
   hideEdit = false,
   hideDelete = false,
 }) => {
-  console.log(img_url, 'img_url');
-  console.log(img_url_two, 'img_url_two');
+  // console.log(img_url, 'img_url');
+  // console.log(img_url_two, 'img_url_two');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

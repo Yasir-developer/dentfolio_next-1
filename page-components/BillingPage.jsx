@@ -82,15 +82,23 @@ const BillingPage = (props) => {
 
   const handleDeleteClick = async (paymentid, index) => {
     data.splice(index, 1);
-    await axios.delete(`${server}/api/paymentMethods/${paymentid}`, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    toast.success('Payment Method Removed Successfully');
-    setData((prevCases) =>
-      prevCases.filter((methodItem) => methodItem.id !== paymentid)
-    );
-    setLoader(false);
+    await axios
+      .delete(`${server}/api/paymentMethods/${paymentid}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .then((res) => {
+        if (res.status == 200) {
+          toast.success('Payment Method Removed Successfully');
+          setData((prevCases) =>
+            prevCases.filter((methodItem) => methodItem.id !== paymentid)
+          );
+          setLoader(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err, 'rerer');
+      });
   };
   return (
     <>

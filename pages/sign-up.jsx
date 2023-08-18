@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import logo from '../../public/images/loginLogo.svg';
-import logoWhite from '../../public/images/logoWhite.png';
-import logotwo from '../../public/images/logo.png';
+import logo from '../public/images/loginLogo.svg';
+import logoWhite from '../public/images/logoWhite.png';
+import logotwo from '../public/images/logo.png';
 import BlueButtons from '@/components/Buttons/BlueButtons';
 import AuthInput from '@/components/Inputs/AuthInput';
 import Router, { useRouter } from 'next/router';
@@ -17,7 +17,7 @@ import { fetchUser } from 'redux/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { server } from 'config';
 import axios from 'axios';
-import { getAddressSuggestions, getAddressData } from '../../lib/googleMaps';
+import { getAddressSuggestions, getAddressData } from '../lib/googleMaps';
 import { Elements, PaymentElement } from '@stripe/react-stripe-js';
 import CheckoutForm from '@/page-components/Checkout/CheckoutForm';
 import { loadStripe } from '@stripe/stripe-js';
@@ -395,7 +395,7 @@ const Signup = () => {
                       <a
                         href="#"
                         className="text-custom-blue underline"
-                        onClick={() => Router.push('/dentist/login')}
+                        onClick={() => Router.push('/login')}
                       >
                         Sign in
                       </a>

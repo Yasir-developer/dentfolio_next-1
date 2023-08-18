@@ -396,9 +396,9 @@ const SignUp = () => {
                   <p className="text-sm text-[#858585]">
                     Already have an account?{' '}
                     <a
-                      href="#"
+                      // href="#"
                       className="text-custom-blue underline"
-                      onClick={() => Router.push('/dentist/login')}
+                      onClick={() => Router.push('/login')}
                     >
                       Sign in
                     </a>

@@ -34,8 +34,9 @@ const DashboardHeader = ({ menuToggler }) => {
   }, []);
   const handleLogout = async (e) => {
     e.preventDefault();
+
     dispatch(logoutUser());
-    Router.replace('/dentist/dentist-plan');
+    Router.replace('/dentist-plan');
   };
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -50,7 +51,7 @@ const DashboardHeader = ({ menuToggler }) => {
         <Image
           src={logoWhite}
           className="mx-auto max-w-[173px] cursor-pointer"
-          onClick={() => Router.push('/dentist/dentist-plan')}
+          onClick={() => Router.push('/dentist-plan')}
           alt="profile image"
         />
 

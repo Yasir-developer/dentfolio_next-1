@@ -27,11 +27,22 @@ const Layout = ({ children }) => {
         }
       }
       if (user && user.role == 1) {
-        console.log(path.split('/')[1], 'splitted path');
+        console.log(path.split('/')[1], 'splitted path====');
         switch (path.split('/')[1]) {
           case 'dentist':
             toast.error('Unauthorized path');
             router.back();
+            break;
+        }
+      }
+
+      if (!user) {
+        console.log(path.split('/')[2], 'splitted path');
+        switch (path.split('/')[1] || path.split('/')[2]) {
+          case 'dentist':
+          case 'admin':
+            // toast.error('Unauthorized path');
+            router.push('/dentist-plan');
             break;
         }
       }

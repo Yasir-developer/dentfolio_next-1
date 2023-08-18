@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import logo from '../../public/images/loginLogo.svg';
-import logoWhite from '../../public/images/logoWhite.png';
+import logo from '../public/images/loginLogo.svg';
+import logoWhite from '../public/images/logoWhite.png';
 import axios from 'axios';
 
 import { FaEye } from 'react-icons/fa';
@@ -142,9 +142,9 @@ const Login = () => {
           <p className="text-sm text-[#858585]">
             Don't have an account?{' '}
             <a
-              href="#"
-              className="text-blue-600 underline"
-              onClick={() => Router.push('/dentist/sign-up')}
+              // href="#"
+              className="text-blue-600 underline cursor-pointer"
+              onClick={() => Router.push('/sign-up')}
             >
               Register now
             </a>
