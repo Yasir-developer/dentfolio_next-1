@@ -429,8 +429,10 @@ const EditCasePage = () => {
           <p className="mt-2 text-[16px] font-light mb-5">Update Information</p>
         </div>
         <div
-          className={`lg:py-5 py-2 flex flex-col max-w-[1140px] min-h-[500px] overflow-y-scroll lg:flex-wrap w-[90%] border-custom-grey rounded-[7px] mx-auto mb-8  ${
-            pageLoader ? 'justify-center h-full' : 'justify-start'
+          className={`lg:py-5 py-2 flex flex-col max-w-[1140px] min-h-[500px] max-[767]:overflow-y-scroll lg:flex-wrap w-[90%] border-custom-grey rounded-[7px] mx-auto mb-8  ${
+            pageLoader
+              ? 'w-full items-center justify-center h-full'
+              : 'justify-start'
           }`}
           style={{
             maxHeight: (cases?.length * 550) / 2,
