@@ -128,9 +128,18 @@ const SearchBanner = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-[#ccd6e5] to-[#dce8fa]">
+    <div
+      className="lg:bg-banner-image bg-banner-image-mobile bg-cover h-[440px] lg:h-[600px] flex justify-center items-center"
+      style={{
+        // backgroundImage: `url(/images/Dentfoilo-BG.jpg)`,
+        backgroundRepeat: 'no-repeat',
+        // backgroundSize: '100% 100%',
+
+        width: '100%',
+      }}
+    >
       <div className="flex flex-col-reverse lg:flex-row items-center justify-center max-w-[1140px] mx-auto px-4 lg:px-8">
-        <div className="w-full lg:w-[70%]">
+        <div className="w-full lg:w-[70%">
           <div className="lg:p-4">
             <h1 className="text-3xl lg:text-4xl font-bold mb-4 text-black w-full lg:w-[80%] mt-[20px] lg:mt-[0px]">
               FIND A PRIVATE DENTIST{' '}
@@ -212,11 +221,11 @@ const SearchBanner = () => {
           </div>
         </div>
         <div className="hidden lg:block lg:w-1/2">
-          <img
-            src="/images/doctor-2.jpg"
+          {/* <img
+            src="/images/Dentfoilo-BG.jpg"
             alt="Image"
             className="w-full max-w-[500px] mx-auto"
-          />
+          /> */}
         </div>
       </div>
     </div>

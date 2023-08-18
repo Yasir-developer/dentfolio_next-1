@@ -429,7 +429,7 @@ const EditCasePage = () => {
           <p className="mt-2 text-[16px] font-light mb-5">Update Information</p>
         </div>
         <div
-          className={`lg:py-5 py-2 flex flex-row flex-wrap w-[90%] border-custom-grey rounded-[7px] gap-y-10 mx-auto mb-8 ${
+          className={`lg:py-5 py-2 flex flex-row flex-wrap w-[90%] border-custom-grey rounded-[7px] mx-auto mb-8 ${
             pageLoader ? 'justify-center h-full' : 'justify-start'
           }`}
         >

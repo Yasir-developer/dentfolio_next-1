@@ -58,7 +58,7 @@ const EditCaseCard = ({
   };
 
   return (
-    <div className="lg:w-[45%] w-full mx-2 border rounded-[7px] border-[#F6EBEB]">
+    <div className="lg:w-[45%] w-full mx-2 my-5 border rounded-[7px] border-[#F6EBEB]">
       <div className="">
         {/* <div> */}
         <div className=" relative flex flex-col px-3" key={id}>
@@ -66,37 +66,40 @@ const EditCaseCard = ({
 
           {/* </div> */}
 
-          <div className="flex flex-wrap lg:px-5 mt-5 pb-5 items-center justify-center lg:w-[85%] w-full flex-row gap-y-3">
-            <div className="flex flex-row w-full justify-center items-center">
-              <div className="flex flex-col items-center">
+          <div className="flex flex-wrap lg:px-5 mt-5 pb-5 items-center justify-center w-full flex-row gap-y-3">
+            <div className="flex flex-row w-full">
+              <div className="flex flex-col justify-between items-center w-[50%]">
                 <p className="font-medium text-center">Before Treatment</p>
-                {img_url && (
-                  <Image
-                    src={img_url ? img_url : '/images/case2.png'}
-                    alt="logo"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="w-[80%] h-[200px] my-3"
-                  />
-                )}
+                <div className="flex justify-center items-center">
+                  {img_url && (
+                    <Image
+                      src={img_url ? img_url : '/images/case2.png'}
+                      alt="logo"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-auto my-3 max-w-[70%]"
+                    />
+                  )}
+                </div>
               </div>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col justify-between items-center w-[50%]">
                 <p className="font-medium text-center">After Treatment</p>
-
-                {img_url_two && (
-                  <Image
-                    src={img_url_two ? img_url_two : '/images/case2.png'}
-                    alt="logo"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="w-[80%] h-[200px] my-3"
-                  />
-                )}
+                <div className=" flex justify-center items-center">
+                  {img_url_two && (
+                    <Image
+                      src={img_url_two ? img_url_two : '/images/case2.png'}
+                      alt="logo"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-auto my-3 max-w-[70%]"
+                    />
+                  )}
+                </div>
               </div>
             </div>
-            <h2 className="lg;text-center lg:text-left text-[21px] text-custom-blue font-semibold lg:w-full w-[90%]">
+            <h2 className="lg:text-left text-[21px] text-custom-blue font-semibold lg:w-full w-[90%] lg:px-3">
               {name}
             </h2>
             {!hideDelete ? (
@@ -105,7 +108,7 @@ const EditCaseCard = ({
                   {/* <div className="flex items-center justify-center px-2 rounded-l-md cursor-pointer"> */}
                   <FaEllipsisV
                     onClick={() => toggleDropdown()}
-                    className="static   lg:w-[18px] lg:h-[18px] font-black lg:mx-[3px] lg:mb-[3px] lg:mt-[5px] cursor-pointer"
+                    className="static lg:w-[18px] lg:h-[18px] font-black lg:mx-[3px] lg:mb-[3px] lg:mt-[5px] cursor-pointer"
                   />
                   {isDropdownOpen && (
                     <div class="absolute top-[30px] right-[5px] w-48 bg-white rounded-lg shadow-xl cursor-pointer">
@@ -118,13 +121,6 @@ const EditCaseCard = ({
                       >
                         Delete Case
                       </p>
-                      {/* <a
-                          href="#"
-                          class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
-                        >
-                          Support
-                        </a> */}
-                      {/* </div> */}
                     </div>
                   )}
                 </div>
@@ -154,10 +150,10 @@ const EditCaseCard = ({
             ) : (
               ''
             )}
-            <p className="text-left text-[12px] lg:text-[16px] font-light w-full">
+            <p className="text-left text-[12px] lg:text-[16px] font-light w-full px-3">
               {description}
             </p>
-            <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-5 w-full">
+            <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-3 w-full px-3">
               {types?.map((data, dataIndex) => (
                 <div
                   className="bg-custom-blue-light flex items-center justify-center h-8 px-3 rounded-[7px]"
@@ -173,7 +169,7 @@ const EditCaseCard = ({
               <div className="justify-start w-full">
                 <BlueButtons
                   buttonText={'Edit'}
-                  className={'mx-auto my-2 '}
+                  className={'my-2 !mx-3'}
                   onClick={() => showModalProp()}
                 />
               </div>
