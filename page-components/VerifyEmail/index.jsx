@@ -3,8 +3,18 @@ import { Container, Spacer, Wrapper } from '@/components/Layout';
 import { Text } from '@/components/Text';
 import Link from 'next/link';
 import styles from './VerifyEmail.module.css';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { paymentModal } from 'redux/actions/auth';
 
 export const VerifyEmail = ({ valid }) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (valid) {
+      dispatch(paymentModal(true));
+    }
+  });
   return (
     <Wrapper className={styles.root}>
       <Container column alignItems="center">
@@ -13,13 +23,13 @@ export const VerifyEmail = ({ valid }) => {
           color={valid ? 'success-light' : 'secondary'}
         >
           {valid
-            ? 'Thank you for verifying your email address. You may close this page.'
+            ? 'Thank you for verifying your email address. You may close this page and Continue to Subscription Payment process.'
             : 'It looks like you may have clicked on an invalid link. Please close this window and try again.'}
         </Text>
         <Spacer size={4} axis="vertical" />
-        <Link href="/" passHref>
+        <Link href="/sign-up" passHref>
           <ButtonLink variant="ghost" type="success" size="large">
-            Go back home
+            Go back Sign up
           </ButtonLink>
         </Link>
       </Container>

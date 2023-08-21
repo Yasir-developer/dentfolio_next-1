@@ -22,14 +22,22 @@ import { Elements, PaymentElement } from '@stripe/react-stripe-js';
 import CheckoutForm from '@/page-components/Checkout/CheckoutForm';
 import { loadStripe } from '@stripe/stripe-js';
 import Link from 'next/link';
+import EmailModal from '@/components/EmailModal/EmailModal';
 
 const Signup = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, modal } = useSelector((state) => state.auth);
+  console.log(modal, 'modal;;lll');
   useEffect(() => {
     if (user) {
       console.log(user, 'useruser');
     }
   }, [user]);
+
+  useEffect(() => {
+    if (modal == true) {
+      setPaymentModalShow(true);
+    }
+  }, [modal]);
 
   const stripePromise = loadStripe(
     'pk_test_51NU3nUFH7jk2A82vTjlYco1pIAuL6ErOcBHh5p5n79GPhVSoBaENlQMi8bKFjluK0c37DcNtkCpGIbW9vCW06gnv00Q5Xtq7BH'
@@ -65,7 +73,7 @@ const Signup = () => {
 
   // const [speciality, setSpeciality] = useState('');
   // const [degree, setDegree] = useState('');
-
+  const [emailModalshow, setEmailModalShow] = useState(false);
   const [showAddress, setShowAddress] = useState('');
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
@@ -139,7 +147,10 @@ const Signup = () => {
               toast.success(
                 'Your account has been created. Please verify Email to continue complete payment process'
               );
-              emailRef.current.openEmailModal();
+              veriifyEmail(response?.data?.user);
+              setEmailModalShow(true);
+              setLoader(false);
+              // emailRef.current.openEmailModal();
               // setPaymentModalShow(true); // router.replace('/dentist/view-profile');
             } else {
               Router.replace('/admin/overview');
@@ -165,18 +176,18 @@ const Signup = () => {
     // console.log(user, "user in verify email");
     try {
       const response = await fetch(
-        `/api/user/email/verify?id=${user._id}&email=${user.email}&name=${user.name}`,
+        `/api/user/email/verify?id=${user._id}&email=${user.email}&firstName=${user.firstName}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
         }
       );
       // console.log(response, "response for email verify");
-      emailRef.current.openEmailModal();
+      // emailRef.current.openEmailModal();
     } catch (e) {
       toast.error(e.message);
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
@@ -207,9 +218,38 @@ const Signup = () => {
       </div>
     );
   };
+  const handleClose = () => {
+    setEmailModalShow(false);
+  };
+  const EmailModal = () => {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-[999]">
+        <div className="bg-white p-8 rounded shadow-lg">
+          <p>Email Confirmation Sent</p>
+
+          <p>An Email Confirmation Has Been Sent To The Address Provided.</p>
+          <div className="mt-4 flex justify-end">
+            <button
+              className="px-4 py-2 mr-2 bg-custom-blue text-white rounded hover:bg-sky-500"
+              onClick={() => handleClose()}
+              // onClick={confirmDelete} // Call confirmDelete when confirmed
+            >
+              OK
+            </button>
+            {/* <button
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+            // onClick={cancelDelete} // Call cancelDelete when canceled
+          >
+            Cancel
+          </button> */}
+          </div>
+        </div>
+      </div>
+    );
+  };
   return (
     <>
-      {/* <EmailModal ref={emailRef} user={userData} /> */}
+      {emailModalshow && EmailModal()}
       {paymentModalShow && (
         <div className="fixed w-full h-full flex justify-center items-center bg-[#00000080] z-[9999]">
           {paymentForm()}
@@ -331,7 +371,7 @@ const Signup = () => {
                     required
                     containerClassName={'w-[92.5%] lg:w-[45%]'}
                   />
-                  <div className="z-[999] w-[92.5%] lg:w-[45%] relative">
+                  <div className="z-[998] w-[92.5%] lg:w-[45%] relative">
                     <GoogleAutocomplete
                       apiKey={'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo'}
                       // className="flex-grow py-2 px-4 focus:outline-none w-4/5"

@@ -4,6 +4,11 @@ export const fetchUser = (data) => {
   };
 };
 
+export const paymentModal = (data) => {
+  return (dispatch) => {
+    dispatch({ type: 'OPEN_MODAL', payload: data });
+  };
+};
 export const fetchUpdatedUser = (data) => {
   return (dispatch) => {
     dispatch({ type: 'FETCH_UPDATED_USER_SUCCESS', payload: data });

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
-import { Form, Modal } from 'react-bootstrap';
+// import { Form, Modal } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 // import { TeacherRegDetails } from 'store/HeaderData/action';
@@ -106,16 +106,17 @@ const EmailModal = forwardRef((props, ref) => {
         <div className="mt-4 flex justify-end">
           <button
             className="px-4 py-2 mr-2 bg-custom-blue text-white rounded hover:bg-sky-500"
-            onClick={confirmDelete} // Call confirmDelete when confirmed
+            onClick={() => handleClose()}
+            // onClick={confirmDelete} // Call confirmDelete when confirmed
           >
-            Confirm
+            OK
           </button>
-          <button
+          {/* <button
             className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
-            onClick={cancelDelete} // Call cancelDelete when canceled
+            // onClick={cancelDelete} // Call cancelDelete when canceled
           >
             Cancel
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
