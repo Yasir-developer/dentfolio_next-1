@@ -14,6 +14,13 @@ export function findAndDeleteTokenByIdAndType(db, id, type) {
     .then(({ value }) => value);
 }
 
+export function findAndDeleteTokenByCreatorIdAndType(db, id, type) {
+  return db
+    .collection('tokens')
+    .findOneAndDelete({ creatorId: new ObjectId(id), type })
+    .then(({ value }) => value);
+}
+
 export async function createToken(db, { creatorId, type, expireAt }) {
   const securedTokenId = nanoid(32);
   const token = {

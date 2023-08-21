@@ -44,7 +44,7 @@ const Signup = () => {
   // console.log(server, "server");
   const [address, setAddress] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const [data, setData] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [loader, setLoader] = useState(false);
 
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -132,13 +132,15 @@ const Signup = () => {
         })
         .then((response) => {
           if (response.status == 201) {
+            setUserData(response?.data?.user);
             dispatch(fetchUser(response?.data?.user));
             console.log(user, 'user after signup');
             if (response?.data?.user?.role == 0) {
               toast.success(
-                'Your account has been created. To continue please complete payment process'
+                'Your account has been created. Please verify Email to continue complete payment process'
               );
-              setPaymentModalShow(true); // router.replace('/dentist/view-profile');
+              emailRef.current.openEmailModal();
+              // setPaymentModalShow(true); // router.replace('/dentist/view-profile');
             } else {
               Router.replace('/admin/overview');
             }
@@ -156,6 +158,25 @@ const Signup = () => {
       toast.error(
         'Please Check all the Marks and Accept Terms & Conditions to continue'
       );
+    }
+  };
+
+  const veriifyEmail = async (user) => {
+    // console.log(user, "user in verify email");
+    try {
+      const response = await fetch(
+        `/api/user/email/verify?id=${user._id}&email=${user.email}&name=${user.name}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+      // console.log(response, "response for email verify");
+      emailRef.current.openEmailModal();
+    } catch (e) {
+      toast.error(e.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -188,6 +209,7 @@ const Signup = () => {
   };
   return (
     <>
+      <EmailModal ref={emailRef} user={userData} />
       {paymentModalShow && (
         <div className="fixed w-full h-full flex justify-center items-center bg-[#00000080] z-[9999]">
           {paymentForm()}
