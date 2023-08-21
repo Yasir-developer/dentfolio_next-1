@@ -222,7 +222,7 @@ const EditCasePage = () => {
       },
     };
     axios
-      .get(`${server}/api/cases`)
+      .get(`${server}/api/cases?id=${profile?.id}`)
       .then(function (response) {
         console.log(response, 'getCase');
         setCases(response.data.cases);
@@ -435,7 +435,7 @@ const EditCasePage = () => {
               : 'justify-start'
           }`}
           style={{
-            maxHeight: (cases?.length * 550) / 2,
+            maxHeight: (cases?.length * 800) / 2,
           }}
         >
           {pageLoader ? (

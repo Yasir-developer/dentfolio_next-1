@@ -32,7 +32,11 @@ export async function insertCase(
   //     .toArray();
 }
 export async function getCases(db, { dentistId }) {
-  const newCase = await db.collection('cases').find({ dentistId }).toArray();
+  console.log(new ObjectId(dentistId), 'dentistIds');
+  const newCase = await db
+    .collection('cases')
+    .find({ dentistId: new ObjectId(dentistId) })
+    .toArray();
   // .find({dentistId:new ObjectId(dentistId.toString())}).toArray();
   return newCase;
 }

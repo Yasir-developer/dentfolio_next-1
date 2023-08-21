@@ -6,9 +6,12 @@ import { server } from 'config';
 import EditCaseCard from '@/components/EditCaseCard/EditCaseCard';
 import { useSelector } from 'react-redux';
 
-const PreviousCases = () => {
+const PreviousCases = ({ id }) => {
+  console.log(id, '------');
   const { profile } = useSelector((state) => state.dentist);
-
+  const { user } = useSelector((state) => state.auth);
+  console.log(user, 'user user');
+  console.log(profile, 'profile');
   const [loader, setLoader] = useState(true);
 
   const [cases, setCases] = useState([]);
@@ -27,7 +30,7 @@ const PreviousCases = () => {
       },
     };
     axios
-      .get(`${server}/api/cases`, {
+      .get(`${server}/api/cases?id=${user?._id ? user?._id : id}`, {
         id: profile?.id,
         options,
       })
@@ -65,7 +68,7 @@ const PreviousCases = () => {
       <div
         className={`flex flex-col max-[767]:overflow-y-scroll lg:flex-wrap mb-10 max-w-[1140px] mx-auto min-h-[500px]`}
         style={{
-          maxHeight: (cases?.length * 500) / 2,
+          maxHeight: (cases?.length * 670) / 2,
         }}
       >
         {/* <div> */}
