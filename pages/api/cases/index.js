@@ -75,7 +75,7 @@ handler.post(
       const image = await cloudinary.uploader.upload(
         req.files.before_cases_photo[0].path,
         {
-          width: 512,
+          width: 1080,
           height: 512,
           crop: 'fill',
         }
@@ -83,7 +83,7 @@ handler.post(
       const imageTwo = await cloudinary.uploader.upload(
         req.files.after_cases_photo[0].path,
         {
-          width: 512,
+          width: 1080,
           height: 512,
           crop: 'fill',
         }

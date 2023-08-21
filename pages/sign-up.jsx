@@ -209,7 +209,7 @@ const Signup = () => {
   };
   return (
     <>
-      <EmailModal ref={emailRef} user={userData} />
+      {/* <EmailModal ref={emailRef} user={userData} /> */}
       {paymentModalShow && (
         <div className="fixed w-full h-full flex justify-center items-center bg-[#00000080] z-[9999]">
           {paymentForm()}
@@ -235,8 +235,8 @@ const Signup = () => {
               </h2>
 
               <form onSubmit={(e) => onSubmit(e)}>
-                <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-2 justify-center">
-                  <div className="w-[45%] text-[16px] font-light">
+                <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-5 justify-center">
+                  <div className="w-[92.5%] lg:w-[45%] text-[16px] font-light">
                     <select
                       className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] p-3  rounded-[7px] text-[14px] bg-custom-dashboard-bg border border-custom-grey"
                       value={selectedOption}
@@ -259,7 +259,7 @@ const Signup = () => {
                   </div>
                   <AuthInput
                     ref={emailRef}
-                    containerClassName={'w-[45%]'}
+                    containerClassName={'w-[92.5%] lg:w-[45%]'}
                     placeholder={'First Name'}
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
@@ -267,7 +267,7 @@ const Signup = () => {
                   />
                   <AuthInput
                     placeholder={'Last Name'}
-                    containerClassName={'w-[45%]'}
+                    containerClassName={'w-[92.5%] lg:w-[45%]'}
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
@@ -294,7 +294,7 @@ const Signup = () => {
                     ref={passwordRef}
                     type={'password'}
                     // className={"!w-[45%]"}
-                    containerClassName={'w-[45%]'}
+                    containerClassName={'w-[92.5%] lg:w-[45%]'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
@@ -321,7 +321,7 @@ const Signup = () => {
                     placeholder={'GDC Number'}
                     value={gdcNo}
                     onChange={(e) => setGdcNo(e.target.value)}
-                    containerClassName={'w-[45%]'}
+                    containerClassName={'w-[92.5%] lg:w-[45%]'}
                     required
                   />
                   <AuthInput
@@ -329,9 +329,9 @@ const Signup = () => {
                     value={buildingName}
                     onChange={(e) => setBuildingName(e.target.value)}
                     required
-                    containerClassName={'w-[45%]'}
+                    containerClassName={'w-[92.5%] lg:w-[45%]'}
                   />
-                  <div className="z-[999] w-[45%] relative">
+                  <div className="z-[999] w-[92.5%] lg:w-[45%] relative">
                     <GoogleAutocomplete
                       apiKey={'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo'}
                       // className="flex-grow py-2 px-4 focus:outline-none w-4/5"
@@ -383,7 +383,7 @@ const Signup = () => {
                     placeholder={'Practice Post Code'}
                     value={postCode}
                     onChange={(e) => setPostCode(e.target.value)}
-                    containerClassName={'w-[45%]'}
+                    containerClassName={'w-[92.5%] lg:w-[45%]'}
                     required
                   />
                 </div>

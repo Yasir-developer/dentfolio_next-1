@@ -66,9 +66,9 @@ const PreviousCases = ({ id }) => {
         MY PREVIOUS <span className=" text-custom-blue">CASES</span>
       </h2>
       <div
-        className={`flex flex-col max-[767]:overflow-y-scroll lg:flex-wrap mb-10 max-w-[1140px] mx-auto min-h-[500px]`}
+        className="flex flex-col m-x:!max-h-full lg:flex-wrap mb-10 max-w-[1140px] mx-auto min-h-[500px]"
         style={{
-          maxHeight: (cases?.length * 670) / 2,
+          maxHeight: (cases?.length * 800) / 2,
         }}
       >
         {/* <div> */}

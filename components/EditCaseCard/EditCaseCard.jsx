@@ -71,7 +71,7 @@ const EditCaseCard = ({
 
           <div className="flex flex-wrap lg:px-5 mt-5 pb-5 items-center justify-center w-full flex-row gap-y-3">
             <div className="flex flex-col w-full gap-y-3">
-              <div className="flex flex-col justify-between items-center w-[50%]">
+              <div className="flex flex-col justify-between items-center">
                 {/* <p className="lg:font-medium font-normal lg:text-[14px] text-[12px] text-center">
                   Before Treatment
                 </p> */}
@@ -83,12 +83,12 @@ const EditCaseCard = ({
                       width={0}
                       height={0}
                       sizes="100vw"
-                      className="w-auto"
+                      className="max-w-[1080px] w-full px-10"
                     />
                   )}
                 </div>
               </div>
-              <div className="flex flex-col justify-between items-center w-[50%]">
+              <div className="flex flex-col justify-between items-center">
                 {/* <p className="lg:font-medium font-normal lg:text-[14px] text-[12px] text-center">
                   After Treatment
                 </p> */}
@@ -100,7 +100,7 @@ const EditCaseCard = ({
                       width={0}
                       height={0}
                       sizes="100vw"
-                      className="w-auto"
+                      className="max-w-[1080px] w-full px-10"
                     />
                   )}
                 </div>
