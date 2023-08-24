@@ -20,7 +20,11 @@ handler.post(
 
     const {
       dentistId,
-
+      city,
+      country,
+      line1,
+      line2,
+      postal_code,
       total,
       customer,
       items,
@@ -42,6 +46,15 @@ handler.post(
       var paymentMethod = await stripe.paymentMethods.create({
         type: 'card',
         card: { token: token },
+        billing_details: {
+          address: {
+            city: city,
+            country: country,
+            line1: line1,
+            line2: line2,
+            postal_code: postal_code,
+          },
+        },
         //   card: {
         //     number: '4242424242424242',
         //     exp_month: 1,
@@ -80,6 +93,14 @@ handler.post(
         invoice_settings: { default_payment_method: paymentMethod.id },
         firstName,
         email,
+
+        address: {
+          city: city,
+          country: country,
+          line1: line1,
+          line2: line2,
+          postal_code: postal_code,
+        },
       });
     }
     // return res.json({ message: customerObj.id });

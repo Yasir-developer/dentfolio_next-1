@@ -88,7 +88,7 @@ const BillingMethodForm = ({ stripe, elements }) => {
 
   return (
     <div>
-      <div class="product-info"></div>
+      {/* <div class="product-info"></div> */}
       <form onSubmit={handleSubmit}>
         <CardSection />
         {loader ? (

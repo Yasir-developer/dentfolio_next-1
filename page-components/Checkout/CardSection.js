@@ -1,5 +1,7 @@
 import React from 'react';
 import { CardElement } from '@stripe/react-stripe-js';
+import AddressForm from '@/components/AddressForm/AddressForm';
+import AuthInput from '@/components/Inputs/AuthInput';
 
 const CARD_ELEMENT_OPTIONS = {
   hidePostalCode: true,
@@ -26,7 +28,7 @@ const CARD_ELEMENT_OPTIONS = {
 function CardSection() {
   return (
     <label>
-      Card details
+      {/* Card details */}
       <CardElement options={CARD_ELEMENT_OPTIONS} />
     </label>
   );

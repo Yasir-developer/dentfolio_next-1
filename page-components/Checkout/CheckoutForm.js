@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ElementsConsumer, CardElement } from '@stripe/react-stripe-js';
 
 import CardSection from './CardSection';
@@ -8,14 +8,18 @@ import { server } from 'config';
 import { toast } from 'react-hot-toast';
 import Router from 'next/router';
 import { fetchUser } from 'redux/actions/auth';
+import AuthInput from '@/components/Inputs/AuthInput';
+import AddressForm from '@/components/AddressForm/AddressForm';
 
 const CheckoutForm = (props) => {
-  // console.log(props, 'props props');
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-  const [loader, setLoader] = useState(false);
+  console.log(user, 'props props');
 
+  const [loader, setLoader] = useState(false);
+  const [address, setAddress] = useState('');
+  useEffect(() => {}, [address]);
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoader(true);
@@ -27,7 +31,7 @@ const CheckoutForm = (props) => {
 
     const card = elements.getElement(CardElement);
     // console.log(CardElement, 'CardElement');
-    // console.log(card, 'card');
+    console.log(card, 'card');
     const result = await stripe.createToken(card);
     if (result.error) {
       toast.error(result.error.message);
@@ -35,7 +39,8 @@ const CheckoutForm = (props) => {
 
       console.log(result.error.message);
     } else {
-      // console.log(result, 'result ----');
+      console.log(result, 'result ----');
+      // return;
       const options = {
         headers: {
           'Content-Type': 'application/json',
@@ -48,6 +53,11 @@ const CheckoutForm = (props) => {
           name: user.firstName,
           email: user.email,
           token: result.token.id,
+          city: address.address.city,
+          line1: address.address.line1,
+          line2: address.address.line2,
+          country: address.address.country,
+          postal_code: address.address.postal_code,
           subscrption_type: '',
           customer_id: '',
           payment_id: '',
@@ -100,11 +110,30 @@ const CheckoutForm = (props) => {
         toast.error(error?.data?.message);
       });
   };
+
+  const handleAddressChange = (newAddress) => {
+    console.log(newAddress, 'newAddress');
+    setAddress(newAddress);
+  };
   return (
     <div>
-      <div class="product-info"></div>
+      <div class="product-info mb-3">
+        <p className="font-semibold text-center !text-[16px]">
+          Payment Details
+        </p>
+      </div>
+      <p className="text-left text-[14px] mb-3">
+        This is to verify your Account, you will not be charged during your 30
+        days free trial
+      </p>
       <form onSubmit={handleSubmit}>
+        {/* Card Holder Full Name */}
+        <AuthInput
+          className={'!w-[90%] mx-3 border-gray-300'}
+          placeholder="Card Holder Full Name"
+        />
         <CardSection />
+        <AddressForm onAddressChange={handleAddressChange} />
         {loader ? (
           <div
             aria-label="Loading..."

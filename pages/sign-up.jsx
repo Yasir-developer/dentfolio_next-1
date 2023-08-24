@@ -201,7 +201,7 @@ const Signup = () => {
   const handlePrivacyChange = () => {
     setPrivacyAccepted(!privacyAccepted);
   };
-  const options = { mode: 'shipping' };
+  const options = { mode: 'billing' };
 
   const paymentForm = (e) => {
     return (
@@ -364,13 +364,7 @@ const Signup = () => {
                     containerClassName={'w-[92.5%] lg:w-[45%]'}
                     required
                   />
-                  <AuthInput
-                    placeholder={'Practice Building number/ Name'}
-                    value={buildingName}
-                    onChange={(e) => setBuildingName(e.target.value)}
-                    required
-                    containerClassName={'w-[92.5%] lg:w-[45%]'}
-                  />
+
                   <div className="z-[998] w-[92.5%] lg:w-[45%] relative">
                     <GoogleAutocomplete
                       apiKey={'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo'}
@@ -404,13 +398,22 @@ const Signup = () => {
                             : localityTwo?.long_name
                         );
                       }}
-                      placeholder="Practice City"
+                      // onChange={() => setCity('')}
+                      placeholder="Practice Building number/ Name"
                       options={{
                         types: ['geocode', 'establishment'],
                       }}
                       // defaultValue={address}
                     />
                   </div>
+                  <AuthInput
+                    placeholder={'Practice City'}
+                    value={city}
+                    // onChange={(e) => setBuildingName(e.target.value)}
+                    onChange={(e) => setCity(e.target.value)}
+                    required
+                    containerClassName={'w-[92.5%] lg:w-[45%]'}
+                  />
 
                   {/* <AuthInput
                     placeholder={'Practice City'}

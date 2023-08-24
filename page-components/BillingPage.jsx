@@ -61,7 +61,7 @@ const BillingPage = (props) => {
   const BillingMethodFormModal = () => {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 bg-gray-900 z-[999]">
-        <div className="product">
+        <div className="billing-product">
           <FaWindowClose
             className="text-right ml-auto w-5 h-5 cursor-pointer"
             onClick={() => {
