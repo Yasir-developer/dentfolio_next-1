@@ -128,10 +128,10 @@ const CheckoutForm = (props) => {
       </p>
       <form onSubmit={handleSubmit}>
         {/* Card Holder Full Name */}
-        <AuthInput
+        {/* <AuthInput
           className={'!w-[90%] mx-3 border-gray-300'}
           placeholder="Card Holder Full Name"
-        />
+        /> */}
         <CardSection />
         <AddressForm onAddressChange={handleAddressChange} />
         {loader ? (

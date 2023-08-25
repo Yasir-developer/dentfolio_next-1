@@ -441,15 +441,7 @@ const EditProfilePage = () => {
                 label="GDC No"
                 required
               />
-              <AuthInput
-                placeholder={'Practice Building number/ Name'}
-                className={'order-9'}
-                containerClassName={'w-[45%]'}
-                value={buildingName}
-                onChange={(e) => setBuildingName(e.target.value)}
-                required
-                label="Building Name"
-              />
+
               <div className="w-[45%] relative">
                 {/* <AuthInput
                   placeholder={'Practice Street Name'}
@@ -481,7 +473,7 @@ const EditProfilePage = () => {
                     </ul>
                   )}
                 </div> */}
-                <p>Practice City</p>
+                <p>Building Name</p>
                 <GoogleAutocomplete
                   apiKey={'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo'}
                   // className="flex-grow py-2 px-4 focus:outline-none w-4/5"
@@ -520,6 +512,17 @@ const EditProfilePage = () => {
                   defaultValue={streetName}
                 />
               </div>
+
+              <AuthInput
+                placeholder={'Practice City'}
+                className={'order-9'}
+                containerClassName={'w-[45%]'}
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                required
+                label="City"
+              />
+
               {/* <AuthInput
                 placeholder={'Practice City'}
                 className={'order-11'}

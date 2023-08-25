@@ -69,9 +69,14 @@ const TreatmentProvide = (props) => {
   ];
   return (
     <div className="my-5 sizingStyles">
-      <h2 className="text-[25px] lg:text-[32px] text-black text-center font-medium">
-        <span className=" text-custom-blue">TREATMENT</span> I PROVIDE
-      </h2>
+      {props.treatment.length > 0 ? (
+        <h2 className="text-[25px] lg:text-[32px] text-black text-center font-medium">
+          <span className=" text-custom-blue">TREATMENT</span> I PROVIDE
+        </h2>
+      ) : (
+        <></>
+      )}
+
       {props.treatment.length > 0 ? (
         <div className="mt-7 gap-x-5">
           <Slider {...settings}>
@@ -79,7 +84,7 @@ const TreatmentProvide = (props) => {
               return (
                 <div>
                   <div
-                    className="mi>n-h-[180px] lg:min-h-full !w-[90%] bg-custom-blue-light items-center justify-center py-7 text-center rounded-[7px]"
+                    className="min-h-[180px] lg:min-h-full !w-[90%] bg-custom-blue-light items-center justify-center py-7 text-center rounded-[7px]"
                     key={index}
                   >
                     <Image src={checkCircle} alt="logo" className="mx-auto" />
@@ -94,7 +99,8 @@ const TreatmentProvide = (props) => {
           </Slider>
         </div>
       ) : (
-        <p className="text-center">No Treatment Found</p>
+        <></>
+        // <p className="text-center">No Treatment Found</p>
       )}
     </div>
   );

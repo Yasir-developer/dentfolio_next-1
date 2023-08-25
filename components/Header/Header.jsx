@@ -83,7 +83,7 @@ const AppHeader = () => {
                               : router.push('/admin/overview');
                           }}
                         >
-                          {user?.displayName}
+                          {user?.firstName}
                           {/* Dylan Taylor */}
                         </h2>
                         {/* className="hidden md:block" */}

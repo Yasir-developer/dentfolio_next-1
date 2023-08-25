@@ -3,7 +3,7 @@ import { FaCheck } from 'react-icons/fa';
 
 const Checkbox = ({ label, checked, onChange }) => {
   return (
-    <label className="flex items-center space-x-2 cursor-pointer ml-5 mb-5">
+    <label className="flex items-center space-x-2 cursor-pointer lg:ml-5 mb-5">
       <div className="relative">
         <input
           type="checkbox"
@@ -22,7 +22,7 @@ const Checkbox = ({ label, checked, onChange }) => {
         )} */}
         <FaCheck className="absolute top-0 left-0 ml-1 mt-1 w-3 h-3 text-white fill-current" />
       </div>
-      <span className="ml-2 text-[14px] lg:text-[16px] font-light mb-1">
+      <span className="ml-2 text-[12px] lg:text-[16px] font-light mb-1">
         {label}
       </span>
     </label>

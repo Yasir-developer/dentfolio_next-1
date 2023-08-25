@@ -18,7 +18,7 @@ const EditCaseCard = ({
   hideEdit = false,
   hideDelete = false,
 }) => {
-  // console.log(img_url, 'img_url');
+  console.log(hideEdit, 'hideEdit');
   // console.log(img_url_two, 'img_url_two');
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -69,13 +69,13 @@ const EditCaseCard = ({
 
           {/* </div> */}
 
-          <div className="flex flex-wrap lg:px-5 mt-5 pb-5 items-center justify-center w-full flex-row gap-y-3">
+          <div className="flex flex-wrap mt-5 pb-5 items-center justify-center w-full flex-row gap-y-3">
             <div className="flex flex-col w-full gap-y-3">
-              <div className="flex flex-col justify-between items-center">
+              <div className="flex flex-col justify-between">
                 {/* <p className="lg:font-medium font-normal lg:text-[14px] text-[12px] text-center">
                   Before Treatment
                 </p> */}
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center">
                   {img_url && (
                     <Image
                       src={img_url ? img_url : '/images/case2.png'}
@@ -83,16 +83,16 @@ const EditCaseCard = ({
                       width={0}
                       height={0}
                       sizes="100vw"
-                      className="max-w-[1080px] w-full px-10"
+                      className="max-w-[1080px]  w-[90%]"
                     />
                   )}
                 </div>
               </div>
-              <div className="flex flex-col justify-between items-center">
+              <div className="flex flex-col justify-between">
                 {/* <p className="lg:font-medium font-normal lg:text-[14px] text-[12px] text-center">
                   After Treatment
                 </p> */}
-                <div className=" flex justify-center items-center">
+                <div className="flex justify-center items-center">
                   {img_url_two && (
                     <Image
                       src={img_url_two ? img_url_two : '/images/case2.png'}
@@ -100,13 +100,18 @@ const EditCaseCard = ({
                       width={0}
                       height={0}
                       sizes="100vw"
-                      className="max-w-[1080px] w-full px-10"
+                      className="max-w-[1080px] w-[90%]"
                     />
                   )}
                 </div>
               </div>
             </div>
-            <h2 className="lg:text-left text-[21px] text-custom-blue font-semibold lg:w-full w-[90%] lg:px-3">
+            <h2
+              className={`lg:text-left text-[21px] text-custom-blue font-semibold lg:w-full w-[90%] ${
+                !hideDelete ? 'lg:px-6' : 'lg:px-6'
+              }
+              `}
+            >
               {name}
             </h2>
             {!hideDelete ? (
@@ -157,10 +162,10 @@ const EditCaseCard = ({
             ) : (
               ''
             )}
-            <p className="text-left text-[12px] lg:text-[16px] font-light w-full px-3">
+            <p className="text-left text-[12px] lg:text-[16px] font-light w-full lg:px-6 px-3">
               {description}
             </p>
-            <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-3 w-full px-3">
+            <div className="flex flex-row flex-wrap gap-x-2 gap-y-2 lg:gap-x-3 w-full lg:px-6 px-3">
               {types?.map((data, dataIndex) => (
                 <div
                   className="bg-custom-blue-light flex items-center justify-center h-8 px-3 rounded-[7px]"

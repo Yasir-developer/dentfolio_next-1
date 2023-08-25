@@ -153,7 +153,7 @@ const DoctorBasicDetail = (props) => {
               </div>
               <div className="mx-5">
                 <h2 className="text-custom-blue font-semibold text-[21px]">
-                  {props?.data?.displayName}
+                  {props?.data?.firstName} {props?.data?.lastName}
                 </h2>
                 {/* <div className="flex flex-col">
                   <h3 className="text-custom-black text-[15px]">
@@ -239,7 +239,7 @@ const DoctorBasicDetail = (props) => {
           <div>
             <h2 className="text-custom-blue font-semibold lg:text-[33px] text-[20px]">
               {props?.data?.courtesyTitle ? props?.data?.courtesyTitle : 'Dr'}{' '}
-              {props?.data?.displayName}
+              {props?.data?.firstName} {props?.data?.lastName}
             </h2>
             {/* <div className="flex flex-col">
               <h3 className="text-custom-black lg:text-[22px] text-[17px]">

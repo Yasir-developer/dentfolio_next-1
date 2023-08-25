@@ -243,6 +243,9 @@ bottom:0;
   overflow-y: scroll;
 } */
 }
+.Button, .CollapsibleContainer{
+  display: none;
+}
 
 .product {
   width: 100%;
@@ -254,7 +257,7 @@ bottom:0;
   /* overflow: hidden; */
   position: relative;
   background-color: #fff;
-  height: 95%;
+  height: 80%;
   overflow-y: scroll;
 }
 

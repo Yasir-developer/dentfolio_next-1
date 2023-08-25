@@ -206,7 +206,7 @@ const dentistlist = () => {
                 options={{
                   types: ['geocode', 'establishment'],
                 }}
-                // defaultValue={location}
+                defaultValue={location}
               />
               <FaFilter
                 size={16}

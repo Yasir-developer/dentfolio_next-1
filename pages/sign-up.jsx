@@ -276,9 +276,9 @@ const Signup = () => {
 
               <form onSubmit={(e) => onSubmit(e)}>
                 <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-5 justify-center">
-                  <div className="w-[92.5%] lg:w-[45%] text-[16px] font-light">
+                  <div className="w-[92.5%] lg:w-[45%] text-[16px] font-light py-4">
                     <select
-                      className="focus:outline-none w-[80%] lg:w-[100%] font-normal lg:text-[16px] p-3  rounded-[7px] text-[14px] bg-custom-dashboard-bg border border-custom-grey"
+                      className="focus:outline-none w-[100%] font-normal lg:text-[16px] p-3 rounded-[7px] text-[14px] bg-custom-dashboard-bg border border-custom-grey"
                       value={selectedOption}
                       onChange={handleSelectChange}
                     >
@@ -312,21 +312,19 @@ const Signup = () => {
                     onChange={(e) => setLastName(e.target.value)}
                     required
                   />
-
+                  <AuthInput
+                    placeholder={'Display Name'}
+                    containerClassName={'w-[92.5%] lg:w-[45%]'}
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    required
+                  />
                   <AuthInput
                     placeholder={'Email Address'}
                     type={'email'}
                     containerClassName={'w-[92.5%] lg:w-[45%]'}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-
-                  <AuthInput
-                    placeholder={'Display Name'}
-                    containerClassName={'w-[92.5%] lg:w-[45%]'}
-                    value={displayName}
-                    onChange={(e) => setDisplayName(e.target.value)}
                     required
                   />
                   <AuthInput
@@ -338,24 +336,6 @@ const Signup = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  {/* <AuthInput
-                    placeholder={'Speciality Title'}
-                    // type={"password"}
-                    // className={"!w-[45%]"}
-                    containerClassName={'w-[45%]'}
-                    value={speciality}
-                    onChange={(e) => setSpeciality(e.target.value)}
-                    required
-                  /> */}
-                  {/* <AuthInput
-                    placeholder={'Degree'}
-                    // type={"password"}
-                    // className={"!w-[45%]"}
-                    containerClassName={'w-[45%]'}
-                    value={degree}
-                    onChange={(e) => setDegree(e.target.value)}
-                    required
-                  /> */}
 
                   <AuthInput
                     placeholder={'GDC Number'}
