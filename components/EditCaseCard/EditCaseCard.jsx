@@ -60,7 +60,7 @@ const EditCaseCard = ({
 
   return (
     <div
-      className={`lg:w-[50%] w-full lg:mx-2 my-5 border rounded-[7px] border-[#F6EBEB] ${className}`}
+      className={`lg:w-[48%] w-full lg:mx-2 my-5 border rounded-[7px] border-[#F6EBEB] ${className}`}
     >
       <div className="">
         {/* <div> */}
@@ -181,7 +181,7 @@ const EditCaseCard = ({
               <div className="justify-start w-full">
                 <BlueButtons
                   buttonText={'Edit'}
-                  className={'my-2 !mx-3'}
+                  className={'my-2 !mx-6'}
                   onClick={() => showModalProp()}
                 />
               </div>
