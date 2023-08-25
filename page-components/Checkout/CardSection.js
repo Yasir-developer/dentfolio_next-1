@@ -24,10 +24,6 @@ const CARD_ELEMENT_OPTIONS = {
         color: '#303238',
       },
     },
-    empty: {
-      // boderWidth: '1',
-      border: '1px solid black',
-    },
   },
 };
 
@@ -35,15 +31,16 @@ function CardSection() {
   return (
     <label>
       {/* Card details */}
-      <div
+      {/* <div
         style={{
           border: '1px solid',
           borderColor: '#CFD7DF',
           borderRadius: '7px',
+          // backgroundColor: 'red',
         }}
-      >
-        <CardElement options={CARD_ELEMENT_OPTIONS} />
-      </div>
+      > */}
+      <CardElement options={CARD_ELEMENT_OPTIONS} className="StripeElement" />
+      {/* </div> */}
     </label>
   );
 }

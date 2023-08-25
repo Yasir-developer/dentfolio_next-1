@@ -222,7 +222,7 @@ bottom:0;
   padding: 10px 12px;
   color: #32325d;
   background-color: white;
-  border: 1px solid transparent;
+  border: 1px solid #CFD7DF !important;
   border-radius: 4px;
 }
 
