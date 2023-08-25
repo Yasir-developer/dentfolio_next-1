@@ -276,7 +276,7 @@ const Signup = () => {
 
               <form onSubmit={(e) => onSubmit(e)}>
                 <div className="w-full flex flex-wrap gap-x-2 lg:gap-x-7 gap-y-5 justify-center">
-                  <div className="w-[92.5%] lg:w-[45%] text-[16px] font-light py-4">
+                  <div className="w-[92.5%] lg:w-[45%] text-[16px] font-light py-4 lg:py-0">
                     <select
                       className="focus:outline-none w-[100%] font-normal lg:text-[16px] p-3 rounded-[7px] text-[14px] bg-custom-dashboard-bg border border-custom-grey"
                       value={selectedOption}
