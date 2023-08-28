@@ -334,7 +334,7 @@ const CreateCasePage = () => {
             </div>
             <BlueButtons
               loading={loader}
-              buttonText={'Save'}
+              buttonText={'Upload'}
               className={'bg-[#D4D4D4] rounded-[7px] mt-10'}
             />
           </div>
