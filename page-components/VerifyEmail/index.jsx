@@ -6,6 +6,7 @@ import styles from './VerifyEmail.module.css';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { paymentModal } from 'redux/actions/auth';
+import BlueButtons from '@/components/Buttons/BlueButtons';
 
 export const VerifyEmail = ({ valid }) => {
   const dispatch = useDispatch();
@@ -28,9 +29,7 @@ export const VerifyEmail = ({ valid }) => {
         </Text>
         <Spacer size={4} axis="vertical" />
         <Link href="/sign-up" passHref>
-          <ButtonLink variant="ghost" type="success" size="large">
-            Go back Sign up
-          </ButtonLink>
+          <BlueButtons buttonText={'Go back to payment process'} />
         </Link>
       </Container>
     </Wrapper>
