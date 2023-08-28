@@ -330,12 +330,12 @@ const SignUp = () => {
                   onChange={(e) => setEmail(e.target.value)}
                 />
 
-                <AuthInput
+                {/* <AuthInput
                   placeholder={'Display Name'}
                   className={'w-[92.5%] lg:w-[45%]'}
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                />
+                /> */}
                 <AuthInput
                   placeholder={'Password'}
                   type={'password'}

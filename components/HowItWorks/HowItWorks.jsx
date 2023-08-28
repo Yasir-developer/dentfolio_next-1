@@ -105,12 +105,12 @@ const HowItWorks = () => {
               Discover local dentists in your area and choose the perfect one
               for your dental needs.
             </p>
-            <a
+            {/* <a
               className="text-[14px] hover:underline decoration-solid text-custom-blue font-poppins font-semibold"
               href="#"
             >
               Find Dentist
-            </a>
+            </a> */}
           </div>
           <div className="absolute bottom-0 right-0">
             <Image
@@ -132,12 +132,12 @@ const HowItWorks = () => {
               Discover impressive dental work through a collection of photos
               showcasing exceptional treatments.
             </p>
-            <a
+            {/* <a
               className="text-[14px] hover:underline decoration-solid text-custom-blue font-poppins font-semibold"
               href="#"
             >
               Find Dentist
-            </a>
+            </a> */}
           </div>
           <div className="absolute bottom-0 right-0">
             <Image src={dental} alt="logo" className="max-h-[160px] w-auto" />
@@ -149,18 +149,18 @@ const HowItWorks = () => {
         <div className="bg-[#DCE8FA] px-5 font-poppins relative rounded-[7px] w-full md:w-[30%] min-h-[250px]">
           <div className="flex flex-col justify-around w-[80%] min-h-[200px]">
             <h1 className="font-semibold text-[18px] mt-5 mb-2 text-custom-blue">
-              CONTACT YOUR DENTAL
+              CONTACT YOUR DENTIST{' '}
             </h1>
             <p className="text-[14px] font-normal">
-              Contact Your Dental: Find a local dentist and schedule
-              appointments easily with our convenient online platform.
+              Once you’ve found the perfect match you can contact them to
+              arrange an appointment.
             </p>
-            <a
+            {/* <a
               className="text-[14px] hover:underline decoration-solid text-custom-blue font-poppins font-semibold"
               href="#"
             >
               Find Dentist
-            </a>
+            </a> */}
           </div>
           <div className="absolute bottom-0 right-0">
             <Image src={cellular} alt="logo" className="max-h-[160px] w-auto" />

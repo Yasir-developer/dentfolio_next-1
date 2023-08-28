@@ -12,14 +12,16 @@ const PrivatePatients = () => {
     {
       img_url: '/images/Account.svg',
       title: '1. CREATE YOUR ACCOUNT',
-      description: 'Sign up and create your account.',
+      description: 'Sign up with a free 30-day trial and create your account.',
     },
     {
       //'/images/message.svg'
       type: '1',
       img_url: '/images/message.svg',
       title: '2. CREATE CASES',
-      description: 'Create Cases to show to potential patients.',
+      description: 'Create and showcase your dental skills.',
+      short_Des:
+        'Don’t have any cases? No problem, you can still sign up and share your profile!',
     },
 
     {
@@ -33,16 +35,16 @@ const PrivatePatients = () => {
       ///
       img_url: '/images/doctor.svg',
       type: '1',
-      title: '4. SEND A EMAIL',
+      title: '4. RECEIVE AN ENQUIRY',
       description:
         'They send a contact form which will arrive to your email inbox.',
     },
     {
       img_url: '/images/photos.svg',
 
-      title: '5. YOU CAN DISCUSS VIA EMAIL',
+      title: '5. DISCUSS VIA EMAIL',
       description:
-        'You can discuss their needs via email and pass their details.',
+        'You can discuss their needs via email and book them in for an examination.',
     },
   ];
 
@@ -60,7 +62,7 @@ const PrivatePatients = () => {
           {steps.map((item, index) => {
             return (
               <div
-                class="flex flex-col items-center lg:w-[20%] w-full min-h-[300px]  justify-start"
+                class="flex flex-col items-center lg:w-[20%] w-full min-h-[400px]  justify-start"
                 key={index}
               >
                 <img src={item.img_url} />
@@ -82,7 +84,10 @@ const PrivatePatients = () => {
                 </div>
                 <div className="w-[60%] mt-[15px] ">
                   <p className="">{item.description}</p>
+
+                  <p className="font-light">{item.short_Des}</p>
                 </div>
+
                 {/* <div class="line"></div> */}
               </div>
             );

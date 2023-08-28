@@ -48,13 +48,13 @@ const DentistMemberBanner = () => {
         <div className="dentistPlanBannerInnerContainer sizingStyles flex items-center justify-between absolute lg:relative top-0 h-full pl-1">
           <div className="w-[100%] lg:w-[55%] lg:py-[100px]  dentistPlanContentContainer">
             <h1 className="lg:text-4xl text-[14px] font-bold mb-4 text-black lg:w-full mt-[30px] lg:mt-[0px] w-[70%] lg:px-0 px-3">
-              JOIN THE HUNDREDS OF OTHER DENTFOLIO MEMBERS GROWING THEIR{' '}
+              JOIN THE OTHER DENTFOLIO MEMBERS GROWING THEIR{' '}
               <span className="lg:text-4xl text-[14px] font-bold font-poppins text-custom-blue">
-                PRIVATE PATIENT LISTS
+                PRIVATE LISTS
               </span>
             </h1>
             <p className="mb-4 text-black font-normal lg:text-[18px] text-[12px] w-[80%] lg:px-0 px-3">
-              Start your free 1-month trial today. Cancel anytime
+              Start your free 1-month trial today. Cancel anytime.
             </p>
             {user ? (
               <></>

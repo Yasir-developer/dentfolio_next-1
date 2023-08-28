@@ -13,6 +13,7 @@ import { toast } from 'react-hot-toast';
 
 const dentistlist = () => {
   const { dentist, location, city } = useSelector((state) => state.dentist);
+  console.log(dentist?.data?.user?.length, 'dentist?.data?.user?.length');
   const dispatch = useDispatch();
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
@@ -133,7 +134,7 @@ const dentistlist = () => {
           <span className="text-3xl sm:text-4xl font-poppins text-custom-blue">
             CERTIFIED
           </span>{' '}
-          DENTIST IN{' '}
+          {dentist?.data?.user?.length > 1 ? 'DENTISTS' : 'DENTIST'} IN{' '}
           <span className="text-3xl sm:text-4xl font-poppins text-custom-blue">
             {/* MANCHESTER */}
             {city?.toUpperCase()}
@@ -143,7 +144,9 @@ const dentistlist = () => {
         <h3 className="text-lg sm:text-xl font-normal">
           {dentist?.data?.user?.length > 0 ? (
             <span>
-              {dentist?.data?.user?.length} Dentist available in {city}
+              {dentist?.data?.user?.length}{' '}
+              {dentist?.data?.user?.length > 1 ? 'Dentists' : 'Dentist'}{' '}
+              available in {city}
             </span>
           ) : (
             <span>No Dentist available in {city}</span>
@@ -152,9 +155,8 @@ const dentistlist = () => {
 
         <div className="w-full sm:w-[80%]">
           <p className="mt-8 text-base sm:text-lg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            congue, sapien non efficitur sollicitudin, ex risus semper diam, sed
-            ornare libero urna ac leo.
+            Browse through the list to find the perfect match for you. You can
+            view their profile or contact them for an appointment.
           </p>
         </div>
         <div className="bg-white rounded-[7px] w-full sm:w-[35%]">

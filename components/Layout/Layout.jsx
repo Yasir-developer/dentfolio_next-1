@@ -1,5 +1,7 @@
 import Head from 'next/head';
 // import Footer from './Footer';
+import doctor from '../../public/images/Dentfolio_favicon.png';
+
 import styles from './Layout.module.css';
 import Nav from './Nav';
 import Footer from '../Footer/Footer';
@@ -80,10 +82,11 @@ const Layout = ({ children }) => {
           property="og:description"
           content="nextjs-mongodb-app is a continously developed app built with Next.JS and MongoDB. This project goes further and attempts to integrate top features as seen in real-life apps."
         />
-        <meta
+        {/* <meta
           property="og:image"
           content="https://repository-images.githubusercontent.com/201392697/5d392300-eef3-11e9-8e20-53310193fbfd"
-        />
+        /> */}
+        <link rel="icon" href={doctor} />
       </Head>
       <Nav />
       <main>{children}</main>

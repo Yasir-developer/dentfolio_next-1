@@ -63,7 +63,7 @@ const DashboardDentistList = ({
       },
       {
         Header: 'Dentist Name',
-        accessor: 'displayName',
+        accessor: 'firstName',
       },
       {
         Header: 'Email Address',

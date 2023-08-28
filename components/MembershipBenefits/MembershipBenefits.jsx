@@ -22,23 +22,37 @@ const MembershipBenefits = () => {
         <div className="flex items-center mt-3 gap-x-2 ">
           <Image src={users} alt="logo" />
           {/* <FaAngleDoubleRight size={18} className="text-custom-blue " />{' '} */}
-          <p className="text-[14px] lg:text-[16px] font-semibold">
-            Stand out and get noticed by potential patients.
+          <p className="text-[14px] lg:text-[16px] font-normal">
+            <span className="text-[14px] lg:text-[16px] font-semibold">
+              Increased Exposure:{' '}
+            </span>
+            Showcase your dental work to a wider audience. Gain visibility and
+            attract potential patients actively searching for cosmetic dentistry
+            services in your area.{' '}
           </p>
         </div>
 
         <div className="flex mt-5 items-center gap-x-2">
           <Image src={userplus} alt="logo" />
 
-          <p className="text-[14px] lg:text-[16px] font-semibold">
-            Attract new patient enquiries{' '}
+          <p className="text-[14px] lg:text-[16px] font-normal">
+            <span className="text-[14px] lg:text-[16px] font-semibold">
+              New Patient Opportunities:{' '}
+            </span>
+            Receive enquiries directly from patients interested in your
+            services.
           </p>
         </div>
 
         <div className="flex mt-5 items-center gap-x-2">
           <Image src={file} alt="logo" />
-          <p className="text-[14px] lg:text-[16px] font-semibold">
-            Grow your private list{' '}
+          <p className="text-[14px] lg:text-[16px] font-normal">
+            <span className="text-[14px] lg:text-[16px] font-semibold">
+              Practice Growth:{' '}
+            </span>
+            Expand your clientele and boost your practice's revenue. With
+            Dentfolio’s targeted marketing, you can tap into a growing market
+            and increase your private income.
           </p>
         </div>
       </div>

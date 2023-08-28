@@ -33,6 +33,7 @@ const SearchBanner = () => {
   const [showModal, setShowModal] = useState(false);
 
   console.log(latitude, longitude, address);
+  useEffect(() => {}, [address]);
 
   const radiusDropdown = () => {
     const handleSliderChange = (values) => {
@@ -139,7 +140,7 @@ const SearchBanner = () => {
       }}
     >
       <div className="flex flex-col-reverse lg:flex-row items-center justify-center max-w-[1140px] mx-auto px-4 lg:px-8">
-        <div className="w-full lg:w-[70%">
+        <div className="w-full">
           <div className="lg:p-4">
             <h1 className="text-3xl lg:text-4xl font-bold mb-4 text-black w-full lg:w-[80%] mt-[20px] lg:mt-[0px]">
               FIND A PRIVATE DENTIST{' '}
@@ -148,13 +149,20 @@ const SearchBanner = () => {
               </span>{' '}
             </h1>
             <p className="mb-4 text-black font-normal lg:text-[14px] text-[13px]">
-              Hundreds of dentists and practices around the UK showcase their
+              {/* Hundreds of dentists and practices around the UK showcase their
               portfolio work on Dentfolio - the home to the UK's best private
-              dentists
+              dentists */}
+              Dentists from all over the UK showcase their work on Dentfolio –
+              the home to the UK’s best dentists.
+            </p>
+
+            <p className="mb-4 text-black font-normal lg:text-[14px] text-[13px]">
+              Search now to find your new private dentist and contact them for
+              an appointment!
             </p>
           </div>
 
-          <div className="bg-white w-full lg:w-3/5 rounded-[7px] max-w-[1140px] my-10 lg:my-0 lg:ml-4">
+          <div className="bg-white w-full lg:w-[80%] rounded-[7px] max-w-[1140px] my-10 lg:my-0 lg:ml-4">
             {showModal && radiusDropdown()}
             <div className="flex items-center p-4 w-full">
               <form
@@ -200,6 +208,10 @@ const SearchBanner = () => {
                         longitude: place?.geometry?.location?.lng(),
                         radius: sliderValue * 1000,
                       };
+                      console.log(place?.formatted_address, 'address');
+                      // return;
+                      dispatch(dentistLocation(place?.formatted_address));
+
                       dispatch(searchDentist(data));
                       router.push('/patient/dentist-list');
                     }}

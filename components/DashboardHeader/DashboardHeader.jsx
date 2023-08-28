@@ -92,7 +92,7 @@ const DashboardHeader = ({ menuToggler }) => {
                 ref={dropdownRef}
                 onClick={toggleDropdown}
               >
-                {user?.displayName}
+                {user?.firstName}
               </h2>
               <div className="flex" style={{ zIndex: 1 }} ref={dropdownRef}>
                 <div

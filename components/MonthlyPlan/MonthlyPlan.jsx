@@ -45,9 +45,7 @@ const MonthlyPlan = () => {
           />
         )}
 
-        <div className="flex flex-row justify-between items-center">
-          <p className="text-[13px] font-light mt-5">sit amet, consectetur</p>
-
+        <div className="flex flex-row justify-end items-center">
           <h1 className="text-[21px] lg:text-[41px] font-bold mt-5 lg:mt-0">
             £99 <span className="text-[13px] font-normal">/ month</span>
           </h1>

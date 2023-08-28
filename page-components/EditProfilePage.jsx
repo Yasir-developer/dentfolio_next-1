@@ -91,6 +91,7 @@ const EditProfilePage = () => {
   useEffect(() => {
     // console.log(user, 'city');
     if (user) {
+      console.log(user, 'user in use EFFECT');
       // console.log(user.city, 'user,city');
       setFirstName(user?.firstName);
       setLastName(user?.lastName);
@@ -163,7 +164,7 @@ const EditProfilePage = () => {
     formData.append('firstName', firstName);
     formData.append('lastName', lastName);
     formData.append('userName', userName);
-    formData.append('displayName', displayName);
+    // formData.append('displayName', displayName);
     formData.append('gdcNo', gdcNo);
     formData.append('buildingName', buildingName);
     formData.append('streetName', showAddress ? showAddress : streetName);
@@ -377,7 +378,7 @@ const EditProfilePage = () => {
                 placeholder={'Last Name'}
                 className={'order-4'}
                 containerClassName={'w-[45%]'}
-                ref={lastRef}
+                // ref={lastRef}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 required
@@ -423,7 +424,7 @@ const EditProfilePage = () => {
 
                 // required
               /> */}
-              <AuthInput
+              {/* <AuthInput
                 placeholder={'Display Name'}
                 className={'order-7'}
                 containerClassName={'w-[45%]'}
@@ -431,7 +432,7 @@ const EditProfilePage = () => {
                 onChange={(e) => setDisplayName(e.target.value)}
                 label="Display Name"
                 required
-              />
+              /> */}
               <AuthInput
                 placeholder={'GDC Number'}
                 className={'order-8'}

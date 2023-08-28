@@ -112,6 +112,7 @@ handler.patch(
         // ...(username && { username }),
 
         ...(firstName && { firstName }),
+        ...(lastName && { lastName }),
         ...(userName && { userName }),
         ...(displayName && { displayName }),
         // ...(payment && { previous_case }),

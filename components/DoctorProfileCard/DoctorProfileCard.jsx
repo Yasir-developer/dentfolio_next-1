@@ -123,7 +123,7 @@ const DoctorProfileCard = ({ data }) => {
               </div>
               <div className="mx-5">
                 <h2 className="text-custom-blue font-semibold text-[21px]">
-                  {modalData.displayName}
+                  {modalData.firstName}
                 </h2>
                 {/* <div className="flex flex-col">
                   <h3 className="text-custom-black text-[15px]">
