@@ -21,7 +21,7 @@ export default function EmailVerifyPage({ valid }) {
       <Head>
         <title>Email verification</title>
       </Head>
-      <VerifyEmail valid={valid} />
+      {/* <VerifyEmail valid={valid} /> */}
     </>
   );
 }
