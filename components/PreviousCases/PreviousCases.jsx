@@ -30,7 +30,7 @@ const PreviousCases = ({ id }) => {
       },
     };
     axios
-      .get(`${server}/api/cases?id=${user?._id ? user?._id : id}`, {
+      .get(`${server}/api/cases?id=${id ? id : user?._id}`, {
         id: profile?.id,
         options,
       })
