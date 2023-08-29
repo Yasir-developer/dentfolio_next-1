@@ -7,6 +7,49 @@ import nc from 'next-connect';
 import { sendMail } from '@/api-lib/mail';
 import { insertContact } from '@/api-lib/db/contact';
 const handler = nc(ncOpts);
+const emailTemplate = `
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        .header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Your Email Header</h1>
+        </div>
+        <div class="content">
+            <p>Hello,</p>
+            <p>This is your email content.</p>
+            <p>Regards,</p>
+            <p>Your Name</p>
+        </div>
+    </div>
+</body>
+</html>
+`;
 
 handler.use(database);
 handler.post(...auths, async (req, res) => {
@@ -34,19 +77,20 @@ handler.post(...auths, async (req, res) => {
   });
 
   await sendMail({
-    from: 'alifr849@gmail.com',
+    from: 'contact@dentfolio.co.uk',
     to: dentistEmail.email,
     subject: 'You have received a new query on Dentfolio',
-    html: `<div>
-    <p>Patient Name:</p>
-    <p>${patient_name}</p>
-    <p>Patient Email:<p/>
-    <p>${patient_email}</p>
-    <p>Patient Phone Number:<p/>
-    <p>${phone_no}</p>
-    <p>Description:<p/>
-    <p>${description}</p>
-      </div>`,
+    html: emailTemplate,
+    //  `<div>
+    // <p>Patient Name:</p>
+    // <p>${patient_name}</p>
+    // <p>Patient Email:<p/>
+    // <p>${patient_email}</p>
+    // <p>Patient Phone Number:<p/>
+    // <p>${phone_no}</p>
+    // <p>Description:<p/>
+    // <p>${description}</p>
+    //   </div>`,
   });
 
   // await sendMail({
