@@ -139,8 +139,8 @@ const SearchBanner = () => {
         width: '100%',
       }}
     >
-      <div className="flex flex-col-reverse lg:flex-row items-center justify-center max-w-[1140px] mx-auto px-4 lg:px-8">
-        <div className="w-full">
+      <div className="flex flex-col-reverse lg:flex-row items-center justify-center max-w-[1140px] mx-auto px-4 lg:px-8 lg:w-[80%] w-full">
+        <div className="w-[90%]">
           <div className="lg:p-4">
             <h1 className="text-3xl lg:text-4xl font-bold mb-4 text-black w-full lg:w-[80%] mt-[20px] lg:mt-[0px]">
               FIND A PRIVATE DENTIST{' '}
@@ -162,7 +162,7 @@ const SearchBanner = () => {
             </p>
           </div>
 
-          <div className="bg-white w-full lg:w-[80%] rounded-[7px] max-w-[1140px] my-10 lg:my-0 lg:ml-4">
+          <div className="bg-white w-full lg:w-[50%] rounded-[7px] max-w-[1140px] my-10 lg:my-0 lg:ml-4">
             {showModal && radiusDropdown()}
             <div className="flex items-center p-4 w-full">
               <form

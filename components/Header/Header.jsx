@@ -55,109 +55,122 @@ const AppHeader = () => {
                   <img className="h-8 w-auto" src={'/images/logo.png'} alt="" />
                 </Link>
               </div>
-              {router.pathname !== '/' &&
-              router.pathname !== '/patient/dentist-search' &&
-              router.pathname !== '/patient/dentist-list' &&
-              router.pathname !== '/patient/[dentistId]' ? (
-                user ? (
-                  <>
-                    <div className="flex">
-                      <div className="flex flex-row items-center justify-center lg:pr-[80px] lg:pl-[30px]">
-                        <Image
-                          src={
-                            user?.profile_photo ? user?.profile_photo : profile
-                          }
-                          alt="logo"
-                          width={51}
-                          height={51}
-                          sizes="100vw"
-                          className="rounded-[25.5px] cursor-pointer"
-                          onClick={() => router.push('/dentist/view-profile')}
-                        />
+              {
+                // router.pathname !== '/' &&
+                // router.pathname !== '/patient/dentist-search' &&
+                router.pathname !== '/patient/dentist-list' &&
+                router.pathname !== '/patient/[dentistId]' ? (
+                  user ? (
+                    <>
+                      <div className="flex">
+                        <div className="flex flex-row items-center justify-center lg:pr-[80px] lg:pl-[30px]">
+                          <Image
+                            src={
+                              user?.profile_photo
+                                ? user?.profile_photo
+                                : profile
+                            }
+                            alt="logo"
+                            width={51}
+                            height={51}
+                            sizes="100vw"
+                            className="rounded-[25.5px] cursor-pointer"
+                            onClick={() => router.push('/dentist/view-profile')}
+                          />
 
-                        <h2
-                          className="hidden lg:block text-custom-blue text-[16px] font-semibold px-2 cursor-pointer"
-                          onClick={() => {
-                            user.role == 0
-                              ? router.push('/dentist/view-profile')
-                              : router.push('/admin/overview');
-                          }}
-                        >
-                          {user?.firstName}
-                          {/* Dylan Taylor */}
-                        </h2>
-                        {/* className="hidden md:block" */}
-                        <div
-                          className="flex"
-                          style={{ zIndex: 1 }}
-                          ref={dropdownRef}
-                        >
-                          <div
-                            className="flex items-center justify-center px-2 rounded-l-md cursor-pointer"
-                            onClick={toggleDropdown}
+                          <h2
+                            className="hidden lg:block text-custom-blue text-[16px] font-semibold px-2 cursor-pointer"
+                            onClick={() => {
+                              user.role == 0
+                                ? router.push('/dentist/view-profile')
+                                : router.push('/admin/overview');
+                            }}
                           >
-                            <HiChevronDown
-                              className={`transform  h-5 w-5 text-[#919191] ${
-                                isDropdownOpen ? 'rotate-180' : 'rotate-0'
-                              }`}
-                            />
+                            {user?.firstName}
+                            {/* Dylan Taylor */}
+                          </h2>
+                          {/* className="hidden md:block" */}
+                          <div
+                            className="flex"
+                            style={{ zIndex: 1 }}
+                            ref={dropdownRef}
+                          >
+                            <div
+                              className="flex items-center justify-center px-2 rounded-l-md cursor-pointer"
+                              onClick={toggleDropdown}
+                            >
+                              <HiChevronDown
+                                className={`transform  h-5 w-5 text-[#919191] ${
+                                  isDropdownOpen ? 'rotate-180' : 'rotate-0'
+                                }`}
+                              />
 
-                            {isDropdownOpen && (
-                              <div class="absolute top-[50px] mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
-                                <p
-                                  class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
-                                  onClick={() => {
-                                    // handleOptionSelect;
-                                    router.push('/dentist/view-profile');
-                                  }}
-                                >
-                                  Dashboard
-                                </p>
+                              {isDropdownOpen && (
+                                <div class="absolute top-[50px] mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
+                                  <p
+                                    class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
+                                    onClick={() => {
+                                      // handleOptionSelect;
+                                      router.push('/dentist/view-profile');
+                                    }}
+                                  >
+                                    Dashboard
+                                  </p>
 
-                                <a
-                                  // href="#"
-                                  onClick={(e) => {
-                                    handleLogout(e);
-                                    // handleOptionSelect;
-                                    // Router.push('/dentist/dentist-plan');
-                                    // handleLogout(e);
-                                  }}
-                                  class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
-                                >
-                                  Sign out
-                                </a>
-                              </div>
-                            )}
+                                  <a
+                                    // href="#"
+                                    onClick={(e) => {
+                                      handleLogout(e);
+                                    }}
+                                    class="block px-4 py-2 text-gray-800 hover:bg-custom-blue hover:text-white"
+                                  >
+                                    Sign out
+                                  </a>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="lg:flex lg:gap-x-2">
-                    <button
-                      className="bg-custom-blue hover:bg-blue-600 text-white font-poppins font-medium py-2 px-[25px] rounded lg:justify-end text-sm"
-                      onClick={() => router.push('/login')}
-                    >
-                      LOGIN
-                    </button>
+                    </>
+                  ) : (
+                    <div>
+                      <div className="lg:flex lg:gap-x-2">
+                        <button
+                          className="bg-custom-blue hover:bg-blue-600 text-white font-poppins font-medium py-2 px-[25px] rounded lg:justify-end text-sm"
+                          onClick={() => router.push('/login')}
+                        >
+                          LOGIN
+                        </button>
 
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        router.push(
-                          router.pathname == '/' ? '/dentist-plan' : '/sign-up'
-                        );
-                      }}
-                      className="bg-white border border-custom-blue text-blue-500 font-poppins font-medium py-2 px-4 rounded w-139 text-sm hidden lg:block"
-                    >
-                      SIGN UP
-                    </button>
-                  </div>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push(
+                              router.pathname == '/'
+                                ? '/dentist-plan'
+                                : '/sign-up'
+                            );
+                          }}
+                          className="bg-white border border-custom-blue text-blue-500 font-poppins font-medium py-2 px-4 rounded w-139 text-sm hidden lg:block"
+                        >
+                          SIGN UP
+                        </button>
+                      </div>
+                      {router.pathname == '/' ||
+                      router.pathname == '/patient/dentist-search' ? (
+                        <p className="text-custom-grey text-[12px] text-center">
+                          For Dentist Only
+                        </p>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  )
+                ) : (
+                  <></>
                 )
-              ) : (
-                <></>
-              )}
+              }
             </nav>
           </header>
         </div>
