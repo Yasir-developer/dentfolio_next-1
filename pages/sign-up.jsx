@@ -71,8 +71,6 @@ const Signup = () => {
   const [postCode, setPostCode] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
 
-  // const [speciality, setSpeciality] = useState('');
-  // const [degree, setDegree] = useState('');
   const [emailModalshow, setEmailModalShow] = useState(false);
   const [showAddress, setShowAddress] = useState('');
   const [latitude, setLatitude] = useState();
