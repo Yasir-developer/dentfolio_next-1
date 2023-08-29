@@ -1,8 +1,8 @@
 import Head from 'next/head';
 // import Footer from './Footer';
-import doctor from '../../public/images/Dentfolio_favicon.png';
+// import doctor from '../../public/images/Dentfolio_favicon.png';
 
-import styles from './Layout.module.css';
+// import styles from './Layout.module.css';
 import Nav from './Nav';
 import Footer from '../Footer/Footer';
 import { useSelector } from 'react-redux';
@@ -86,7 +86,7 @@ const Layout = ({ children }) => {
           property="og:image"
           content="https://repository-images.githubusercontent.com/201392697/5d392300-eef3-11e9-8e20-53310193fbfd"
         /> */}
-        <link rel="icon" href={doctor} />
+        {/* <link rel="icon" href={doctor} /> */}
       </Head>
       <Nav />
       <main>{children}</main>

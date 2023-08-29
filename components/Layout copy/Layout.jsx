@@ -1,8 +1,8 @@
 // import { server } from "Config";
-import Head from 'next/head';
+// import Head from 'next/head';
 import AppHeader from '../Header/Header';
 import Footer from '../Footer/Footer';
-import doctor from '../../public/images/Dentfolio_favicon.png';
+// import doctor from '../../public/images/Dentfolio_favicon.png';
 
 // import Meta from '../Meta/Meta';
 // import Footer from './Footer';

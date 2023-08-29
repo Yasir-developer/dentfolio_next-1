@@ -17,7 +17,7 @@ const Meta = () => {
       <meta name='description' content={setting?.meta_description} />
       <meta property="og:title" content={setting?.meta_title} /> */}
       <meta charSet="utf-8" />
-      <link rel="icon" href={doctor} />
+      {/* <link rel="icon" href={doctor} /> */}
       {/* <title>{setting?.meta_title}</title> */}
     </Head>
   );
