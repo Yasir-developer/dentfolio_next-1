@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
     <div>
       {/* <Meta title="Math Scouts" /> */}
       <AppHeader />
-      <Head>
+      {/* <Head>
         <title>Dentfolio</title>
         <meta
           key="viewport"
@@ -31,12 +31,9 @@ const Layout = ({ children }) => {
           property="og:description"
           content="nextjs-mongodb-app is a continously developed app built with Next.JS and MongoDB. This project goes further and attempts to integrate top features as seen in real-life apps."
         />
-        {/* <meta
-          property="og:image"
-          content="https://repository-images.githubusercontent.com/201392697/5d392300-eef3-11e9-8e20-53310193fbfd"
-        /> */}
+      
         <link rel="icon" href={doctor} />
-      </Head>
+      </Head> */}
       <main>{children}</main>
       {/* <p className='text-center h2'>Website under Construction</p> */}
       <Footer />
