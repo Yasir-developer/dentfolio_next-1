@@ -6,50 +6,9 @@ import { ncOpts } from '@/api-lib/nc';
 import nc from 'next-connect';
 import { sendMail } from '@/api-lib/mail';
 import { insertContact } from '@/api-lib/db/contact';
+import Feed from '../../feed';
+import { server } from 'config';
 const handler = nc(ncOpts);
-const emailTemplate = `
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #ffffff;
-        }
-        .header {
-            background-color: #007bff;
-            color: #ffffff;
-            padding: 10px;
-            text-align: center;
-        }
-        .content {
-            padding: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Your Email Header</h1>
-        </div>
-        <div class="content">
-            <p>Hello,</p>
-            <p>This is your email content.</p>
-            <p>Regards,</p>
-            <p>Your Name</p>
-        </div>
-    </div>
-</body>
-</html>
-`;
 
 handler.use(database);
 handler.post(...auths, async (req, res) => {
@@ -58,10 +17,72 @@ handler.post(...auths, async (req, res) => {
   // }
   const { dentistId, description, patient_name, patient_email, phone_no } =
     req.body;
+  const imagePath = '/images/logo.png';
+  const emailTemplate = `
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <style>
+          body {
+              font-family: Arial, sans-serif;
+              background-color: #f4f4f4;
+              margin: 0;
+              padding: 0;
+          }
+          .container {
+              max-width: 600px;
+              margin: 0 auto;
+              padding: 20px;
+              background-color: #ffffff;
+          }
+          .header {
+<!--                 background-color: #007bff; -->
+              color: #ffffff;
+              padding: 10px;
+<!--           width:100px -->
+<!--                 text-align: center; -->
+          }
+          .content {
+              padding: 20px;
+          }
+        .headerText{
+        font-size:20px;
+<!--           font-style:bold -->
+        color:#000000
+        }
+        .dentText{
+        color:#0372E2
+        }
+        .heading{
+        color:#d6d3cc
+        }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+          <div class="header">
+          <img src="${server}/images/logo.png" alt="Sample Image" />
 
-  // await updateCoursesInUser(req.db, studentId, courseId);
+              <h1 class="headerText" style="font-size:20px; color:#000000">YOU HAVE RECEIVED A 
+                <h1 class="headerText" style="font-size:20px; color:#000000">NEW QUERY ON      <span class="dentText" style="color:#0372E2">DENTFOLIO</span></h1>
+           
+            </h1>
+          </div>
+          <div class="content">
+              <p class="heading" style="color:#A9A9A9">Patient Name</p><p>${patient_name}</p>
 
-  // const teacherEmail = await findEmailById(req.db, teacherId);
+            <p class="heading" style="color:#A9A9A9">Patient Email</p><p>${patient_email}</p>
+            
+            <p class="heading" style="color:#A9A9A9">Patient Phone Number</p><p>${phone_no}</p>
+            
+            <p class="heading" style="color:#A9A9A9">Description</p><p>${description}</p>
+           
+          </div>
+      </div>
+  </body>
+  </html>
+    `;
+
   const dentistEmail = await findEmailById(req.db, dentistId);
   console.log(dentistEmail, 'dentistEmail');
   console.log(dentistId, description, patient_name, patient_email, phone_no);
@@ -71,33 +92,17 @@ handler.post(...auths, async (req, res) => {
     email: patient_email,
     phone: phone_no,
     name: patient_name,
-    // caseType: req.body.tags,
-    // visibility: req.body.selectedOption == 'public' ? 1 : 0,
+
     dentistId: dentistId,
   });
 
   await sendMail({
     from: 'contact@dentfolio.co.uk',
     to: dentistEmail.email,
+
     subject: 'You have received a new query on Dentfolio',
     html: emailTemplate,
-    //  `<div>
-    // <p>Patient Name:</p>
-    // <p>${patient_name}</p>
-    // <p>Patient Email:<p/>
-    // <p>${patient_email}</p>
-    // <p>Patient Phone Number:<p/>
-    // <p>${phone_no}</p>
-    // <p>Description:<p/>
-    // <p>${description}</p>
-    //   </div>`,
   });
-
-  // await sendMail({
-  //   to: studentEmail.email,
-  //   subject: "Class Request",
-  //   html: "<div><p>You created a New Class Request. Thanks!</p></div>",
-  // });
 
   return res.json({ contact: ContactMe, message: 'Email sent Successfully!' });
 });
