@@ -15,6 +15,9 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'banner-image': 'url(/images/Dentfoilo-BG.jpg)',
         'banner-image-mobile': 'url(/images/Dentfoilo-_BG_Mobile.jpg)',
+        'banner-image-home': 'url(/images/Dentfoilo-home.jpg)',
+        'banner-image-home-mobile':
+          'url(/images/Dentfoilo-BG-dentist-mobile-home.jpg)',
       },
       fontFamily: {
         poppins: ['Poppins'],

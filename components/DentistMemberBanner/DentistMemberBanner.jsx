@@ -1,7 +1,7 @@
 import React from 'react';
 import BlueButtons from '@/components/Buttons/BlueButtons';
 import Image from 'next/image';
-import doctor from '../../public/images/female-dentist.png';
+import doctor from '../../public/images/Dentfoilo-home.jpg';
 import PrivatePatients from '../../page-components/PrivatePatients';
 import { FaLongArrowAltDown, FaStethoscope } from 'react-icons/fa';
 import MonthlyPlan from '../MonthlyPlan/MonthlyPlan';
@@ -13,7 +13,14 @@ const DentistMemberBanner = () => {
   return (
     <>
       <div
-        className="dentistPlanBannerContainer lg:bg-custom-grey-medium relative"
+        className="dentistPlanBannerContainer bg-cover h-[440px] min-[1500px]:h-[600px] relative lg:bg-banner-image-home bg-banner-image-home-mobile"
+        style={{
+          // backgroundImage: `url(/images/Dentfoilo-BG.jpg)`,
+          backgroundRepeat: 'no-repeat',
+          // backgroundSize: '100% 100%',
+
+          width: '100%',
+        }}
         // style={{
         //   backgroundImage: `url(/images/female.png)`,
         //   backgroundRepeat: "no-repeat",
@@ -21,7 +28,7 @@ const DentistMemberBanner = () => {
         // }}
       >
         <div>
-          <img
+          {/* <img
             src={'/images/female.png'}
             style={{
               objectFit: 'cover',
@@ -31,7 +38,7 @@ const DentistMemberBanner = () => {
               // height: "300px",
             }}
             className="lg:hidden block"
-          />
+          /> */}
           {/* <Image
             src={"/images/female.png"}
             width={500}
@@ -75,14 +82,14 @@ const DentistMemberBanner = () => {
             )}
           </div>
           <div className="w-[45%] dentistPlanImageContainer hidden lg:block">
-            <Image
+            {/* <Image
               src={doctor}
               width={0}
               height={0}
               sizes="100vw"
               className="h-[614px] w-auto ml-auto mr-0"
               alt="logo"
-            />
+            /> */}
           </div>
         </div>
       </div>
