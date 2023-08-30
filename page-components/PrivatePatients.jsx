@@ -82,10 +82,10 @@ const PrivatePatients = () => {
                     {item.title}
                   </p>
                 </div>
-                <div className="w-[60%] mt-[15px] ">
-                  <p className="">{item.description}</p>
+                <div className="w-[60%] mt-[15px]">
+                  <p className="text-center">{item.description}</p>
 
-                  <p className="font-light">{item.short_Des}</p>
+                  <p className="font-light text-center">{item.short_Des}</p>
                 </div>
 
                 {/* <div class="line"></div> */}

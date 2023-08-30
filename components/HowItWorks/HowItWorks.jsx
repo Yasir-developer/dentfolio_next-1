@@ -116,7 +116,7 @@ const HowItWorks = () => {
             <Image
               src={satisfied}
               alt="logo"
-              className="max-h-[160px] w-auto"
+              className="max-h-[140px] w-auto"
             />
           </div>
         </div>
@@ -140,7 +140,7 @@ const HowItWorks = () => {
             </a> */}
           </div>
           <div className="absolute bottom-0 right-0">
-            <Image src={dental} alt="logo" className="max-h-[160px] w-auto" />
+            <Image src={dental} alt="logo" className="max-h-[140px] w-auto" />
           </div>
         </div>
         <div className="hidden md:block">
@@ -163,7 +163,7 @@ const HowItWorks = () => {
             </a> */}
           </div>
           <div className="absolute bottom-0 right-0">
-            <Image src={cellular} alt="logo" className="max-h-[160px] w-auto" />
+            <Image src={cellular} alt="logo" className="max-h-[140px] w-auto" />
           </div>
         </div>
       </div>

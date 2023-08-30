@@ -135,6 +135,14 @@ const AppHeader = () => {
                     </>
                   ) : (
                     <div>
+                      {router.pathname == '/' ||
+                      router.pathname == '/patient/dentist-search' ? (
+                        <p className="text-custom-grey text-[12px] text-center">
+                          For Dentist
+                        </p>
+                      ) : (
+                        <></>
+                      )}
                       <div className="lg:flex lg:gap-x-2">
                         <button
                           className="bg-custom-blue hover:bg-blue-600 text-white font-poppins font-medium py-2 px-[25px] rounded lg:justify-end text-sm"
@@ -157,14 +165,6 @@ const AppHeader = () => {
                           SIGN UP
                         </button>
                       </div>
-                      {router.pathname == '/' ||
-                      router.pathname == '/patient/dentist-search' ? (
-                        <p className="text-custom-grey text-[12px] text-center">
-                          For Dentist Only
-                        </p>
-                      ) : (
-                        <></>
-                      )}
                     </div>
                   )
                 ) : (
