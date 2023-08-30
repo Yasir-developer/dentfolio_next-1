@@ -3,7 +3,6 @@ import { findPosts, insertPost, updateUserById } from '@/api-lib/db';
 import { insertPayments } from '@/api-lib/db/payments';
 import { insertSubscriptions, updateUser } from '@/api-lib/db/subscription';
 import { auths, database, validateBody } from '@/api-lib/middlewares';
-// import { getMongoDb } from '@/api-lib/mongodb';
 import { ncOpts } from '@/api-lib/nc';
 import nc from 'next-connect';
 
