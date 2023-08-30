@@ -242,7 +242,7 @@ const DoctorProfileCard = ({ data }) => {
                 <div className="sm:ml-7">
                   <div className="flex flex-col  items-start p-[20px]">
                     <h2 className="text-custom-blue font-semibold text-[18px] lg:text-[21px]">
-                      {item.displayName}
+                      {item.firstName} {item.lastName}
                     </h2>
                     <div className="flex mt-3">
                       <Image src={location} alt="logo" />
