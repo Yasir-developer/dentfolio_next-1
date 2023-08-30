@@ -123,7 +123,6 @@ const Signup = () => {
           lastName,
           courtesyTitle: selectedOption,
 
-          // degree,
           // displayName,
           gdcNo,
           buildingName,
