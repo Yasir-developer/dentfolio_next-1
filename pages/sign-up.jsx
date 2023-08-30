@@ -105,7 +105,6 @@ const Signup = () => {
   ];
   const router = useRouter();
   const handleSelectChange = (event) => {
-    // console.log(event.target.value, "event");
     setSelectedOption(event.target.value);
   };
   const onSubmit = (e) => {
