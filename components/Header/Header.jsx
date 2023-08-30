@@ -138,7 +138,7 @@ const AppHeader = () => {
                       {router.pathname == '/' ||
                       router.pathname == '/patient/dentist-search' ? (
                         <p className="text-custom-grey text-[12px] text-center">
-                          For Dentist
+                          For Dentists
                         </p>
                       ) : (
                         <></>
