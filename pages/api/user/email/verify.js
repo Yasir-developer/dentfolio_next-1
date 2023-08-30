@@ -21,7 +21,7 @@ handler.post(async (req, res) => {
 
   await sendMail({
     to: email,
-    from: 'alifr849@gmail.com',
+    from: 'contact@dentfolio.co.uk',
     subject: `Verification Email for ${server}`,
     html: `
       <div>
