@@ -60,9 +60,8 @@ handler.post(...auths, async (req, res) => {
         .footer{
           height:20px; background-color:#001323; width:600px; align-items:center; justify-content:center
         }
-        footerText{
-          text-align:center; color:#fff; font-size:14px
-        }
+        .footerText{
+          text-align:center; color:#fff; font-size:14px; background-color:#001323        }
       </style>
   </head>
   <body>
@@ -87,7 +86,7 @@ handler.post(...auths, async (req, res) => {
           </div>
 
           <footer style="height:20px; background-color:#001323; width:600px; align-items:center; justify-content:center">
-          <p style="text-align:center; color:#fff; font-size:14px" >
+          <p class="footerText" style="text-align:center; color:#fff; font-size:14px; background-color:#001323" >
                   © Copyright 2023 Dentfolio. All Rights Reserved.
                   <p>
             </footer>
