@@ -54,7 +54,8 @@ handler.post(...auths, async (req, res) => {
         color:#0372E2
         }
         .heading{
-        color:#d6d3cc
+        color:#d6d3cc;
+         font-weight: bold;
         }
       </style>
   </head>
@@ -63,21 +64,27 @@ handler.post(...auths, async (req, res) => {
           <div class="header">
           <img src="${server}/images/logo.png" alt="Sample Image" />
 
-              <h1 class="headerText" style="font-size:20px; color:#000000">YOU HAVE RECEIVED A 
-                <h1 class="headerText" style="font-size:20px; color:#000000">NEW QUERY ON      <span class="dentText" style="color:#0372E2">DENTFOLIO</span></h1>
+              <h1 class="headerText" style="font-size:20px; color:#000000">YOU HAVE RECEIVED A NEW QUERY ON  
+                   <span class="dentText" style="color:#0372E2">DENTFOLIO</span></h1>
            
             </h1>
           </div>
           <div class="content">
-              <p class="heading" style="color:#A9A9A9">Patient Name</p><p>${patient_name}</p>
+              <p class="heading" style="color:#A9A9A9; font-weight: bold;">Patient Name</p><p>${patient_name}</p>
 
-            <p class="heading" style="color:#A9A9A9">Patient Email</p><p>${patient_email}</p>
+            <p class="heading" style="color:#A9A9A9; font-weight: bold;">Patient Email</p><p>${patient_email}</p>
             
-            <p class="heading" style="color:#A9A9A9">Patient Phone Number</p><p>${phone_no}</p>
+            <p class="heading" style="color:#A9A9A9; font-weight: bold;">Patient Phone Number</p><p>${phone_no}</p>
             
-            <p class="heading" style="color:#A9A9A9">Description</p><p>${description}</p>
+            <p class="heading" style="color:#A9A9A9; font-weight: bold;">Description</p><p>${description}</p>
            
           </div>
+
+          <footer style="height:20px; background-color:#001323; width:600px; align-items:center; justify-content:center">
+          <p style="text-align:center; color:#fff; font-size:14px" >
+                  © Copyright 2023 Dentfolio. All Rights Reserved.
+                  <p>
+            </footer>
       </div>
   </body>
   </html>
