@@ -57,6 +57,12 @@ handler.post(...auths, async (req, res) => {
         color:#d6d3cc;
          font-weight: bold;
         }
+        .footer{
+          height:20px; background-color:#001323; width:600px; align-items:center; justify-content:center
+        }
+        footerText{
+          text-align:center; color:#fff; font-size:14px
+        }
       </style>
   </head>
   <body>
@@ -91,8 +97,8 @@ handler.post(...auths, async (req, res) => {
     `;
 
   const dentistEmail = await findEmailById(req.db, dentistId);
-  console.log(dentistEmail, 'dentistEmail');
-  console.log(dentistId, description, patient_name, patient_email, phone_no);
+  // console.log(dentistEmail, 'dentistEmail');
+  // console.log(dentistId, description, patient_name, patient_email, phone_no);
   // return;
   const ContactMe = insertContact(req.db, {
     description: description,
