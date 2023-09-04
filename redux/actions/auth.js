@@ -22,6 +22,6 @@ export const resetUser = (data) => {
 
 export const logoutUser = () => {
   return (dispatch) => {
-    dispatch({ type: 'FETCH_USER_LOGOUT', payload: null });
+    dispatch({ type: 'FETCH_USER_LOGOUT', payload: {} });
   };
 };

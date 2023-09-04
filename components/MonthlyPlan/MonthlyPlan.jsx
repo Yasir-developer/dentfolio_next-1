@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 const MonthlyPlan = () => {
   const { user } = useSelector((state) => state.auth);
-
+  console.log(user, 'user');
   return (
     // <div className="flex">
     <div className="px-5 lg:px-0 lg:w-[45%] w-full">
@@ -32,7 +32,7 @@ const MonthlyPlan = () => {
             Cancel anytime. We'll remind you 7 days before your trial ends.
           </p>
         </div>
-        {user ? (
+        {user && Object?.keys(user)?.length > 0 ? (
           <></>
         ) : (
           <BlueButtons

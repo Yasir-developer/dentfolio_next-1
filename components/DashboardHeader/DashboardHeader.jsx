@@ -51,7 +51,7 @@ const DashboardHeader = ({ menuToggler }) => {
         <Image
           src={logoWhite}
           className="mx-auto max-w-[173px] cursor-pointer"
-          onClick={() => Router.push('/dentist-plan')}
+          onClick={() => Router.push('/')}
           alt="profile image"
         />
 

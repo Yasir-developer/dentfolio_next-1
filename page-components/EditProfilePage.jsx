@@ -39,7 +39,7 @@ const EditProfilePage = () => {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [userName, setUserName] = useState('');
+  // const [userName, setUserName] = useState('');
 
   const [displayName, setDisplayName] = useState('');
   const [gdcNo, setGdcNo] = useState('');
@@ -110,7 +110,7 @@ const EditProfilePage = () => {
       setBio(user?.bio);
       setPhone(user?.phone ? user?.phone : '');
       setTags(user?.treatment_type);
-      setUserName(user?.userName);
+      // setUserName(user?.userName);
       setPickedImage(user?.profile_photo);
       // setI(user?.treatment_type);
     }
@@ -163,7 +163,7 @@ const EditProfilePage = () => {
 
     formData.append('firstName', firstName);
     formData.append('lastName', lastName);
-    formData.append('userName', userName);
+    // formData.append('userName', userName);
     // formData.append('displayName', displayName);
     formData.append('gdcNo', gdcNo);
     formData.append('buildingName', buildingName);
@@ -356,7 +356,7 @@ const EditProfilePage = () => {
                   })}
                 </select>
               </div>
-              <AuthInput
+              {/* <AuthInput
                 placeholder={'User Name'}
                 className={'order-2'}
                 containerClassName={'w-[45%]'}
@@ -364,7 +364,7 @@ const EditProfilePage = () => {
                 onChange={(e) => setUserName(e.target.value)}
                 label="User Name"
                 // required
-              />
+              /> */}
               <AuthInput
                 placeholder={'First Name'}
                 className={'order-3'}

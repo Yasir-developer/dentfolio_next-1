@@ -60,7 +60,7 @@ const AppHeader = () => {
                 // router.pathname !== '/patient/dentist-search' &&
                 router.pathname !== '/patient/dentist-list' &&
                 router.pathname !== '/patient/[dentistId]' ? (
-                  user ? (
+                  user && Object?.keys(user)?.length > 0 ? (
                     <>
                       <div className="flex">
                         <div className="flex flex-row items-center justify-center lg:pr-[80px] lg:pl-[30px]">
