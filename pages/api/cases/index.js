@@ -125,21 +125,12 @@ handler.patch(
     let path;
     let afterPath;
 
-    // console.log(req.file, 'path========');
-    // if (req.file) {
-    //   console.log(req.file.path, 'req.file=======');
-    //   const image = await cloudinary.uploader.upload(req.file.path);
-    //   path = image.secure_url;
-    //   // console.log(path, 'my path');
-    //   // return;
-    // }
-
     if (req.files) {
       // console.log(req.file.path, 'req.file=======');
       const image = await cloudinary.uploader.upload(
         req.files.before_cases_photo[0].path,
         {
-          width: 512,
+          width: 1080,
           height: 512,
           crop: 'fill',
         }
@@ -147,23 +138,15 @@ handler.patch(
       const imageTwo = await cloudinary.uploader.upload(
         req.files.after_cases_photo[0].path,
         {
-          width: 512,
+          width: 1080,
           height: 512,
           crop: 'fill',
         }
       );
       path = image.secure_url;
       afterPath = imageTwo.secure_url;
-      console.log(path, 'path');
-      console.log(afterPath, 'afterPath');
-
-      // console.log(path, 'my path');
     }
-    // else{
-    //   return res.status(400).json({error:'Please Select an Image'})
-    // }
 
-    // console.log(req.body)
     const { id, dentistId, title, description, tags, selectedOption } =
       req.body;
 

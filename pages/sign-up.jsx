@@ -40,7 +40,7 @@ const Signup = () => {
   }, [modal]);
 
   const stripePromise = loadStripe(
-    'pk_live_51NU3nUFH7jk2A82vWgVJ1bOKT87w6XoqnbBoreTpy9LlFAXah1gS35ED6eLjHV0wbaJy4FJQNgYu97uLQT8kjoe000LI6Ux8Li'
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
   );
 
   const emailRef = useRef();

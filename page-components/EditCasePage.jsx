@@ -58,6 +58,9 @@ const EditCasePage = () => {
     const [file] = e.target.files;
     if (file) {
       setImageFiles(file);
+      if (parseFloat(file.size) > 5000000) {
+        return toast.error('File can not be larger than 5 mb');
+      }
       dispatch(saveFiles(file));
       if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
         console.log('no file');
@@ -74,6 +77,9 @@ const EditCasePage = () => {
     const [file] = e.target.files;
     if (file) {
       setAfterImageFiles(file);
+      if (parseFloat(file.size) > 5000000) {
+        return toast.error('File can not be larger than 5 mb');
+      }
       // dispatch(saveFiles(file));
       if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
         console.log('no file');
@@ -429,13 +435,20 @@ const EditCasePage = () => {
           <p className="mt-2 text-[16px] font-light mb-5">Update Information</p>
         </div>
         <div
-          className={`lg:py-5 py-2 flex flex-col max-w-[1140px] min-h-[500px] max-[767]:overflow-y-scroll lg:flex-wrap w-[90%] border-custom-grey rounded-[7px] mx-auto mb-8  ${
+          className={`lg:py-5 py-2 flex flex-col max-w-[1140px] min-h-[500px] m-x:!max-h-full max-[767]:overflow-y-scroll lg:flex-wrap w-[90%] border-custom-grey rounded-[7px] mx-auto mb-8  ${
             pageLoader
               ? 'w-full items-center justify-center h-full'
               : 'justify-start'
           }`}
           style={{
             maxHeight: (cases?.length * 1000) / 2,
+
+            // maxHeight:
+            //   cases.length > 1
+            //     ? cases.length == 3
+            //       ? (cases?.length * 1000) / 2
+            //       : (cases?.length * 800) / 2
+            //     : '',
           }}
         >
           {pageLoader ? (

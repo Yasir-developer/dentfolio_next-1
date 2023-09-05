@@ -42,7 +42,7 @@ const AppHeader = () => {
       router.pathname !== '/admin/overview' &&
       router.pathname !== '/admin/dentist' &&
       router.pathname !== '/admin/revenue' &&
-      router.pathname !== '/verify-email/[token]' &&
+      // router.pathname !== '/verify-email/[token]' &&
       router.pathname !== '/admin/settings' ? (
         <div className="border-b border-[#D1CDD2]">
           <header className="inset-x-0 top-0 z-50 sizingStyles">
@@ -58,6 +58,8 @@ const AppHeader = () => {
               {
                 // router.pathname !== '/' &&
                 // router.pathname !== '/patient/dentist-search' &&
+                router.pathname !== '/verify-email/[token]' &&
+                router.pathname !== '/verify-email-login/[token]' &&
                 router.pathname !== '/patient/dentist-list' &&
                 router.pathname !== '/patient/[dentistId]' ? (
                   user && Object?.keys(user)?.length > 0 ? (

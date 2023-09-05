@@ -63,8 +63,8 @@ const CreateCasePage = () => {
     const [file] = e.target.files;
     if (file) {
       setImageFiles(file);
-      // console.log(formatBytes(file.size), "formatBytes(file.size)");
-      if (parseFloat(formatBytes(file.size)) > 5000) {
+      console.log(formatBytes(file.size), 'formatBytes(file.size)');
+      if (parseFloat(file.size) > 5000000) {
         return toast.error('File can not be larger than 5 mb');
       }
       if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {
@@ -82,8 +82,8 @@ const CreateCasePage = () => {
     const [file] = e.target.files;
     if (file) {
       setAfterImageFiles(file);
-      // console.log(formatBytes(file.size), "formatBytes(file.size)");
-      if (parseFloat(formatBytes(file.size)) > 5000) {
+      console.log(formatBytes(file.size), ' second  formatBytes(file.size)');
+      if (parseFloat(file.size) > 5000000) {
         return toast.error('File can not be larger than 5 mb');
       }
       if (!file.name.match(/\.(jpg|jpeg|png|gif)$/)) {

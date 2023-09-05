@@ -12,28 +12,39 @@ import { server } from 'config';
 import { fetchUser } from 'redux/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
-// import { server } from '../../../config';
-// import { toast } from 'react-toastify';
-// import { fetchUser } from '@/redux/actions/auth';
-// import { useDispatch } from 'react-redux';
+import { Elements, PaymentElement } from '@stripe/react-stripe-js';
+import CheckoutForm from '@/page-components/Checkout/CheckoutForm';
+import { loadStripe } from '@stripe/stripe-js';
+
 const Login = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user, modal } = useSelector((state) => state.auth);
 
   const [email, setEmail] = useState('');
+  const [emailModalshow, setEmailModalShow] = useState(false);
+
   const [password, setPassword] = useState('');
   const [loader, setLoader] = useState(false);
+  const [paymentModalShow, setPaymentModalShow] = useState(false);
+
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  );
   useEffect(() => {
     if (user) {
       console.log(user, 'user use effect');
     }
   }, [user]);
+  useEffect(() => {
+    if (modal == true) {
+      setPaymentModalShow(true);
+    }
+  }, [modal]);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setLoader(true);
-    // console.log(email, password);
-    // Send a POST request to the login API endpoint
+
     let data = {
       email,
       password,
@@ -60,8 +71,11 @@ const Login = () => {
 
           if (res?.data?.user?.role == 1) {
             Router.replace('/admin/overview');
-          } else {
+          } else if (res?.data?.user?.emailVerified) {
             Router.replace('/dentist/view-profile');
+          } else {
+            veriifyEmail(res?.data?.user);
+            setEmailModalShow(true);
           }
         }
       })
@@ -72,8 +86,84 @@ const Login = () => {
         setLoader(false);
       });
   };
+
+  const EmailModal = () => {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-[999]">
+        <div className="bg-white p-8 rounded shadow-lg">
+          <p className="text-[20px] text-custom-blue py-3">
+            Your Email is not Verified
+          </p>
+
+          <p>Email Confirmation Sent</p>
+
+          <p>An Email Confirmation Has Been Sent To The Address Provided.</p>
+          <div className="mt-4 flex justify-end">
+            <button
+              className="px-4 py-2 mr-2 bg-custom-blue text-white rounded hover:bg-sky-500"
+              onClick={() => handleClose()}
+              // onClick={confirmDelete} // Call confirmDelete when confirmed
+            >
+              OK
+            </button>
+            {/* <button
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+            // onClick={cancelDelete} // Call cancelDelete when canceled
+          >
+            Cancel
+          </button> */}
+          </div>
+        </div>
+      </div>
+    );
+  };
+  const options = { mode: 'billing' };
+
+  const paymentForm = (e) => {
+    return (
+      <div className="product">
+        <div>
+          {/* <InjectedCheckoutForm /> */}
+          <Elements stripe={stripePromise} option={options}>
+            {/* <PaymentElement /> */}
+
+            <CheckoutForm />
+            {/* <AddressForm /> */}
+          </Elements>
+        </div>
+      </div>
+    );
+  };
+
+  const handleClose = () => {
+    setEmailModalShow(false);
+  };
+  const veriifyEmail = async (user) => {
+    // console.log(user, "user in verify email");
+    try {
+      const response = await fetch(
+        `/api/user/email/loginVerify?id=${user._id}&email=${user.email}&firstName=${user.firstName}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+      // console.log(response, "response for email verify");
+      // emailRef.current.openEmailModal();
+    } catch (e) {
+      toast.error(e.message);
+    } finally {
+      // setIsLoading(false);
+    }
+  };
   return (
     <div className="lg:w-full flex flex-col lg:flex-row h-screen bg-[#F9FBFC]">
+      {emailModalshow && EmailModal()}
+      {paymentModalShow && (
+        <div className="fixed w-full h-full flex justify-center items-center bg-[#00000080] z-[9999]">
+          {paymentForm()}
+        </div>
+      )}
       <div className="lg:w-full lg:py-[0px] py-[30px] bg-gradient-radial from-[#0372E2] to-[#0B5FB4] justify-center flex items-center text-center">
         <Image src={logo} alt="logo" className="mx-auto hidden lg:block" />
 

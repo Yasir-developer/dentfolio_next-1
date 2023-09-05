@@ -68,7 +68,12 @@ const PreviousCases = ({ id }) => {
       <div
         className="flex flex-col overflow-y-scroll overflow-x-hidden m-x:!max-h-full lg:flex-wrap mb-10 max-w-[1140px] mx-auto min-h-[500px]"
         style={{
-          maxHeight: (cases?.length * 800) / 2,
+          maxHeight:
+            cases.length > 1
+              ? cases.length == 3
+                ? (cases?.length * 1000) / 2
+                : (cases?.length * 800) / 2
+              : '',
         }}
       >
         {/* <div> */}

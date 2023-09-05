@@ -115,7 +115,7 @@ handler.post(
         : payment_id,
       trial_period_days: 30,
       cancel_at: timestamps.unixTimestampAfterOneYear,
-      // items: [{ price: 'price_1NaGYqFH7jk2A82vAC2kyeyf' }], test
+      // items: [{ price: 'price_1NaGYqFH7jk2A82vAC2kyeyf' }],
       items: [{ price: 'price_1NksNBFH7jk2A82vi3EaxVi2' }],
     });
     // console.log(charge, 'charge');

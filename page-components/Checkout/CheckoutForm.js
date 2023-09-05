@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { server } from 'config';
 import { toast } from 'react-hot-toast';
 import Router from 'next/router';
-import { fetchUser } from 'redux/actions/auth';
+import { fetchUser, paymentModal } from 'redux/actions/auth';
 import AuthInput from '@/components/Inputs/AuthInput';
 import AddressForm from '@/components/AddressForm/AddressForm';
 
@@ -76,6 +76,8 @@ const CheckoutForm = (props) => {
             setLoader(false);
 
             //   emptFields();
+            dispatch(paymentModal(false));
+
             Router.replace('/dentist/view-profile');
           } else if (res.status == 400) {
           }
