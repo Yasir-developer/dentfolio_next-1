@@ -51,7 +51,7 @@ const AppHeader = () => {
               aria-label="Global"
             >
               <div className="flex lg:flex-1">
-                <Link href={user ? '#' : '/'} className="-m-1.5 p-1.5" passHref>
+                <Link href={'/'} className="-m-1.5 p-1.5" passHref>
                   <img className="h-8 w-auto" src={'/images/logo.png'} alt="" />
                 </Link>
               </div>
