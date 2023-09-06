@@ -13,8 +13,11 @@ import { toast } from 'react-hot-toast';
 import BlueButtons from '../Buttons/BlueButtons';
 import axios from 'axios';
 import { server } from 'config';
+import ReCAPTCHA from 'react-google-recaptcha';
+const TEST_SITE_KEY = '6Le6sAMoAAAAAGl9N980ZjGYwV9YNDmy9irsjBGM';
 const DoctorBasicDetail = (props) => {
-  console.log(props, '=====');
+  const recaptchaRef = React.createRef();
+
   const [showModal, setShowModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
   const [showContact, setShowContact] = useState(false);
@@ -58,45 +61,47 @@ const DoctorBasicDetail = (props) => {
   const contactMe = (e) => {
     e.preventDefault();
     // if (name && phone && email || description) {
-    setContactLoader(true);
-    const options = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
+    const recaptchaValue = recaptchaRef.current.getValue();
+    if (recaptchaValue) {
+      setContactLoader(true);
+      const options = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
 
-    axios
-      .post(`${server}/api/patient`, {
-        dentistId: props?.data._id,
-        patient_name: name,
-        phone_no: phone,
-        patient_email: email,
-        description,
+      axios
+        .post(`${server}/api/patient`, {
+          dentistId: props?.data._id,
+          patient_name: name,
+          phone_no: phone,
+          patient_email: email,
+          description,
 
-        options,
-      })
-      .then((res) => {
-        // return;
-        if (res.status == 200) {
+          options,
+        })
+        .then((res) => {
+          // return;
+          if (res.status == 200) {
+            setContactLoader(false);
+            toast.success('Your Response has been sent to the Dentist');
+            setName('');
+            setPhone('');
+            setEmail('');
+            setDescription('');
+            setShowModal(false);
+            setShowThankYouModal(true);
+          } else if (res.status == 400) {
+          }
+        })
+        .catch((error) => {
+          toast.success(error?.response?.data?.message);
           setContactLoader(false);
-          toast.success('Your Response has been sent to the Dentist');
-          setName('');
-          setPhone('');
-          setEmail('');
-          setDescription('');
-          setShowModal(false);
-          setShowThankYouModal(true);
-        } else if (res.status == 400) {
-        }
-      })
-      .catch((error) => {
-        toast.success(error?.response?.data?.message);
-        setContactLoader(false);
-        console.log(error, 'erroorrr');
-      });
-    // } else {
-    //   toast.error('All fields are required to Continue');
-    // }
+          console.log(error, 'erroorrr');
+        });
+    } else {
+      toast.error('Please check the field to Continue');
+    }
   };
 
   const thankYouModal = () => {
@@ -204,6 +209,11 @@ const DoctorBasicDetail = (props) => {
                 onChange={(e) => setDescription(e.target.value)}
                 required
               ></textarea>
+              <ReCAPTCHA
+                // style={{ display: 'inline-block' }}
+                sitekey={TEST_SITE_KEY}
+                ref={recaptchaRef}
+              />
               <BlueButtons
                 loading={contactLoader}
                 className="bg-custom-blue hover:bg-blue-600 text-white font-poppins font-medium py-2 mt-5 mb-7 px-[45px] rounded lg:justify-end text-sm"

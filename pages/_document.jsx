@@ -24,6 +24,7 @@ class MyDocument extends Document {
             // href='https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap'
             rel="stylesheet"
           />
+          <script src="https://www.google.com/recaptcha/api.js"></script>
         </Head>
         <body className="h-full">
           <Main />
