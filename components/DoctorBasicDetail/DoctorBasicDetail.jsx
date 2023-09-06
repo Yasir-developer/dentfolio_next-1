@@ -38,11 +38,6 @@ const DoctorBasicDetail = (props) => {
         setShowContact(false);
       }
     }
-
-    // if()
-    // return () => {
-    //   second
-    // }
   }, [showContact]);
 
   const onGoogleApiLoaded = ({ map, maps }) => {
@@ -160,11 +155,6 @@ const DoctorBasicDetail = (props) => {
                 <h2 className="text-custom-blue font-semibold text-[21px]">
                   {props?.data?.firstName} {props?.data?.lastName}
                 </h2>
-                {/* <div className="flex flex-col">
-                  <h3 className="text-custom-black text-[15px]">
-                    {props?.data?.speciality}
-                  </h3>
-                </div> */}
               </div>
             </div>
             <form onSubmit={(e) => contactMe(e)}>
@@ -251,15 +241,6 @@ const DoctorBasicDetail = (props) => {
               {props?.data?.courtesyTitle ? props?.data?.courtesyTitle : 'Dr'}{' '}
               {props?.data?.firstName} {props?.data?.lastName}
             </h2>
-            {/* <div className="flex flex-col">
-              <h3 className="text-custom-black lg:text-[22px] text-[17px]">
-                {props?.data?.speciality}
-              </h3>
-
-              <h2 className="text-[#5D5D5D] text-[16px] font-normal">
-                {props?.data?.degree}
-              </h2>
-            </div> */}
           </div>
         </div>
         <div className="lg:px-8">
