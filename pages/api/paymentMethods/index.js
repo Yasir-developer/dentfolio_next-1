@@ -32,6 +32,12 @@ handler.post(
       token,
       firstName,
       email,
+      city,
+      country,
+      line1,
+      line2,
+      postal_code,
+
       //   cardNumber,
       //   cardExpMonth,
       //   cardExpYear,
@@ -49,6 +55,15 @@ handler.post(
     const paymentMethod = await stripe.paymentMethods.create({
       type: 'card',
       card: { token: token },
+      billing_details: {
+        address: {
+          city: city,
+          country: country,
+          line1: line1,
+          line2: line2,
+          postal_code: postal_code,
+        },
+      },
     });
     console.log(paymentMethod.id, 'paymentMethod.id');
 

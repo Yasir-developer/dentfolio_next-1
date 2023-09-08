@@ -18,7 +18,7 @@ export async function dentistsCount(db) {
 export async function dentistsCountBySubscription(db) {
   return db
     .collection('users')
-    .find({ role: 0, paymentVerified: true })
+    .find({ role: 0, paymentVerified: true, emailVerified: true })
     .count();
 }
 
@@ -29,6 +29,7 @@ export async function listDentists(db, startDate) {
     .find(
       {
         role: 0,
+        // emailVerified: false,
         create_at: {
           $gte: startDate,
         },

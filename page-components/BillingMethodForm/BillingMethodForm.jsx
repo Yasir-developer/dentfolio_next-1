@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ElementsConsumer, CardElement } from '@stripe/react-stripe-js';
 
 import CardSection from '../../page-components/Checkout/CardSection';
@@ -12,6 +12,7 @@ import {
   PaymentMethods,
   handleModal,
 } from 'redux/actions/payment';
+import AddressForm from '@/components/AddressForm/AddressForm';
 
 const BillingMethodForm = ({ stripe, elements }) => {
   //   console.log(props, 'props props');
@@ -22,6 +23,8 @@ const BillingMethodForm = ({ stripe, elements }) => {
 
   const [loader, setLoader] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [address, setAddress] = useState('');
+  useEffect(() => {}, [address]);
   // console.log(change, 'changechang');
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -56,6 +59,11 @@ const BillingMethodForm = ({ stripe, elements }) => {
           name: user.name,
           email: user.email,
           token: result.token.id,
+          city: address.address.city,
+          line1: address.address.line1,
+          line2: address.address.line2,
+          country: address.address.country,
+          postal_code: address.address.postal_code,
           options,
         })
         .then((res) => {
@@ -85,12 +93,18 @@ const BillingMethodForm = ({ stripe, elements }) => {
         });
     }
   };
-
+  const handleAddressChange = (newAddress) => {
+    console.log(newAddress, 'newAddress');
+    setAddress(newAddress);
+  };
   return (
     <div>
       {/* <div class="product-info"></div> */}
       <form onSubmit={handleSubmit}>
         <CardSection />
+
+        <AddressForm onAddressChange={handleAddressChange} />
+
         {loader ? (
           <div
             aria-label="Loading..."

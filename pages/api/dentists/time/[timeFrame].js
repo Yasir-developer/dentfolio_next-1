@@ -11,7 +11,7 @@ handler.post(async (req, res) => {
   // console.log(req.body, 'req.body');
   // return;
   const { timeFrame } = req.query;
-  console.log(req.query, 'eerrere');
+  // console.log(req.query, 'eerrere');
   // console.log(timeFrame, 'timeFrame');
   const currentTime = new Date();
   let startDate;
@@ -27,7 +27,7 @@ handler.post(async (req, res) => {
     throw new Error('Invalid time frame');
   }
   const dentists = await listDentists(req.db, startDate);
-
+  console.log(dentists);
   res.json({ dentists });
 });
 
