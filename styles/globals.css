@@ -239,6 +239,8 @@ bottom:0;
   /* overflow: hidden; */
   /* position: relative; */
   background-color: #fff;
+  height: 80%;
+    overflow-y: scroll
   /* height: 95%;
   overflow-y: scroll;
 } */

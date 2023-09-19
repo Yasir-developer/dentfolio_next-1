@@ -102,7 +102,11 @@ const BillingPage = (props) => {
   };
   return (
     <>
-      {change && BillingMethodFormModal()}
+      {change && (
+        <div className="fixed w-full h-full flex justify-center items-center bg-[#00000080] z-[9999]">
+          {BillingMethodFormModal()}
+        </div>
+      )}
       <div className="items-center justify-center mx-auto">
         <div className="flex lg:flex-row flex-col  justify-between lg:items-center my-8 mx-auto w-[90%]">
           <div className="flex flex-col">
