@@ -25,6 +25,15 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           <script src="https://www.google.com/recaptcha/api.js"></script>
+
+          <script async src="https://www.googletagmanager.com/gtag/js?id=G-0BTT5R168E"></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments)}
+            gtag('js', new Date());
+
+            gtag('config', 'G-0BTT5R168E');
+          </script>
         </Head>
         <body className="h-full">
           <Main />
