@@ -16,7 +16,7 @@ export const VerifyEmail = ({ valid }) => {
     if (valid) {
       dispatch(paymentModal(true));
     }
-  });
+  }, []);
   return (
     <Wrapper className={styles.root}>
       {/* <AppHeader /> */}
@@ -30,8 +30,8 @@ export const VerifyEmail = ({ valid }) => {
             : 'It looks like you may have clicked on an invalid link. Please close this window and try again.'}
         </Text>
         <Spacer size={4} axis="vertical" />
-        <Link href="/sign-up" passHref>
-          {valid ? <BlueButtons buttonText={'Continue to Payment'} /> : ''}
+        <Link href="/login" passHref>
+          {valid ? <BlueButtons buttonText={'Continue to Login'} /> : ''}
         </Link>
       </Container>
     </Wrapper>

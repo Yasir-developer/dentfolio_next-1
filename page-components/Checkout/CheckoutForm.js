@@ -20,6 +20,7 @@ const CheckoutForm = (props) => {
   const [loader, setLoader] = useState(false);
   const [address, setAddress] = useState('');
   useEffect(() => {}, [address]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoader(true);
@@ -68,7 +69,11 @@ const CheckoutForm = (props) => {
           // console.log(res, 'job post response..');
           // return;
           if (res.status == 200) {
-            dispatch(fetchUser(res?.data?.user));
+            console.log(
+              res?.data?.user,
+              'res?.data?.user============================'
+            );
+            // dispatch(fetchUser(res?.data?.user));
             handleSave();
             // console.log(res, 'subs res');
             //   setLoader(false);
@@ -101,9 +106,11 @@ const CheckoutForm = (props) => {
         headers: { 'Content-Type': 'application/json' },
       })
       .then((res) => {
-        // console.log(res, 'res after update');
+        console.log(res, 'res after update');
         // setLoader(false);
         if (res.status == 200) {
+          dispatch(fetchUser(res?.data?.user));
+
           toast.success('Subscription Created Successfully');
         }
       })

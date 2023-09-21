@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import profile from '../../public/images/profile1.jpeg';
 import Image from 'next/image';
-import { FaMapMarkerAlt, FaTimes } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaTimes, FaWindowClose } from 'react-icons/fa';
 import checkCircle from '../../public/images/check-circle2.svg';
 import mapOptions from './map-options.json';
 
@@ -13,10 +13,24 @@ import { toast } from 'react-hot-toast';
 import BlueButtons from '../Buttons/BlueButtons';
 import axios from 'axios';
 import { server } from 'config';
+import { Elements, PaymentElement } from '@stripe/react-stripe-js';
+import CheckoutForm from '@/page-components/Checkout/CheckoutForm';
+import { loadStripe } from '@stripe/stripe-js';
 import ReCAPTCHA from 'react-google-recaptcha';
+
+import { paymentModal } from 'redux/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
 const TEST_SITE_KEY = '6Le6sAMoAAAAAGl9N980ZjGYwV9YNDmy9irsjBGM';
 const DoctorBasicDetail = (props) => {
+  const dispatch = useDispatch();
+
+  const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  );
+  const { user, modal } = useSelector((state) => state.auth);
+
   const recaptchaRef = React.createRef();
+  const [paymentModalShow, setPaymentModalShow] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const [showThankYouModal, setShowThankYouModal] = useState(false);
@@ -39,6 +53,12 @@ const DoctorBasicDetail = (props) => {
       }
     }
   }, [showContact]);
+  useEffect(() => {
+    console.log(modal, 'modal');
+    if (modal == true) {
+      setPaymentModalShow(true);
+    }
+  }, [modal]);
 
   const onGoogleApiLoaded = ({ map, maps }) => {
     mapRef.current = map;
@@ -216,9 +236,40 @@ const DoctorBasicDetail = (props) => {
       </div>
     );
   };
+  const options = { mode: 'billing' };
+
+  const paymentForm = (e) => {
+    return (
+      <div className="loginModal">
+        <FaWindowClose
+          className="text-right ml-auto w-5 h-5 cursor-pointer"
+          onClick={() => {
+            dispatch(paymentModal(false));
+            // dispatch(handleModal(false));
+          }}
+        />
+        <div>
+          {/* <InjectedCheckoutForm /> */}
+          <Elements stripe={stripePromise} option={options}>
+            {/* <PaymentElement /> */}
+
+            <CheckoutForm />
+            {/* <AddressForm /> */}
+          </Elements>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="sizingStyles flex flex-col lg:flex-row justify-between">
+      {/* {modal ? (
+        <div className="fixed w-full h-full flex justify-center items-center bg-[#00000080] z-[9999]">
+          {paymentForm()}
+        </div>
+      ) : (
+        <></>
+      )} */}
       {showModal && conversationModal()}
       {showThankYouModal && thankYouModal()}
       <div className="w-full lg:w-[80%]">

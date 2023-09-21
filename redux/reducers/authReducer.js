@@ -15,7 +15,7 @@ const authReducer = (state = initialState, action) => {
       return { ...state, loading: false, updatedUser: action.payload };
 
     case 'OPEN_MODAL':
-      return { ...state, modal: true };
+      return { ...state, modal: action.payload };
     case 'FETCH_USER_LOGOUT':
       return { ...state, loading: false, user: null };
     default:

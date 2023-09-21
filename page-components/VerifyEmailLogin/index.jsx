@@ -29,7 +29,7 @@ export const VerifyEmailLogin = ({ valid }) => {
         </Text>
         <Spacer size={4} axis="vertical" />
         <Link href="/login" passHref>
-          {valid ? <BlueButtons buttonText={'Continue to Payment'} /> : ''}
+          {valid ? <BlueButtons buttonText={'Continue to Login'} /> : ''}
         </Link>
       </Container>
     </Wrapper>

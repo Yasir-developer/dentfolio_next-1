@@ -34,6 +34,8 @@ const DentistTabs = (props) => {
   const [activeTab, setActiveTab] = useState('editProfile');
   const [toggleMenu, setToggleMenu] = useState(false);
 
+  useEffect(() => {}, [user]);
+
   const menuHandler = () => {
     setToggleMenu(!toggleMenu);
     console.log(toggleMenu, 'toggleMenu');

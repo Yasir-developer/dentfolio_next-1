@@ -15,8 +15,11 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import NProgress from 'nprogress';
 import { useEffect } from 'react';
+import Script from 'next/script';
+
 import { useRouter } from 'next/router';
 import { useCurrentUser } from '@/lib/user';
+import Head from 'next/head';
 
 // import '../assets/globals.css';
 
@@ -45,6 +48,18 @@ const MyApp = ({ Component, pageProps, reduxStore }) => {
         <Layout>
           <Component {...pageProps} />
           <Toaster />
+          <Head>
+            <Script id="google-analytics">
+              {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments)}
+              gtag('js', new Date());
+
+
+              gtag('config', 'G-0BTT5R168E');
+            `}
+            </Script>
+          </Head>
         </Layout>
         {/* </ThemeProvider> */}
       </PersistGate>

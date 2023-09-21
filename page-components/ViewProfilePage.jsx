@@ -24,6 +24,12 @@ const ViewProfilePage = () => {
     handleProfile();
   }, []);
 
+  // useEffect(()=>{
+  //     if(user.paymentVerified){
+
+  //     }
+  // },[])
+
   const handleProfile = () => {
     const options = {
       headers: {
@@ -35,8 +41,6 @@ const ViewProfilePage = () => {
         options,
       })
       .then((res) => {
-        // console.log(res?.data?.user, 'res =======');
-        // setLoader(false);
         if (res.status == 200) {
           dispatch(fetchUser(res?.data?.user));
         }
@@ -45,10 +49,6 @@ const ViewProfilePage = () => {
   };
   return (
     <div className="w-[90%] mx-auto">
-      {/* <DentistTabs> */}
-      {/* <EditCasePage /> */}
-      {/* <h1>Edit case</h1> */}
-
       {!loader ? (
         <div className="w-full flex items-center justify-center">
           <div

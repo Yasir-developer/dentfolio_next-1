@@ -159,11 +159,11 @@ const Login = () => {
   return (
     <div className="lg:w-full flex flex-col lg:flex-row h-screen bg-[#F9FBFC]">
       {emailModalshow && EmailModal()}
-      {paymentModalShow && (
+      {/* {paymentModalShow && (
         <div className="fixed w-full h-full flex justify-center items-center bg-[#00000080] z-[9999]">
           {paymentForm()}
         </div>
-      )}
+      )} */}
       <div className="lg:w-full lg:py-[0px] py-[30px] bg-gradient-radial from-[#0372E2] to-[#0B5FB4] justify-center flex items-center text-center">
         <Image src={logo} alt="logo" className="mx-auto hidden lg:block" />
 
