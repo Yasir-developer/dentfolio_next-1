@@ -425,7 +425,7 @@ const Signup = () => {
                 <div className="mt-5 flex flex-col items-center justify-center">
                   <BlueButtons
                     loading={loader}
-                    buttonText="Continue to Payment"
+                    buttonText="Continue to Login"
                     className="px-[50px] cursor-pointer"
                   />
 
