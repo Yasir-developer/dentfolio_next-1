@@ -49,7 +49,18 @@ const MyApp = ({ Component, pageProps, reduxStore }) => {
           <Component {...pageProps} />
           <Toaster />
           <Head>
-            <Script id="google-analytics">
+            <script
+              async
+              src="https://www.googletagmanager.com/gtag/js?id=G-VBN79YJDXV"
+            ></script>
+            <Script>
+              {`window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'G-VBN79YJDXV')`}
+            </Script>
+            {/* <Script id="google-analytics">
               {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments)}
@@ -58,7 +69,7 @@ const MyApp = ({ Component, pageProps, reduxStore }) => {
 
               gtag('config', 'G-0BTT5R168E');
             `}
-            </Script>
+            </Script> */}
           </Head>
         </Layout>
         {/* </ThemeProvider> */}
