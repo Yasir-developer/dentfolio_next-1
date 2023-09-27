@@ -40,6 +40,14 @@ const MyApp = ({ Component, pageProps, reduxStore }) => {
     router.events.on('routeChangeComplete', () => NProgress.done());
     router.events.on('routeChangeError', () => NProgress.done());
   }, []);
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () {
+      dataLayer.push(arguments);
+    };
+    window.gtag('js', new Date());
+    window.gtag('config', 'G-VBN79YJDXV');
+  }, []);
 
   return (
     <Provider store={reduxStore}>
