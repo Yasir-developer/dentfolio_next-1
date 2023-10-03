@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Elements, PaymentElement } from '@stripe/react-stripe-js';
 import CheckoutForm from '@/page-components/Checkout/CheckoutForm';
 import { loadStripe } from '@stripe/stripe-js';
+import { paymentModal } from 'redux/actions/auth';
 
 const viewprofile = ({ data }) => {
   const { user, modal } = useSelector((state) => state.auth);
