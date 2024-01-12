@@ -565,7 +565,6 @@ const EditProfilePage = () => {
                   <Select
                     value={tags}
                     onChange={handleChange}
-                    // onChange={handleSelectChange}
                     options={options}
                     isClearable={false}
                     isSearchable
