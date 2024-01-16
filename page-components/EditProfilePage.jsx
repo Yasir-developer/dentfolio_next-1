@@ -524,17 +524,6 @@ const EditProfilePage = () => {
                 label="City"
               />
 
-              {/* <AuthInput
-                placeholder={'Practice City'}
-                className={'order-11'}
-                containerClassName={'w-[45%]'}
-                value={city}
-                onChange={(e) => {
-                  setCity(e.target.value);
-                }}
-                label="City"
-                required
-              /> */}
               <AuthInput
                 placeholder={'Practice Post Code'}
                 className={'order-12'}
