@@ -490,9 +490,7 @@ const EditProfilePage = () => {
                       component.types.includes('postal_code')
                     );
                     setPostCode(postal_code?.long_name);
-                    // console.log(postal_code, 'postal_code');
 
-                    // console.log(locality, 'locality');
                     const localityTwo = addressComponents?.find((component) =>
                       component.types.includes('locality')
                     );
