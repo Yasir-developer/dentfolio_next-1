@@ -479,7 +479,6 @@ const EditProfilePage = () => {
                   apiKey={'AIzaSyDtNQLSo9z2j996yTIBxmxRTseja8eQhgo'}
                   // className="flex-grow py-2 px-4 focus:outline-none w-4/5"
                   className=" order-10 focus:outline-none border w-full border-custom-grey rounded-[7px] p-3 bg-custom-dashboard-bg placeholder-slate-400 lg:text-[16px] text-[14px] font-normal mb-5"
-                  // style={{ width: '100%', height: 50 }}
                   onPlaceSelected={(place) => {
                     setLatitude(place?.geometry?.location?.lat());
                     setLongitude(place?.geometry?.location?.lng());
